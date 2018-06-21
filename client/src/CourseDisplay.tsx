@@ -1,0 +1,117 @@
+import * as React from "react";
+import {Route} from "react-router";
+import Client from "./Client";
+import Course from "./Course";
+import LibrarianBox from "./LibrarianBox";
+import LibrariesHeader from "./LibrariesHeader";
+import ReadingList from "./ReadingList";
+import ResearchGuidesBox from "./ResearchGuidesBox";
+
+class CourseDisplay extends React.Component<{ match: any }, { course: Course, loading: boolean }> {
+    public constructor(params: any) {
+        super(params);
+        this.state = {
+            course: new Course,
+            loading: false
+        }
+    }
+
+    public async componentDidMount() {
+        const params = this.props.match.params;
+        const queryVars = parseQueryString();
+        let course: Course;
+
+        if (params.course_id && params.section_id) {
+            course = Course.buildFromCourseAndSection(params.course_id, params.section_id);
+        } else if (queryVars.course_sis_id) {
+            course = Course.buildFromId(queryVars.course_sis_id);
+        } else {
+            course = new Course;
+        }
+
+        document.title = `${course.subject}${course.number}-${course.section} resources - Boston College Libraries`;
+
+        this.setState(prevState => {
+            return {...prevState, course, loading: true}
+        });
+
+        await Client.fetchCourse(course);
+
+        this.setState(prevState => {
+            return {...prevState, course, loading: false}
+        });
+    }
+
+    public render() {
+        const classes: string[] = ['App'];
+        const course = this.state.course;
+
+        if (this.state.loading) {
+            classes.push('loading');
+        }
+
+        if (location.pathname.includes('lti')) {
+            classes.push('lti-style')
+        } else {
+            classes.push('libraries-style');
+        }
+
+        const readingsBox = this.state.loading ? loadingPage() : this.readingsDisplay();
+
+        function renderHeader() {
+            return (<LibrariesHeader course={course}/>);
+        }
+
+        return (
+            <div className={classes.join(' ')}>
+                <Route path={`${process.env.PUBLIC_URL}/course`} render={renderHeader}/>
+
+                <div className={'app-container'}>
+                    <div className="readings">
+                        <h2>Readings</h2>
+                        {readingsBox}
+                    </div>
+                    <div className="library-info">
+                        <ul>
+                            <li><a href="https://library.bc.edu" target="_blank" className="link-to-libraries">The
+                                Boston College Libraries</a></li>
+                        </ul>
+                    </div>
+                    <div className="research-guides">
+                        <ResearchGuidesBox course={course}/>
+                    </div>
+                    <div className="librarian">
+                        <LibrarianBox course={course}/>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    private readingsDisplay() {
+        return (this.state.course.hasReadings) ? (<ReadingList readings={this.state.course.lists[0].citations}/>) :
+            (<div>No readings found.</div>);
+    }
+}
+
+function loadingPage(): any {
+    return (
+        <div className="is-loading">
+            <div className="loader-img"/>
+            <div className="loading-message">loading readings...</div>
+        </div>
+    );
+}
+
+function parseQueryString(): any {
+    const queryPairs = location.search.substring(1).split('&');
+    const queryObject = {};
+    queryPairs.forEach(val => {
+        const parts = val.split('=');
+        queryObject[parts[0]] = parts[1];
+    });
+    return queryObject;
+}
+
+
+export default CourseDisplay;

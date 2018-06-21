@@ -1,0 +1,24 @@
+figure {
+    max-width: 200px;
+    overflow: hidden;
+    margin: 0;
+    position: relative;
+}
+
+figure img {
+    display: block;
+    margin:0 -18%;
+    width:135%;
+}
+
+figcaption {
+    margin-top: .5em;
+}
+
+figcaption .name {
+    font-weight: bold;
+}
+
+.librarian-box {
+    margin-bottom: 1.5em;
+}

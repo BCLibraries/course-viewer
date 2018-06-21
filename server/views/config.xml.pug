@@ -1,0 +1,17 @@
+doctype xml
+cartridge_basiclti_link(xsi:schemalocation="http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0p1.xsd http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lticp="http://www.imsglobal.org/xsd/imslticp_v1p0" xmlns:lticm="http://www.imsglobal.org/xsd/imslticm_v1p0" xmlns:blti="http://www.imsglobal.org/xsd/imsbasiclti_v1p0" xmlns="http://www.imsglobal.org/xsd/imslticc_v1p0")
+    blti:title Nearpod
+    blti:description Create, engage, and assess your students in every lesson!
+    blti:launch_url #{launchUrl}
+    blti:icon http://fspro.com/nearEducationUploaded/Images/logo.png
+    blti:extensions(platform="canvas.instructure.com")
+        lticm:property(name="tool_id") nearpod
+        lticm:property(name="icon_url") http://fspro.com/nearEducationUploaded/Images/logo.png
+        lticm:property(name="domain") mlib.bc.edu
+        lticm:property(name="privacy_level") public
+        lticm:property(name="text") Library Course Reserves and Resources
+        lticm:options(name="course_navigation")
+            lticm:property(name="enabled") true
+            lticm:property(name="text") Library Course Reserves and Resources
+            lticm:property(name="url") #{launchUrl}
+            lticm:property(name="visibility") members

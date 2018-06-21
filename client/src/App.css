@@ -1,0 +1,150 @@
+.lti-style {
+    font-family: "Lato", sans-serif;
+}
+
+.libraries-style {
+    font-family: "Open Sans", monospace, sans-serif;
+    line-height: 1.5
+}
+
+.libraries-style .readings li {
+    margin-bottom: 2em;
+}
+
+.libraries-style ul {
+    padding: 0;
+}
+
+a[target="_blank"]::after {
+    content: '';
+    display: inline-block;
+    background-size: 14px 14px;
+    height: 14px;
+    width: 14px;
+    background-image: url("./img/new-tab.svg");
+    margin-left: 4px;
+}
+
+.App .app-container {
+    font-weight: 300;
+    display: grid;
+    grid-template-columns:  66% 33%;
+    grid-template-rows: max-content max-content;
+}
+
+.readings {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    padding-right: 2em;
+}
+
+.librarian {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 2em;
+}
+
+.is-loading {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.is-loading .loader-img {
+    background: url("img/loading-01.gif") no-repeat center;
+    height: 6em;
+    margin-bottom: 1em;
+}
+
+.is-loading .loading-message {
+    color: #555555;
+}
+
+.library-info {
+    grid-column: 2;
+    -ms-grid-row: 1;
+    grid-row: 1;
+    margin-top: 36px;
+}
+
+a.link-to-libraries {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+a.link-to-libraries:hover {
+    text-decoration: none;
+}
+
+.research-guides {
+    grid-column: 2;
+    -ms-grid-row: 2;
+    grid-row: 2;
+    margin-top: 2em;
+}
+
+.thumbnail {
+    background: no-repeat center;
+    width: 60px;
+    min-height: 80px;
+    float: left;
+    margin-right: 1em;
+    background-size: 65px;
+    border: none;
+}
+
+.physical-book .thumbnail {
+    background-image: url("img/book.svg");
+}
+
+.library-info li {
+    list-style: none;
+}
+
+.readings li {
+    list-style: none;
+    margin-bottom: 1em;
+    clear: left;
+    min-height: 100px;
+}
+
+.readings li cite {
+    font-weight: 400;
+}
+
+.physical-article cite, .electronic-article cite {
+    font-style: normal;
+}
+
+.physical-book cite {
+    font-style: italic;
+}
+
+.cite-journal-title {
+    font-style: italic;
+}
+
+.availability strong {
+    font-weight: 400;
+    color: green;
+}
+
+.availability {
+    color: green;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2.course-name {
+    font-size: 20px;
+    margin-bottom: 1.5em;
+}
+
+h2.course-name .course-id {
+    font-size: 16px;
+}
+
+.megamenu-container {
+    margin-bottom: 2em;
+}
