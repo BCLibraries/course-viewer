@@ -19,5 +19,10 @@
   },
   "scripts": {
     "start": "nodemon"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.1",
+    "jest": "^23.1.0",
+    "ts-jest": "^22.4.6"
   }
 }
