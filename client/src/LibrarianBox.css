@@ -1,17 +1,33 @@
-figure {
+figure, .ph-librarian {
     max-width: 200px;
     overflow: hidden;
     margin: 0;
     position: relative;
 }
 
-figure img {
+figure img, .ph-librarian-image {
     display: block;
-    margin:0 -18%;
-    width:135%;
+    margin: 0 -18%;
+    max-width: 135%;
 }
 
-figcaption {
+.ph-librarian-image {
+    height: 288px;
+}
+
+.ph-librarian-info {
+    height: .8em;
+    margin-top: .6em;
+    max-width: 80%;
+}
+
+.ph-librarian-header {
+    height: 1em;
+    margin-bottom: 1em;
+    max-width: 9em;
+}
+
+figcaption, .ph-librarian .title {
     margin-top: .5em;
 }
 

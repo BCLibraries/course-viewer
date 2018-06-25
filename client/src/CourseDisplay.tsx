@@ -4,6 +4,7 @@ import Client from "./Client";
 import Course from "./Course";
 import LibrarianBox from "./LibrarianBox";
 import LibrariesHeader from "./LibrariesHeader";
+import './Placeholder.css';
 import ReadingList from "./ReadingList";
 import ResearchGuidesBox from "./ResearchGuidesBox";
 
@@ -48,6 +49,8 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
 
         if (this.state.loading) {
             classes.push('loading');
+        } else {
+            classes.push('loaded');
         }
 
         if (location.pathname.includes('lti')) {
@@ -78,10 +81,10 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
                         </ul>
                     </div>
                     <div className="research-guides">
-                        <ResearchGuidesBox course={course}/>
+                        <ResearchGuidesBox course={course} loading={this.state.loading}/>
                     </div>
                     <div className="librarian">
-                        <LibrarianBox course={course}/>
+                        <LibrarianBox course={course} loading={this.state.loading}/>
                     </div>
                 </div>
             </div>
@@ -96,10 +99,24 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
 
 function loadingPage(): any {
     return (
-        <div className="is-loading">
-            <div className="loader-img"/>
-            <div className="loading-message">loading readings...</div>
-        </div>
+        <ul className="is-loading">
+            {readingsLoading()}
+            {readingsLoading()}
+            {readingsLoading()}
+            {readingsLoading()}
+            {readingsLoading()}
+        </ul>
+    );
+}
+
+function readingsLoading(): any {
+    return (
+        <li className="physical-book ph-item">
+            <div className="thumbnail"/>
+            <div className="book-ph-line"/>
+            <div className="book-ph-line"/>
+            <div className="book-ph-line"/>
+        </li>
     );
 }
 

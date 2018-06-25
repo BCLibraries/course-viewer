@@ -10,10 +10,10 @@ class Book extends React.Component<{ reading: any }, {}> {
         return (
             <li className="physical-book">
                 <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>
-                <cite>{metadata.title}</cite><br/>
-                {metadata.author}{additionalPerson}<br />
-                {metadata.publisher} {metadata.year} {metadata.edition}
-                {availabilityInfo}
+                <div><cite>{metadata.title}</cite></div>
+                <div>{metadata.author}{additionalPerson}</div>
+                <div>{metadata.publisher} {metadata.year} {metadata.edition}</div>
+                <div>{availabilityInfo}</div>
             </li>
         )
     }

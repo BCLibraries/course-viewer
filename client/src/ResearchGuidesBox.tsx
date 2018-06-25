@@ -2,8 +2,19 @@ import * as React from 'react';
 import Course from "./Course";
 import './ResearchGuidesBox.css';
 
-class ResearchGuidesBox extends React.Component<{ course: Course }, {}> {
+class ResearchGuidesBox extends React.Component<{ course: Course, loading: boolean }, {}> {
     public render() {
+        if (this.props.loading) {
+            return (
+                <div className="research-guides-block">
+                    <div className="ph-research-guides-header"/>
+                    <div className="ph-research-guides-header"/>
+                    <div className="ph-research-guides-header"/>
+                    <div className="ph-research-guides-header"/>
+                </div>
+            );
+        }
+
         const course = this.props.course;
 
         if (!course.subjectInfo.slug) {

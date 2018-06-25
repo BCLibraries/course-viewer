@@ -2,8 +2,22 @@ import * as React from 'react';
 import Course from "./Course";
 import './LibrarianBox.css';
 
-class LibrarianBox extends React.Component<{ course: Course }, {}> {
+class LibrarianBox extends React.Component<{ course: Course, loading: boolean }, {}> {
     public render() {
+        if (this.props.loading) {
+            return (
+                <div>
+                    <div className="ph-librarian-header"/>
+                    <div className="ph-librarian ph-item">
+                        <div className="ph-librarian-image"/>
+                        <div className="ph-librarian-info"/>
+                        <div className="ph-librarian-info"/>
+                    </div>
+                </div>
+            );
+        }
+
+
         const course = this.props.course;
 
         if (!course.subjectInfo.experts) {

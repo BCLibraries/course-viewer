@@ -1,0 +1,39 @@
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.loading .ph-item div, .ph-librarian-header, .ph-research-guides-header {
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px 104px;
+    position: relative;
+}
+
+.book-ph-line {
+    margin-left: 77px;
+    margin-bottom: 6px;
+    height: .8em;
+}
+
+.book-ph-line:nth-child(2) {
+    max-width: 38em;
+    height: 1em;
+}
+
+.book-ph-line:nth-child(3) {
+    max-width: 12em;
+}
+
+.book-ph-line:nth-child(4) {
+    max-width: 16em;
+}

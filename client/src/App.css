@@ -92,7 +92,7 @@ a.link-to-libraries:hover {
     border: none;
 }
 
-.physical-book .thumbnail {
+.loaded .physical-book .thumbnail {
     background-image: url("img/book.svg");
 }
 
@@ -137,12 +137,14 @@ a {
 }
 
 h2.course-name {
-    font-size: 20px;
-    margin-bottom: 1.5em;
+    font-size: 28px;
+    margin-bottom: 1em;
+    max-width: 925px;
+    line-height: 1.25;
 }
 
 h2.course-name .course-id {
-    font-size: 16px;
+    font-weight: 600;
 }
 
 .megamenu-container {
