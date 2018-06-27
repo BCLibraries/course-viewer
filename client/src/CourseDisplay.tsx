@@ -51,6 +51,10 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
             classes.push('loading');
         } else {
             classes.push('loaded');
+
+            if (!this.state.course.hasReadings) {
+                classes.push('no-readings');
+            }
         }
 
         if (location.pathname.includes('lti')) {

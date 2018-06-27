@@ -1,5 +1,6 @@
 .lti-style {
     font-family: "Lato", sans-serif;
+    padding-left: 1em;
 }
 
 .libraries-style {
@@ -32,16 +33,28 @@ a[target="_blank"]::after {
     grid-template-rows: max-content max-content;
 }
 
+.App.no-readings .app-container {
+    grid-template-columns: 75% 25%;
+}
+
 .readings {
     grid-column: 1;
     grid-row: 1 / span 3;
     padding-right: 2em;
 }
 
+.no-readings .readings {
+    grid-column: 2;
+}
+
 .librarian {
     grid-column: 2;
     grid-row: 3;
     margin-top: 2em;
+}
+
+.no-readings .librarian {
+    grid-column: 1;
 }
 
 .is-loading {
@@ -66,6 +79,11 @@ a[target="_blank"]::after {
     margin-top: 36px;
 }
 
+.no-readings .library-info {
+    grid-column: 1;
+}
+
+
 a.link-to-libraries {
     font-weight: 600;
     font-size: 18px;
@@ -80,6 +98,10 @@ a.link-to-libraries:hover {
     -ms-grid-row: 2;
     grid-row: 2;
     margin-top: 2em;
+}
+
+.no-readings .research-guides {
+    grid-column: 1;
 }
 
 .thumbnail {
