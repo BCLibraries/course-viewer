@@ -10,6 +10,10 @@ require('dotenv').config();
 // Create Express server
 const app = express();
 
+if (process.env.BEHIND_PROXY) {
+    app.set('trust proxy', true);
+}
+
 // Express configuration
 app.set("port", process.env.PORT || 3001);
 app.use(bodyParser.json());
