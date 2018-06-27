@@ -17,10 +17,22 @@ function readingFactory(reading: any) {
     }
 }
 
+function compare(a: any, b: any) {
+    if (a.props.reading.sortTitle < b.props.reading.sortTitle) {
+        return -1;
+    }
+    if (a.props.reading.sortTitle > b.props.reading.sortTitle) {
+        return 1;
+    }
+    return 0;
+}
+
+
 class ReadingList extends React.Component<{ readings: any }, {}> {
     public render() {
         const readingList = this.props.readings.map(readingFactory);
-        return  (<ul>{readingList}</ul>);
+        readingList.sort(compare);
+        return (<ul>{readingList}</ul>);
     }
 }
 

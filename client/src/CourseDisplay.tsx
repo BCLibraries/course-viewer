@@ -75,7 +75,9 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
 
                 <div className={'app-container'}>
                     <div className="readings">
-                        <h2>Readings</h2>
+                        <div className={"readings-header"}>
+                            <h2>Readings</h2>
+                        </div>
                         {readingsBox}
                     </div>
                     <div className="library-info">
