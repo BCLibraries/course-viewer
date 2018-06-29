@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
-import lookup from "./SubjectLookup";
 import Course from "./Course";
 import fetchGuides from "./LibGuidesClient";
+import lookup from "./SubjectLookup";
 
 const router = require('express').Router();
 const {fetchCourse} = require('./AlmaClient');

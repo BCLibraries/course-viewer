@@ -35,7 +35,8 @@ class Course {
     public subject: string = '';
     public semester: string = '';
     public subjectInfo: any = {
-        url: null
+        slug: null,
+        url: null,
     };
     public researchGuides: any = [];
 }

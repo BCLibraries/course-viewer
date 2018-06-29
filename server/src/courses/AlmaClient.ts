@@ -19,6 +19,9 @@ async function fetchCourse(course: Course) {
         return course;
     }
     const activeCourses = courseSearchResponse.data.course.filter(isActive);
+    if (activeCourses.length === 0) {
+        return course;
+    }
 
     course.loadFromAlma(activeCourses[0]);
     const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});

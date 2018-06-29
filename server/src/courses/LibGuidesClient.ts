@@ -4,7 +4,7 @@ import Guide from "./Guide";
 
 async function fetchGuides(course: Course) {
     const dept = course.department.toUpperCase();
-    const fullCourse = `${dept}${course.code}`;
+    const fullCourse = `${dept}${course.number}`;
     const withSection = `${fullCourse}-${course.section}`;
     const response = await fetchFromLibGuides(dept, fullCourse, withSection);
     course.research_guides = response.data.map(buildGuide);
@@ -12,12 +12,20 @@ async function fetchGuides(course: Course) {
 }
 
 function fetchFromLibGuides(dept: string, fullCourse: string, withSection: string) {
+    const tagNames = [
+        dept,
+        fullCourse,
+        withSection,
+        fullCourse.substring(0, 5) + 'xxx',
+        fullCourse.substring(0, 6) + 'xx',
+        fullCourse.substring(0, 7) + 'x'
+    ];
     const params = {
         site_id: process.env.LIBGUIDS_SITE_ID,
         key: process.env.LIBGUIDES_KEY,
         expand: 'tags',
-        status: '1',
-        tag_names: [dept, fullCourse, withSection].join(',')
+        status: '1,2',
+        tag_names: tagNames.join(',')
     };
     return axios.get('https://lgapi-us.libapps.com//1.1/guides', {params});
 }

@@ -38,7 +38,7 @@ class ResearchGuidesBox extends React.Component<{ course: Course, loading: boole
 }
 
 function guideFactory(guide: any) {
-    return (<a href={guide.friendlyUrl} key={guide.url} target="_blank">{guide.title}</a>);
+    return (<li><a href={guide.friendlyUrl} key={guide.url} target="_blank">{guide.title}</a></li>);
 }
 
 export default ResearchGuidesBox;
