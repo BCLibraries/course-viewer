@@ -1,13 +1,13 @@
 // let xml2js = require('xml2js');
 import xml2js from 'xml2js';
 
-interface stringMap {
+interface IStringMap {
     [index: string]: string;
 }
 
 const ebookLabel = 'E-book';
 
-const avaCodeMap: stringMap = {
+const avaCodeMap: IStringMap = {
     'b': 'library',
     'c': 'location',
     'd': 'call_number',
@@ -76,7 +76,7 @@ function parseAVAFields(datafields: any) {
 
     if (avaDatafields.length > 0) {
         avaDatafields.forEach((datafield: any) => {
-                const availability: stringMap = {};
+                const availability: IStringMap = {};
                 datafield.subfield.forEach((subfield: any) => {
                     const subfieldCode: any = subfield.$.code;
                     const fieldName = avaCodeMap[subfieldCode];

@@ -6,6 +6,7 @@ function buildStateCourse(courseJson: any, course: Course) {
     course.lists = courseJson.reading_lists;
     course.hasReadings = courseJson.has_readings;
     course.subjectInfo = courseJson.subject_info;
+    course.researchGuides = courseJson.research_guides;
     return course;
 }
 

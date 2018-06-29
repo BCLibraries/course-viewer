@@ -23,13 +23,22 @@ class ResearchGuidesBox extends React.Component<{ course: Course, loading: boole
 
         const url = `https://libguides.bc.edu/${course.subjectInfo.slug}`;
 
+        const guides = course.researchGuides.map(guideFactory);
+
         return (
             <div className="research-guides-block">
                 <h4>Research guides</h4>
-                <a href={url} target="_blank">{course.subjectInfo.name} resources</a>
+                <ul>
+                    {guides}
+                    <li><a href={url} target="_blank">{course.subjectInfo.name} resources</a></li>
+                </ul>
             </div>
         );
     }
+}
+
+function guideFactory(guide: any) {
+    return (<a href={guide.friendlyUrl} key={guide.url} target="_blank">{guide.title}</a>);
 }
 
 export default ResearchGuidesBox;

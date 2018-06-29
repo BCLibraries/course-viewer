@@ -1,23 +1,31 @@
 import {Request, Response} from "express";
 import lookup from "./SubjectLookup";
+import Course from "./Course";
+import fetchGuides from "./LibGuidesClient";
 
-let router = require('express').Router();
-let {fetchCourse} = require('./AlmaClient');
+const router = require('express').Router();
+const {fetchCourse} = require('./AlmaClient');
 
 require('events').EventEmitter.defaultMaxListeners = 15;
 
 
 async function getCourse(req: Request, res: Response) {
     let outgoing = null;
-    const course_id = req.params.course_id;
-    const section_id = req.params.section_id;
+    const course = new Course();
+    course.id = req.params.course_id;
+    course.number = req.params.course_id.substring(8 - 4);
+    course.section = req.params.section_id;
+    course.department = course.id.substring(0, 4);
 
-    const subject = await lookup(course_id.substring(0,4));
 
-    fetchCourse(course_id, section_id)
-        .then((response: any) => {
-            outgoing = response;
-            outgoing.subject_info = JSON.parse(subject);
+
+    course.subject_info = JSON.parse(await lookup(course.id.substring(0,4)));
+    const guidePromise = fetchGuides(course);
+    const almaPromise = fetchCourse(course);
+
+    Promise.all([guidePromise, almaPromise])
+        .then((response: any[]) => {
+            outgoing = course;
             res.setHeader('Content-Type', 'application/json');
             // res.setHeader('Cache-Control','max-age=120');
             res.send(JSON.stringify(outgoing));
@@ -26,7 +34,7 @@ async function getCourse(req: Request, res: Response) {
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(outgoing));
     });
-} 
+}
 
 router.get('/:course_id/sections/:section_id', getCourse);
 

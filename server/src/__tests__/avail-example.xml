@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record>
+    <leader>01066pam 2200337 a 4500</leader>
+    <controlfield tag="001">99105195900001021
+    </controlfield>
+    <controlfield tag="005">20160823101505.0</controlfield>
+    <controlfield tag="008">120610s2002 njua b 001 0 eng</controlfield>
+    <datafield ind1=" " ind2=" " tag="010">
+        <subfield code="a">2001042749</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+        <subfield code="a">0130942871 (pbk.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="035">
+        <subfield code="a">(Aleph)001781322BCL01</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="035">
+        <subfield code="a">(OCoLC)ocm47161282</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="040">
+        <subfield code="a">DLC</subfield>
+        <subfield code="c">DLC</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="043">
+        <subfield code="a">n-us---</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="049">
+        <subfield code="a">BXMM</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="050">
+        <subfield code="a">LB1570</subfield>
+        <subfield code="b">.E4254 2002</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="082">
+        <subfield code="a">375/.001</subfield>
+        <subfield code="2">21</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="100">
+        <subfield code="a">Eisner, Elliot W.</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="4" tag="245">
+        <subfield code="a">The educational imagination :</subfield>
+        <subfield code="b">on the design and evaluation of school programs /</subfield>
+        <subfield code="c">Elliot W. Eisner.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="250">
+        <subfield code="a">3rd ed.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="260">
+        <subfield code="a">Upper Saddle River, N.J. :</subfield>
+        <subfield code="b">Prentice Hall,</subfield>
+        <subfield code="c">c2002.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="300">
+        <subfield code="a">ix, 389 p. :</subfield>
+        <subfield code="b">ill. ;</subfield>
+        <subfield code="c">24 cm.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="504">
+        <subfield code="a">Includes bibliographical references and index.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+        <subfield code="a">Curriculum planning</subfield>
+        <subfield code="z">United States.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+        <subfield code="a">Education</subfield>
+        <subfield code="x">Aims and objectives</subfield>
+        <subfield code="z">United States.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+        <subfield code="a">Curriculum evaluation.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+        <subfield code="a">Curriculum change</subfield>
+        <subfield code="z">United States.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="940">
+        <subfield code="a">RETAIN FOR EAST</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="948">
+        <subfield code="a">LTI 04/18/2003</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="950">
+        <subfield code="a">OL</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="994">
+        <subfield code="a">E0</subfield>
+        <subfield code="b">BXM</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="INT">
+        <subfield code="a">P</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="INST">
+        <subfield code="a">01BC_INST</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="AVA">
+        <subfield code="a">01BC_INST</subfield>
+        <subfield code="b">TML</subfield>
+        <subfield code="c">Course Reserves 2 hours</subfield>
+        <subfield code="d">LB1570 .E4254 2002</subfield>
+        <subfield code="e">available</subfield>
+        <subfield code="f">1</subfield>
+        <subfield code="g">0</subfield>
+        <subfield code="i">BRIGHTON</subfield>
+        <subfield code="j">RES_2H</subfield>
+        <subfield code="k">0</subfield>
+        <subfield code="p">1</subfield>
+        <subfield code="q">Theology and Ministry Library</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="AVA">
+        <subfield code="0">99105195900001021</subfield>
+        <subfield code="8">22330225690001021</subfield>
+        <subfield code="a">01BC_INST</subfield>
+        <subfield code="b">ONL</subfield>
+        <subfield code="c">Stacks</subfield>
+        <subfield code="d">LB1570 .E4254 2002</subfield>
+        <subfield code="e">available</subfield>
+        <subfield code="f">1</subfield>
+        <subfield code="g">0</subfield>
+        <subfield code="i">MAIN</subfield>
+        <subfield code="j">STACK</subfield>
+        <subfield code="k">0</subfield>
+        <subfield code="p">2</subfield>
+        <subfield code="q">O'Neill</subfield>
+    </datafield>
+</record>

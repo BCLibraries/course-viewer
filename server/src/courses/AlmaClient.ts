@@ -5,22 +5,22 @@ import ReadingList from './ReadingList';
 
 const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
 
-async function fetchCourse(courseNumber: string, section: string) {
+async function fetchCourse(course: Course) {
     const localParams = {
         direction: 'ASC',
         limit: 10,
         offset: 0,
         order_by: "code,section",
-        q: "code~" + courseNumber + " AND section~" + section
+        q: "code~" + course.id + " AND section~" + course.section
     };
 
     const courseSearchResponse = await fetchFromAlma('/courses', localParams);
     if (!courseSearchResponse.data.course) {
-        return new Course({})
+        return course;
     }
     const activeCourses = courseSearchResponse.data.course.filter(isActive);
 
-    const course = new Course(activeCourses[0]);
+    course.loadFromAlma(activeCourses[0]);
     const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});
 
     if (!courseFetchResponse.data.reading_lists.reading_list[0]) {
@@ -61,12 +61,12 @@ function isActive(course: Course) {
 
 function isPhysicalBook(cite: Citation) {
     const isBook = cite.type.primary === 'Physical Book' && cite.type.secondary !== 'Video';
-    return isBook && ! isEBook(cite);
+    return isBook && !isEBook(cite);
 }
 
 function isEBook(cite: Citation) {
     const typeIsEbook = cite.type.primary === 'Physical Book' && cite.type.secondary === 'E-book';
-    const hasEbookInTitle = cite.metadata.title.match(/[eE]-?book/) && cite.type.primary === 'Physical Book';
+    const hasEbookInTitle = cite.metadata.title.match(/[eE]-?book/);
     return typeIsEbook || hasEbookInTitle;
 }
 

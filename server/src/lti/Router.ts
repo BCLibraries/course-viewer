@@ -21,9 +21,6 @@ function launch(req: Request, res: Response) {
     }
     const match = req.body.lis_course_offering_sourcedid.match(/([A-Z]{4}\d{4})(\d{2})\d{4}[SFU]/);
     const url = `http://localhost:3000/course/${match[1]}/section/${match[2]}`;
-
-    //res.setHeader('Content-Type', 'application/json');
-    //res.send(JSON.stringify({url}, null, 3));
     res.redirect(303, url);
 }
 

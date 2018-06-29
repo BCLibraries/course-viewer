@@ -37,6 +37,7 @@ class Course {
     public subjectInfo: any = {
         url: null
     };
+    public researchGuides: any = [];
 }
 
 export default Course;
