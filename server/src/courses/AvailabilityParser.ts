@@ -26,12 +26,12 @@ async function setAvailability(availabilityXML: string) {
 
 async function parseAVAFields(availabilityXML:string) {
     const data = await parseStringAsync(availabilityXML);
-    console.log(data.record.datafields);
     const avaDatafields = data.record.datafield.filter((field: any) => {
         return field.$.tag === 'AVA';
     });
     return avaDatafields;
 }
+/*
 
 function oldParse(datafields: any) {
     const availabilities: AvailabilityInfo[] = [];
@@ -56,5 +56,6 @@ function oldParse(datafields: any) {
     }
     return availabilities;
 }
+*/
 
 export default parseAVAFields;

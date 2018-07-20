@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import courseRouter from "./courses/Router";
 import itemRouter from "./items/Router";
 import ltiRouter from "./lti/Router";
+import postRouter from "./auth/Router";
 
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ app.use((req: Request, res: Response, next: Function) => {
 app.use('/items', itemRouter);
 app.use('/courses', courseRouter);
 app.use('/lti', ltiRouter);
+app.use('/post', postRouter);
 
 // 404
 app.use((req: Request, res: Response, next: Function) => {

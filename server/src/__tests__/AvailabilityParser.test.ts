@@ -7,5 +7,4 @@ const xml = fs.readFileSync(avaPath, 'utf8').replace("\ufeff", "");
 
 it('subtracts 5 - 1 to equal 4 in TypeScript', async () => {
     const data = await parseAVAFields(xml);
-    console.log(data);
 });
