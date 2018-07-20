@@ -1,4 +1,3 @@
-// let xml2js = require('xml2js');
 import xml2js from 'xml2js';
 
 interface IStringMap {
@@ -23,26 +22,23 @@ class Citation {
     public availability: any;
 
     constructor(almaCite: any) {
-        const metadata = almaCite.metadata;
-        const primaryType = isEbook(almaCite.type.desc, almaCite.secondary_type.desc) ? ebookLabel : almaCite.type.desc;
-
         this.id = almaCite.id;
         this.status = almaCite.status.value;
         this.type = {
-            primary: primaryType,
+            primary: isEbook(almaCite) ? ebookLabel : almaCite.type.desc,
             secondary: almaCite.secondary_type.desc
         };
-        this.metadata = metadata;
+        this.metadata = almaCite.metadata;
 
-        if (metadata.title) {
-            metadata.title = metadata.title.replace(/\/$/, "");
+        if (this.metadata.title) {
+            this.metadata.title = this.metadata.title.replace(/\/$/, "");
         }
 
-        if (metadata.author) {
-            metadata.author = metadata.author.replace(/,$/, "");
+        if (this.metadata.author) {
+            this.metadata.author = this.metadata.author.replace(/,$/, "");
         }
 
-        this.sortTitle = metadata.title ? metadata.title : metadata.article_title;
+        this.sortTitle = this.metadata.title ? this.metadata.title : this.metadata.article_title;
     }
 
     public setAvailability(availabilityXML: string) {
@@ -55,16 +51,11 @@ class Citation {
     }
 }
 
-/*
-function isBookChapter() {
-    let foo = new CitationType();
-    foo.delivery = CitationType.DELIVERY.Electronic;
-    foo.delivery = "electronic";
-}
-*/
-
-function isEbook(primaryType: string, secondaryType: string) {
-    return secondaryType === ebookLabel;
+function isEbook(almaCite: any) {
+    if (almaCite.secondary_type.desc === ebookLabel || almaCite.type.desc === ebookLabel) {
+        return true;
+    }
+    return almaCite.metadata.pages && almaCite.metadata.pages.includes('online');
 }
 
 function parseAVAFields(datafields: any) {
