@@ -17,7 +17,7 @@ class ResearchGuidesBox extends React.Component<{ course: Course, loading: boole
 
         const course = this.props.course;
 
-        if (!course.subjectInfo.slug) {
+        if (!course.subjectInfo || !course.subjectInfo.slug) {
             return (<span/>);
         }
 

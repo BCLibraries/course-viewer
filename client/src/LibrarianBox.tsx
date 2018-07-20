@@ -20,7 +20,7 @@ class LibrarianBox extends React.Component<{ course: Course, loading: boolean },
 
         const course = this.props.course;
 
-        if (!course.subjectInfo.experts) {
+        if (!course.subjectInfo || !course.subjectInfo.experts) {
             return (<span/>);
         }
 
