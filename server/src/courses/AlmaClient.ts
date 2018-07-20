@@ -5,6 +5,8 @@ import ReadingList from './ReadingList';
 
 const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
 
+const webClient = axios.create({timeout: 10000})
+
 async function fetchCourse(course: Course) {
     const localParams = {
         direction: 'ASC',
@@ -33,16 +35,19 @@ async function fetchCourse(course: Course) {
     const list = new ReadingList(firstList);
     course.addList(list);
 
+    try {
+        const physicalBooks = list.citations.filter(isPhysicalBook);
+        const promises = physicalBooks.map(cite => {
+            return fetchAvailability(cite);
+        });
+        const availabilityResults = await Promise.all(promises);
+        availabilityResults.forEach((result: any, citationNumber: number) => {
+                physicalBooks[citationNumber].setAvailability(result.data.anies[0]);
+            }
+        );
+    } catch (e) {
 
-    const physicalBooks = list.citations.filter(isPhysicalBook);
-    const promises = physicalBooks.map(cite => {
-        return fetchAvailability(cite);
-    });
-    const availabilityResults = await Promise.all(promises);
-    availabilityResults.forEach((result: any, citationNumber: number) => {
-            physicalBooks[citationNumber].setAvailability(result.data.anies[0]);
-        }
-    );
+    }
 
     return course;
 }
@@ -55,7 +60,7 @@ function fetchFromAlma(url: string, localParams: any) {
     };
 
     const params = {...baseParams, ...localParams};
-    return axios.get(almaBase + url, {params});
+    return webClient.get(almaBase + url, {params});
 }
 
 function isActive(course: Course) {
