@@ -19,8 +19,13 @@ function launch(req: Request, res: Response) {
     if (! validate(req)) {
         res.send({status: false});
     }
-    const match = req.body.lis_course_offering_sourcedid.match(/([A-Z]{4}\d{4})(\d{2})\d{4}[SFU]/);
-    const url = `http://localhost:3000/course/${match[1]}/section/${match[2]}`;
+
+    const regExp = /([A-Z]{4}\d{4})([X[0-9]\d)\d{4}[SFU]/;
+    const match = req.body.lis_course_offering_sourcedid.match(regExp);
+    if (! match) {
+        res.json(req.body);
+    }
+    const url = `https://${req.get('host')}/reserves/course/${match[1]}/section/${match[2]}`;
     res.redirect(303, url);
 }
 

@@ -8,14 +8,18 @@ const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
 const webClient = axios.create({timeout: 10000})
 
 async function fetchCourse(course: Course) {
+    const query = course.section.includes('X') ? `searchable_ids~${course.code}${course.section}`
+        : `code~${course.id} AND section~${course.section}`;
+
     const localParams = {
         direction: 'ASC',
         limit: 10,
         offset: 0,
         order_by: "code,section",
-        q: "code~" + course.id + " AND section~" + course.section
+        q: query
     };
 
+    // Search for courses.
     const courseSearchResponse = await fetchFromAlma('/courses', localParams);
     if (!courseSearchResponse.data.course) {
         return course;
@@ -25,6 +29,7 @@ async function fetchCourse(course: Course) {
         return course;
     }
 
+    // Fetch course information.
     course.loadFromAlma(activeCourses[0]);
     const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});
 
@@ -35,6 +40,7 @@ async function fetchCourse(course: Course) {
     const list = new ReadingList(firstList);
     course.addList(list);
 
+    // Load availability information for physical books.
     try {
         const physicalBooks = list.citations.filter(isPhysicalBook);
         const promises = physicalBooks.map(cite => {

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import authenticate from "./LDAP";
-import User from "./User";
+import {ICourse, User} from "./User";
 
 let router = require('express').Router();
 
