@@ -38,7 +38,7 @@ class Citation {
             this.metadata.author = this.metadata.author.replace(/,$/, "");
         }
 
-        this.sortTitle = this.metadata.title ? this.metadata.title : this.metadata.article_title;
+        this.sortTitle = this.buildSortTitle();
     }
 
     public setAvailability(availabilityXML: string) {
@@ -48,6 +48,19 @@ class Citation {
                 this.availability = avaData;
             }
         })
+    }
+
+    private buildSortTitle() {
+        let sortTitle = this.sortTitle;
+        if (this.metadata.title) {
+            sortTitle = this.metadata.title;
+        } else if (this.metadata.article_title) {
+            sortTitle = this.metadata.article_title
+        } else if (this.metadata.journal_title) {
+            sortTitle = this.metadata.journal_title;
+        }
+
+        return sortTitle.toLowerCase().replace(/the |a |an /, '');
     }
 }
 
