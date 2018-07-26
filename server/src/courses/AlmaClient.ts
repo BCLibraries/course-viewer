@@ -1,49 +1,33 @@
 import axios from 'axios';
+import cache from "../Cache";
 import Citation from "./Citation";
 import Course from './Course';
 import ReadingList from './ReadingList';
 
 const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
 
-const webClient = axios.create({timeout: 10000})
+const webClient = axios.create({timeout: 10000});
 
 async function fetchCourse(course: Course) {
-    const query = course.section.includes('X') ? `searchable_ids~${course.code}${course.section}`
-        : `code~${course.id} AND section~${course.section}`;
 
-    const localParams = {
-        direction: 'ASC',
-        limit: 10,
-        offset: 0,
-        order_by: "code,section",
-        q: query
-    };
-
-    // Search for courses.
-    const courseSearchResponse = await fetchFromAlma('/courses', localParams);
-    if (!courseSearchResponse.data.course) {
+    // Search for the course in Alma.
+    const courseFromAlma = await searchForCourse(course);
+    if (!courseFromAlma) {
         return course;
     }
-    const activeCourses = courseSearchResponse.data.course.filter(isActive);
-    if (activeCourses.length === 0) {
+    course.loadFromAlma(courseFromAlma);
+
+    // Load any reading lists.
+    const readingList = await fetchReadingList(course);
+    if (!readingList) {
         return course;
     }
-
-    // Fetch course information.
-    course.loadFromAlma(activeCourses[0]);
-    const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});
-
-    if (!courseFetchResponse.data.reading_lists.reading_list[0]) {
-        return course;
-    }
-    const firstList = courseFetchResponse.data.reading_lists.reading_list[0];
-    const list = new ReadingList(firstList);
-    course.addList(list);
+    course.addList(readingList);
 
     // Load availability information for physical books.
     try {
-        const physicalBooks = list.citations.filter(isPhysicalBook);
-        const promises = physicalBooks.map(cite => {
+        const physicalBooks = readingList.citations.filter(isPhysicalBook);
+        const promises = physicalBooks.map((cite: any) => {
             return fetchAvailability(cite);
         });
         const availabilityResults = await Promise.all(promises);
@@ -56,6 +40,48 @@ async function fetchCourse(course: Course) {
     }
 
     return course;
+}
+
+async function searchForCourse(course: Course) {
+    const query = course.section.includes('X') ? `searchable_ids~${course.code}${course.section}`
+        : `code~${course.code} AND section~${course.section}`;
+
+    const localParams = {
+        direction: 'ASC',
+        limit: 10,
+        offset: 0,
+        order_by: "code,section",
+        q: query
+    };
+
+    let courseFromAlma = await cache.fetchCourseSearch(course);
+    if (!courseFromAlma) {
+        // Search for courses.
+        const courseSearchResponse = await fetchFromAlma('/courses', localParams);
+        if (courseSearchResponse.data.course) {
+            const activeCourses = courseSearchResponse.data.course.filter(isActive);
+            if (activeCourses.length > 0) {
+                courseFromAlma = activeCourses[0];
+                cache.saveCourseSearch(course, courseFromAlma);
+            }
+        }
+    }
+    return courseFromAlma;
+}
+
+async function fetchReadingList(course: Course) {
+    let readingList = await cache.fetchReadingList(course);
+
+    // If list wasn't cached, fetch it.
+    if (!readingList) {
+        const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});
+
+        if (courseFetchResponse.data.reading_lists.reading_list[0]) {
+            readingList = courseFetchResponse.data.reading_lists.reading_list[0];
+            cache.saveReadingList(course, readingList);
+        }
+    }
+    return new ReadingList(readingList);
 }
 
 function fetchFromAlma(url: string, localParams: any) {

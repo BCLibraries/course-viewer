@@ -1,11 +1,7 @@
-import redis from 'redis';
-import {promisify} from 'util';
-
-const client = redis.createClient();
-const getAsync = promisify(client.get).bind(client);
+import cache from '../Cache';
 
 function lookup(subjectCode: string) {
-    return getAsync(`bc-subj-${subjectCode}`);
+    return cache.lookupSubject(subjectCode);
 }
 
 export default lookup;

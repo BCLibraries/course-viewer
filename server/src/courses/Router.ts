@@ -12,14 +12,12 @@ require('events').EventEmitter.defaultMaxListeners = 15;
 async function getCourse(req: Request, res: Response) {
     let outgoing = null;
     const course = new Course();
-    course.id = req.params.course_id;
-    course.number = req.params.course_id.substring(8 - 4);
+    course.code = req.params.course_code;
+    course.number = req.params.course_code.substring(8 - 4);
     course.section = req.params.section_id;
     course.department = course.id.substring(0, 4);
 
-
-
-    course.subject_info = JSON.parse(await lookup(course.id.substring(0,4)));
+    course.subject_info = JSON.parse(await lookup(course.code.substring(0,4)));
     const guidePromise = fetchGuides(course);
     const almaPromise = fetchCourse(course);
 
@@ -36,6 +34,6 @@ async function getCourse(req: Request, res: Response) {
     });
 }
 
-router.get('/:course_id/sections/:section_id', getCourse);
+router.get('/:course_code/sections/:section_id', getCourse);
 
 export default router;
