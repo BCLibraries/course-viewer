@@ -54,6 +54,8 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
 
             if (!this.state.course.hasReadings) {
                 classes.push('no-readings');
+            } else {
+                classes.push('has-readings');
             }
         }
 
