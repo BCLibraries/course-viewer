@@ -75,10 +75,19 @@ a[target="_blank"]::after {
     padding-right: 2em;
 }
 
-.no-readings-message {
+.no-readings-box {
+    display: table;
     background-color: #efeedf;
-    padding: 1em .5em;
     border: 2px solid #dfddcf;
+    height: 5em;
+    max-width: 29em;
+}
+
+.no-readings-message {
+    display: table-cell;
+    padding: 0 1em;
+    vertical-align: middle;
+    font-size: 18px;
 }
 
 .librarian {

@@ -1,5 +1,5 @@
 figure, .ph-librarian {
-    max-width: 200px;
+    max-width: 250px;
     overflow: hidden;
     margin: 0;
     position: relative;
@@ -7,8 +7,7 @@ figure, .ph-librarian {
 
 figure img, .ph-librarian-image {
     display: block;
-    margin: 0 -18%;
-    max-width: 135%;
+    max-width: 250px;
 }
 
 .ph-librarian-image {

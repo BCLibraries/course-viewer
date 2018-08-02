@@ -10,16 +10,18 @@ class ElectronicArticle extends React.Component<{ reading: any }, {}> {
         return (
             <li className="physical-article">
                 <img src={FileIcon} className="thumbnail" alt=""/>
-                <div className={"cite-title"}><cite><LinkToReading mms={metadata.mms_id} title={metadata.article_title}/></cite></div>
-                <div className={"cite-author"}>{metadata.author}</div>
-                <div className={"cite-journal-title"}>{metadata.journal_title}</div>
-                <div className={"date"}>{dateString}</div>
+                <div className="item-metadata">
+                    <div className={"cite-title"}>
+                        <cite><LinkToReading mms={metadata.mms_id} title={metadata.article_title}/></cite></div>
+                    <div className={"cite-author"}>{metadata.author}</div>
+                    <div className={"cite-journal-title"}>{metadata.journal_title}</div>
+                    <div className={"date"}>{dateString}</div>
+                </div>
             </li>
         )
     }
 
-    private dateString(metadata: any)
-    {
+    private dateString(metadata: any) {
         return "";
     }
 }

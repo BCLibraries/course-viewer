@@ -5,7 +5,9 @@ class BookEntry extends Component {
         return (
             <li>
                 <img src={thumbnailURL(this.props.reading.metadata.isbn)} alt=""/>
-                {this.props.reading.metadata.title}
+                <div className="item-metadata">
+                    {this.props.reading.metadata.title}
+                </div>
             </li>
         )
     }

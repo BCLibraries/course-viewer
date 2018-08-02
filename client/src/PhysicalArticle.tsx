@@ -22,10 +22,13 @@ class PhysicalArticle extends React.Component<{ reading: any }, {}> {
         return (
             <li className="physical-article">
                 <img src={PDFIcon} className="thumbnail" alt=""/>
-                <div className={"cite-title"}><cite><LinkToReading mms={metadata.mms_id} title={title}/></cite></div>
-                <div className={"cite-author"}>{metadata.author}</div>
-                <div className={"cite-journal-title"}>{metadata.journal_title}</div>
-                {publisherInfo}
+                <div className="item-metadata">
+                    <div className={"cite-title"}><cite><LinkToReading mms={metadata.mms_id} title={title}/></cite>
+                    </div>
+                    <div className={"cite-author"}>{metadata.author}</div>
+                    <div className={"cite-journal-title"}>{metadata.journal_title}</div>
+                    {publisherInfo}
+                </div>
             </li>
         )
     }
