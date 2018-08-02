@@ -53,17 +53,20 @@
     </script>
 
     <!-- Load megamenu scripts if this is not an LTI call -->
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
     <script>
         if (!isLTICall) {
             var toLoad = [
-                'https://code.jquery.com/jquery-1.12.1.min.js',
-                'https://code.jquery.com/jquery-1.12.1.min.js',
+                'https://code.jquery.com/ui/1.9.2/jquery-ui.min.js',
                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js',
                 'https://library.bc.edu/theme/js/bootstrap-hover-dropdown.min.js',
                 'https://library.bc.edu/theme/js/megamenu.js'
             ];
             for (var i = 0, len = toLoad.length; i < len; i++) {
-                head.appendChild(toLoadp[i]);
+                var scriptLink = document.createElement('script');
+                scriptLink.src = toLoad[i];
+                console.log('append')
+                document.head.appendChild(scriptLink);
             }
         }
     </script>
