@@ -75,6 +75,12 @@ a[target="_blank"]::after {
     padding-right: 2em;
 }
 
+.no-readings-message {
+    background-color: #efeedf;
+    padding: 1em .5em;
+    border: 2px solid #dfddcf;
+}
+
 .librarian {
     margin-top: 2em;
 }
