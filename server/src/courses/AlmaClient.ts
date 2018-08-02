@@ -9,6 +9,7 @@ const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
 const webClient = axios.create({timeout: 10000});
 
 async function fetchCourse(course: Course) {
+    console.log('fetching...');
 
     // Search for the course in Alma.
     const courseFromAlma = await searchForCourse(course);
@@ -43,8 +44,16 @@ async function fetchCourse(course: Course) {
 }
 
 async function searchForCourse(course: Course) {
-    const query = course.section.includes('X') ? `searchable_ids~${course.code}${course.section}`
-        : `code~${course.code} AND section~${course.section}`;
+    let query = '';
+    if (course.section.includes('X')) {
+        query = `searchable_ids~${course.code}.${course.section}`;
+    } else if (course.section === '') {
+        query = `searchable_ids~${course.code}`;
+    } else {
+        query = `code~${course.code} AND section~${course.section}`;
+    }
+
+    console.log(query);
 
     const localParams = {
         direction: 'ASC',

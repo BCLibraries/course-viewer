@@ -8,16 +8,19 @@ const {fetchCourse} = require('./AlmaClient');
 
 require('events').EventEmitter.defaultMaxListeners = 15;
 
-
-async function getCourse(req: Request, res: Response) {
+async function getCourseByCodeAndSection(req: Request, res: Response) {
+    console.log('this happened...');
     let outgoing = null;
     const course = new Course();
-    course.code = req.params.course_code;
-    course.number = req.params.course_code.substring(8 - 4);
-    course.section = req.params.section_id;
-    course.department = course.id.substring(0, 4);
-
-    course.subject_info = JSON.parse(await lookup(course.code.substring(0,4)));
+    course.code = req.params.course_code ? req.params.course_code : req.params.searchable_id;
+    course.number = req.params.course_code ? req.params.course_code.substring(8 - 4) : '';
+    course.section = req.params.section_id ? req.params.section_id : '';
+    course.department = req.params.section_id ? course.id.substring(0, 4) : '';
+    const subjectInfo = await lookup(course.code.substring(0, 4));
+    if (subjectInfo) {
+        course.subject_info = JSON.parse(subjectInfo);
+    }
+    console.log('here');
     const guidePromise = fetchGuides(course);
     const almaPromise = fetchCourse(course);
 
@@ -28,12 +31,12 @@ async function getCourse(req: Request, res: Response) {
             // res.setHeader('Cache-Control','max-age=120');
             res.send(JSON.stringify(outgoing));
         }).catch((error: any) => {
-            outgoing = {message: error.message};
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(outgoing));
+        outgoing = {message: error.message};
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(outgoing));
     });
 }
 
-router.get('/:course_code/sections/:section_id', getCourse);
+router.get('/:course_code/sections/:section_id', getCourseByCodeAndSection);
 
 export default router;

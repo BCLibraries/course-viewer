@@ -16,16 +16,25 @@ function sendConfig(req: Request, res: Response) {
 }
 
 function launch(req: Request, res: Response) {
-    if (! validate(req)) {
+    if (!validate(req)) {
         res.send({status: false});
     }
 
     const regExp = /([A-Z]{4}\d{4})([X[0-9]\d)\d{4}[SFU]/;
-    const match = req.body.lis_course_offering_sourcedid.match(regExp);
-    if (! match) {
-        res.json(req.body);
+    let courseId = '';
+    let sectionId = 'X';
+    if (req.body.lis_course_offering_sourcedid) {
+        const match = req.body.lis_course_offering_sourcedid.match(regExp);
+        if (match) {
+            courseId = match[1];
+            sectionId = match[2];
+        } else {
+            courseId= req.body.lis_course_offering_sourcedid;
+        }
+    } else {
+        courseId = req.body.context_label;
     }
-    const url = `https://${req.get('host')}/reserves/course/${match[1]}/section/${match[2]}`;
+    const url = `https://${req.get('host')}/reserves/course/${courseId}/section/${sectionId}`;
     res.redirect(303, url);
 }
 
