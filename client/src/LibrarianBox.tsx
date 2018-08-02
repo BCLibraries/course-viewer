@@ -45,7 +45,7 @@ class LibrarianBox extends React.Component<{ course: Course, loading: boolean },
                             </div>
                         )
                     }
-                )};
+                )}
             </div>
         );
     }
