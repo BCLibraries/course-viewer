@@ -42,45 +42,29 @@ a[target="_blank"]::after {
     grid-row: 1;
 }
 
-@media only screen and (min-width: 800px) {
-    .App.has-readings .app-container {
+@media only screen and (min-width: 600px) {
+    .App .app-container, .App.loading .app-container {
         grid-template-columns: 66% 33%;
         grid-template-rows: max-content max-content;
     }
 
-    .App.no-readings .app-container {
-        grid-template-columns: 100%;
-    }
-
-    .has-readings .readings {
+    .App .readings, .App.loading .readings {
         grid-column: 1;
         grid-row: 1 / span 3;
     }
 
-    .no-readings .readings {
-        grid-column: 1;
-    }
-
-    .has-readings .librarian {
+    .App .librarian, .App.loading .librarian {
         grid-column: 2;
         grid-row: 3;
     }
 
-    .no-readings .librarian {
-        grid-column: 1;
-    }
-
-    .has-readings .library-info {
+    .App .library-info, .App.loading .library-info {
         grid-column: 2;
         -ms-grid-row: 1;
         grid-row: 1;
     }
 
-    .no-readings .library-info {
-        grid-column: 1;
-    }
-
-    .has-readings .research-guides {
+    .App .research-guides, .App.loading .research-guides {
         grid-column: 2;
         -ms-grid-row: 2;
         grid-row: 2;
@@ -127,7 +111,7 @@ a.link-to-libraries:hover {
     margin-top: 2em;
 }
 
-.no-readings .research-guides {
+.research-guides {
     grid-column: 1;
 }
 

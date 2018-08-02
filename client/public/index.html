@@ -9,7 +9,19 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico?v=2" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico?v=2"/>
+
+    <script>
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+
+        var isLTICall = inIframe();
+    </script>
 
     <style>
         .lti-style #bclib-header, .lti-style #megamenu-refresh, .lti-style .library-course-resources {
@@ -17,8 +29,9 @@
         }
     </style>
 
+    <!-- Load separate styles for LTI or non-LTI -->
     <script type="text/javascript">
-        if (/\/course/.test(window.top.location.pathname)) {
+        if (!isLTICall) {
             attachCSS('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700');
             attachCSS('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css');
             attachCSS('https://library.bc.edu/theme/modular/header/css/lib-header.css');
@@ -39,11 +52,21 @@
         }
     </script>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://library.bc.edu/theme/js/bootstrap-hover-dropdown.min.js"></script>
-    <script type="text/javascript" src="http://library.bc.edu/theme/js/megamenu.js"></script>
+    <!-- Load megamenu scripts if this is not an LTI call -->
+    <script>
+        if (!isLTICall) {
+            var toLoad = [
+                'https://code.jquery.com/jquery-1.12.1.min.js',
+                'https://code.jquery.com/jquery-1.12.1.min.js',
+                'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js',
+                'https://library.bc.edu/theme/js/bootstrap-hover-dropdown.min.js',
+                'https://library.bc.edu/theme/js/megamenu.js'
+            ];
+            for (var i = 0, len = toLoad.length; i < len; i++) {
+                head.appendChild(toLoadp[i]);
+            }
+        }
+    </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -124,7 +147,7 @@
                                                     <a href="https://library.bc.edu/catalog" id="mm-find-books-catalog-simple-search">Catalog
                                                         Simple Search</a></li>
                                                 <li>
-                                                    <a href="http://bclib.bc.edu/advanced-search" id="mm-find-books-catalog-advanced-search">Catalog
+                                                    <a href="https://bclib.bc.edu/advanced-search" id="mm-find-books-catalog-advanced-search">Catalog
                                                         Advanced Search</a></li>
                                                 <li>
                                                     <a href="https://libguides.bc.edu/popcollection" id="mm-find-books-popular">Popular
@@ -147,13 +170,14 @@
                                                 <li>
                                                     <a href="https://libguides.bc.edu/az.php" id="mm-find-articles-databases">Databases</a>
                                                 </li>
-                                                <li><a href="http://bclib.bc.edu/a-to-z" id="mm-find-articles-journals">Journals</a>
+                                                <li>
+                                                    <a href="https://bclib.bc.edu/a-to-z" id="mm-find-articles-journals">Journals</a>
                                                 </li>
                                                 <li>
                                                     <a href="https://bc-primo.hosted.exlibrisgroup.com/primo-explore/search?tab=pci_only&amp;vid=bclib_new&amp;sortby=rank" id="mm-find-articles-search">Article
                                                         search</a></li>
                                                 <li>
-                                                    <a href="http://bclib.bc.edu/find-by-citation" id="mm-find-articles-citation">Find
+                                                    <a href="https://bclib.bc.edu/find-by-citation" id="mm-find-articles-citation">Find
                                                         by Citation</a></li>
                                             </ul>
 
@@ -1040,7 +1064,7 @@
   To create a production bundle, use `npm run build` or `yarn build`.
 -->
 <script type="text/javascript">
-    if (/\/course/.test(window.top.location.pathname)) {
+    if (!isLTICall) {
         document.body.className = "homepagerefresh";
     }
 </script>

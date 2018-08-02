@@ -101,7 +101,7 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
 
     private readingsDisplay() {
         return (this.state.course.hasReadings) ? (<ReadingList readings={this.state.course.lists[0].citations}/>) :
-            (<div>No readings found.</div>);
+            (<div className="no-readings-message">No reserve readings were found for this course.</div>);
     }
 }
 
