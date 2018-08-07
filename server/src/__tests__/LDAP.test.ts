@@ -1,5 +1,5 @@
 import authenticate from '../auth/LDAP';
-import {User} from "../auth/User";
+import User from "../auth/User";
 
 it('rejects anonymous binds', async () => {
     return expect(authenticate('fakeuid', '')).rejects.toEqual('no anonymous binds');

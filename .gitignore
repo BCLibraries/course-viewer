@@ -2,6 +2,7 @@
 ### Node template
 # Logs
 server/logs
+server/log
 *.log
 
 # Runtime data

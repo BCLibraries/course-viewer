@@ -1,0 +1,54 @@
+{
+  "dn": "uid=brubakme,ou=people,dc=bc,dc=edu",
+  "controls": [],
+  "mail": "melissa.brubaker@bc.edu",
+  "cn": [
+    "melissa brubaker",
+    "melissa brubaker 1"
+  ],
+  "sn": "Brubaker",
+  "givenname": "Melissa K",
+  "primaryaffiliation": "student",
+  "coursememberof": [
+    "CH109012019S",
+    "BI200022019F",
+    "CH111012019F",
+    "PL090182019F",
+    "TH090182018U",
+    "SL003012018U",
+    "SL121012019U"
+  ],
+  "authphotourl": "Y",
+  "title": "Student in Morrissey College, Arts & Sciences, class of 2022",
+  "schoolcode": "01",
+  "gradyear": "2022",
+  "fieldofstudy": [
+    "biochemistry",
+    "Bachelor of Science",
+    "pre medical program"
+  ],
+  "college": "Morrissey College, Arts & Sciences",
+  "formalname": "Ms.  Melissa K. Brubaker",
+  "bcismemberof": [
+    "cn=BCCommunity.allaffiliation.applicant,ou=groups,dc=bc,dc=edu",
+    "cn=BCCommunity.primaryaffiliation.student,ou=groups,dc=bc,dc=edu",
+    "cn=BCCommunity.allaffiliation.student,ou=groups,dc=bc,dc=edu",
+    "cn=BIOL2000022019F,ou=groups,dc=bc,dc=edu",
+    "cn=CHEM1109012019F,ou=groups,dc=bc,dc=edu",
+    "cn=CHEM1111012019F,ou=groups,dc=bc,dc=edu",
+    "cn=PHIL1090182019S,ou=groups,dc=bc,dc=edu",
+    "cn=SLAV1121012018U,ou=groups,dc=bc,dc=edu",
+    "cn=SLAV1123012019U,ou=groups,dc=bc,dc=edu",
+    "cn=fisichea.1819IncomingVerification3,ou=groups,dc=bc,dc=edu",
+    "cn=mccormce.2018bcsoinstrumentfreshmen,ou=groups,dc=bc,dc=edu"
+  ],
+  "uid": "brubakme",
+  "objectclass": [
+    "inetOrgPerson",
+    "organizationalPerson",
+    "person",
+    "top",
+    "bcPerson",
+    "eduPerson"
+  ]
+}

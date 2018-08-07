@@ -1,14 +1,10 @@
-interface ICourse {
-    courseNum: string,
-    sectionNum: string,
-    courseName?: string
-}
+import SectionList from "./SectionList";
 
 class User {
     public readonly uid: string;
 
+    public readonly sections: SectionList = new SectionList();
     private _empty: boolean = true;
-    private _courses: ICourse[] = [];
 
     public constructor(uid: string) {
         this.uid = uid;
@@ -18,17 +14,9 @@ class User {
         return this._empty;
     }
 
-    get courses(): ICourse[] {
-        return this._courses;
-    }
-
     public found() {
         this._empty = false;
     }
-
-    public addCourse(course: ICourse) {
-        this._courses.push(course);
-    }
 }
 
-export {User, ICourse};
+export default User;

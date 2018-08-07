@@ -1,6 +1,6 @@
 import {Client} from "ldapjs";
 import {promisify} from "util";
-import {User} from "./User";
+import User from "./User";
 
 import logger from "../Logger";
 
