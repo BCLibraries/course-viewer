@@ -47,6 +47,14 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
         const classes: string[] = ['App'];
         const course = this.state.course;
 
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+
         if (this.state.loading) {
             classes.push('loading');
         } else {
@@ -59,7 +67,7 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
             }
         }
 
-        if (location.pathname.includes('lti')) {
+        if (inIframe()) {
             classes.push('lti-style')
         } else {
             classes.push('libraries-style');

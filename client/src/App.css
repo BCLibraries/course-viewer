@@ -1,5 +1,5 @@
 .lti-style {
-    font-family: "Lato", sans-serif;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     padding-left: 1em;
 }
 
@@ -8,7 +8,7 @@
 }
 
 .libraries-style {
-    font-family: "Open Sans", monospace, sans-serif;
+    font-family: "Open Sans", sans-serif;
     line-height: 1.5
 }
 
