@@ -9,7 +9,6 @@ const {fetchCourse} = require('./AlmaClient');
 require('events').EventEmitter.defaultMaxListeners = 15;
 
 async function getCourseByCodeAndSection(req: Request, res: Response) {
-    console.log('this happened...');
     let outgoing = null;
     const course = new Course();
     course.code = req.params.course_code ? req.params.course_code : req.params.searchable_id;
@@ -20,7 +19,6 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
     if (subjectInfo) {
         course.subject_info = JSON.parse(subjectInfo);
     }
-    console.log('here');
     const guidePromise = fetchGuides(course);
     const almaPromise = fetchCourse(course);
 

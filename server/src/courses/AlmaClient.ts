@@ -8,9 +8,9 @@ const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
 
 const webClient = axios.create({timeout: 10000});
 
-async function fetchCourse(course: Course) {
-    console.log('fetching...');
+const activeListStatuses: any = ['complete', 'beingprepared', 'being prepared'];
 
+async function fetchCourse(course: Course) {
     // Search for the course in Alma.
     const courseFromAlma = await searchForCourse(course);
     if (!courseFromAlma) {
@@ -53,8 +53,6 @@ async function searchForCourse(course: Course) {
         query = `code~${course.code} AND section~${course.section}`;
     }
 
-    console.log(query);
-
     const localParams = {
         direction: 'ASC',
         limit: 10,
@@ -85,12 +83,19 @@ async function fetchReadingList(course: Course) {
     if (!readingList) {
         const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});
 
-        if (courseFetchResponse.data.reading_lists.reading_list[0]) {
-            readingList = courseFetchResponse.data.reading_lists.reading_list[0];
-            cache.saveReadingList(course, readingList);
+        if (courseFetchResponse.data.reading_lists.reading_list) {
+            const filteredLists = courseFetchResponse.data.reading_lists.reading_list.filter(listIsActive);
+            if (filteredLists[0]) {
+                readingList = filteredLists[0];
+                cache.saveReadingList(course, readingList);
+            }
         }
     }
     return new ReadingList(readingList);
+}
+
+function listIsActive(list:any) {
+    return activeListStatuses.includes(list.status.value.toLowerCase());
 }
 
 function fetchFromAlma(url: string, localParams: any) {
