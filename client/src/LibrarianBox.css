@@ -1,13 +1,13 @@
 figure, .ph-librarian {
-    max-width: 250px;
+    max-width: 200px;
     overflow: hidden;
-    margin: 0;
+    margin: 2em 0 3em 0;
     position: relative;
 }
 
 figure img, .ph-librarian-image {
     display: block;
-    max-width: 250px;
+    max-width: 200px;
 }
 
 .ph-librarian-image {
