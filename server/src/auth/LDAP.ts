@@ -26,7 +26,8 @@ async function authenticate(uid: string, passwd: string): Promise<User> {
 }
 
 async function getCourses(user: User, client: Client) {
-    await search(user, client);
+    const entry = await search(user, client);
+    console.log(entry);
 }
 
 async function search(user: User, client: Client) {
@@ -40,7 +41,7 @@ async function search(user: User, client: Client) {
                 reject('LDAP search error');
             }
             res.on('searchEntry', entry => {
-                resolve(user);
+                resolve(entry.object);
             });
         });
     });

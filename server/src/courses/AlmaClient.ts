@@ -4,8 +4,6 @@ import Citation from "./Citation";
 import Course from './Course';
 import ReadingList from './ReadingList';
 
-const almaBase = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1';
-
 const webClient = axios.create({timeout: 10000});
 
 const activeListStatuses: any = ['complete', 'beingprepared', 'being prepared'];
@@ -37,7 +35,7 @@ async function fetchCourse(course: Course) {
             }
         );
     } catch (e) {
-
+        // Don't fail if availability information isn't available, just return the list.
     }
 
     return course;
@@ -106,7 +104,7 @@ function fetchFromAlma(url: string, localParams: any) {
     };
 
     const params = {...baseParams, ...localParams};
-    return webClient.get(almaBase + url, {params});
+    return webClient.get(process.env.ALMA_API_BASE + url, {params});
 }
 
 function isActive(course: Course) {
