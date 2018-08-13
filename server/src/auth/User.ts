@@ -3,7 +3,7 @@ import SectionList from "./SectionList";
 class User {
     public readonly uid: string;
 
-    public readonly sections: SectionList = new SectionList();
+    public sections: SectionList = new SectionList();
     private _empty: boolean = true;
 
     public constructor(uid: string) {
