@@ -25,7 +25,13 @@ app.set('view engine', 'pug');
 app.use((req: Request, res: Response, next: Function) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    next();
+
+    // Handle CORS preflight requests
+    if ('OPTIONS' === req.method) {
+        res.send(200);
+    } else {
+        next();
+    }
 });
 
 app.use('/items', itemRouter);
