@@ -6,11 +6,20 @@ import CourseDisplay from "./CourseDisplay";
 import LoginPage from "./LoginPage";
 import SchedulePage from './SchedulePage';
 
+const alternateBase = '/reserves';
+
 class App extends React.Component {
+    
     public render() {
         return (
             <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
                 <div>
+                    <Route path={`${alternateBase}/:course_id/section/:section_id`} component={CourseDisplay}/>
+                    <Route path={`${alternateBase}/course/:course_id/section/:section_id`} component={CourseDisplay}/>
+                    <Route path={`${alternateBase}/lti`} component={CourseDisplay} />
+                    <Route exact={true} path={`${alternateBase}/`} component={LoginPage}/>
+                    <Route exact={true} path={`${alternateBase}/schedule`} component={SchedulePage} />
+                    
                     <Route path={`${process.env.PUBLIC_URL}/:course_id/section/:section_id`} component={CourseDisplay}/>
                     <Route path={`${process.env.PUBLIC_URL}/course/:course_id/section/:section_id`} component={CourseDisplay}/>
                     <Route path={`${process.env.PUBLIC_URL}/lti`} component={CourseDisplay} />

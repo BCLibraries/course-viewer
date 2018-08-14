@@ -23,6 +23,7 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
         let course: Course;
 
         if (params.course_id && params.section_id) {
+            params.course_id = params.course_id.toUpperCase();
             course = Course.buildFromCourseAndSection(params.course_id, params.section_id);
         } else if (queryVars.course_sis_id) {
             course = Course.buildFromId(queryVars.course_sis_id);
