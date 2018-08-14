@@ -9,6 +9,7 @@ class App extends React.Component {
         return (
             <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
                 <div>
+                    <Route path={`${process.env.PUBLIC_URL}/:course_id/section/:section_id`} component={CourseDisplay}/>
                     <Route path={`${process.env.PUBLIC_URL}/course/:course_id/section/:section_id`} component={CourseDisplay}/>
                     <Route path={`${process.env.PUBLIC_URL}/lti`} component={CourseDisplay} />
                 </div>

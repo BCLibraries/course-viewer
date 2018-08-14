@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mlib.bc.edu/reserves",
+  "homepage": "https://library.bc.edu/courses",
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2",

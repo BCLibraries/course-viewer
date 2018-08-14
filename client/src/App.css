@@ -13,7 +13,7 @@
 }
 
 .libraries-style .readings li {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
 }
 
 .libraries-style ul {
@@ -146,6 +146,11 @@ a.link-to-libraries:hover {
 
 .library-info li {
     list-style: none;
+}
+
+.readings-header h2 {
+    font-size: 22px;
+    margin-bottom: 1.5em;
 }
 
 .readings li {
