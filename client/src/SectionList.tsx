@@ -20,11 +20,23 @@ function currentSectionFilter(section: any) {
 
 class SectionList extends React.Component<{ sections: any }, {}> {
     public render() {
-        const sectionList = this.props.sections.filter(currentSectionFilter).map(sectionFactory);
+        const currentSections = this.props.sections.filter(currentSectionFilter);
+        let mainContent = <div className="no-courses-box">
+            <div className="no-courses-message">
+                We could not find any Fall 2019 courses that you are registered for. If you believe you have received
+                this
+                message in error, please <a href="https://library.bc.edu/feedback/">contact Boston College Libraries
+                support</a>.
+            </div>
+        </div>;
+
+        if (currentSections.length !== 0) {
+            mainContent = currentSections.map(sectionFactory);
+        }
         return (
-            <div className={"schedule"} >
+            <div className={"schedule"}>
                 <h3>Fall 2019 courses</h3>
-                <ul>{sectionList}</ul>
+                <ul>{mainContent}</ul>
             </div>
         );
     }
