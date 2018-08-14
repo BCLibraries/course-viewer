@@ -2,6 +2,12 @@ import * as React from 'react';
 import {Redirect} from "react-router-dom";
 import './LoginPage.css';
 
+/* tslint:disable */
+
+// Fetch polyfill
+import "promise/polyfill"
+import "whatwg-fetch"
+
 class LoginPage extends React.Component<{}, { username: string, password: string, user: any }> {
     public constructor(props: any) {
         super(props);
@@ -28,7 +34,7 @@ class LoginPage extends React.Component<{}, { username: string, password: string
         if (this.state.user) {
             mainContent = <Redirect
                 to={{
-                    pathname: "/schedule",
+                    pathname: `${process.env.PUBLIC_URL}/schedule`,
                     state: {user: this.state.user}
                 }}
             />;
@@ -46,7 +52,8 @@ class LoginPage extends React.Component<{}, { username: string, password: string
             password: this.state.password,
             username: this.state.username
         };
-        fetch('http://localhost:3001/auth', {
+
+        fetch(`${process.env.REACT_APP_API_BASE}/auth`, {
             body: JSON.stringify(loginPayload),
             headers: {
                 "Content-Type": "application/json; charset=utf-8"

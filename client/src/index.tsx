@@ -3,6 +3,11 @@ import * as ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
+// Fetch polyfill
+import "promise/polyfill";
+import "whatwg-fetch";
+
+
 /* IE Shims */
 // String.includes()
 if (!String.prototype.includes) {
