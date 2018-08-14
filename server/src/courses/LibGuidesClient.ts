@@ -27,7 +27,7 @@ function fetchFromLibGuides(dept: string, fullCourse: string, withSection: strin
         status: '1,2',
         tag_names: tagNames.join(',')
     };
-    return axios.get('https://lgapi-us.libapps.com//1.1/guides', {params});
+    return axios.get('https://lgapi-us.libapps.com/1.1/guides', {params});
 }
 
 function buildGuide(guideJson: any) {

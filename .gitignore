@@ -1,7 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
-server/logs/*
+server/logs
+server/log
 *.log
 
 # Runtime data

@@ -1,0 +1,52 @@
+{
+  "dn": "uid=brubakme,ou=people,dc=bc,dc=edu",
+  "controls": [],
+  "mail": "melissa.brubaker@bc.edu",
+  "cn": [
+    "melissa brubaker",
+    "melissa brubaker 1"
+  ],
+  "sn": "Brubaker",
+  "givenname": "Melissa K",
+  "primaryaffiliation": "faculty",
+  "courseinstructorof": [
+    "ABCD4911082019F",
+    "ABCD8014012019F",
+    "ABCD8014022019F",
+    "ABCD8499012019F",
+    "ABCD8499012018U",
+    "ABCD4911082018S",
+    "ABCD8014012018S",
+    "ABCD8015012018S",
+    "ABCD8499012018S"
+  ],
+  "authphotourl": "Y",
+  "title": "Associate Professor, ABCD Department, ABCD",
+  "schoolcode": "01",
+  "college": "Morrissey College, Arts & Sciences",
+  "formalname": "Ms.  Melissa K. Brubaker",
+  "bcismemberof": [
+    "cn=BCCommunity.allaffiliation.faculty,ou=groups,dc=bc,dc=edu",
+    "cn=BCCommunity.primaryaffiliation.faculty,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD4911082018S,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD4911082019F,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8014012018S,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8014012019F,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8014022019F,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8015012018S,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8499012018S,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8499012018U,ou=groups,dc=bc,dc=edu",
+    "cn=ABCD8499012019F,ou=groups,dc=bc,dc=edu",
+    "cn=adminbcl.bcdepts,ou=groups,dc=bc,dc=edu",
+    "cn=admincsom.ironmountain,ou=groups,dc=bc,dc=edu"
+  ],
+  "uid": "brubakme",
+  "objectclass": [
+    "inetOrgPerson",
+    "organizationalPerson",
+    "person",
+    "top",
+    "bcPerson",
+    "eduPerson"
+  ]
+}

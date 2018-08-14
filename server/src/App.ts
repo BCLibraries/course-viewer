@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import courseRouter from "./courses/Router";
 import itemRouter from "./items/Router";
 import ltiRouter from "./lti/Router";
-import postRouter from "./auth/Router";
+import authRouter from "./auth/Router";
 
 require('dotenv').config();
 
@@ -24,13 +24,14 @@ app.set('view engine', 'pug');
 // Apply CORS header
 app.use((req: Request, res: Response, next: Function) => {
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next();
 });
 
 app.use('/items', itemRouter);
 app.use('/courses', courseRouter);
 app.use('/lti', ltiRouter);
-app.use('/post', postRouter);
+app.use('/auth', authRouter);
 
 // 404
 app.use((req: Request, res: Response, next: Function) => {

@@ -1,0 +1,15 @@
+.no-courses-box {
+    display: table;
+    background-color: #f1f2f2;
+    border: 2px solid #efedef;
+    height: 5em;
+    max-width: 40em;
+    padding: 1em;
+}
+
+.no-courses-message {
+    display: table-cell;
+    padding: 0 1em;
+    vertical-align: middle;
+    font-size: 18px;
+}
