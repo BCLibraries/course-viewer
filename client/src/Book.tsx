@@ -7,16 +7,18 @@ class Book extends React.Component<{ reading: any }, {}> {
         const metadata = reading.metadata;
         const availabilityInfo = reading.availability ? buildAvailabilityLine(reading.availability[0]) : '';
         let displayTitle = metadata.title;
+        let thumbnail = <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>;
 
         if (!reading.availability) {
-            displayTitle = <LinkToReading mms={metadata.mms_id} title={metadata.title}/>
+            displayTitle = <LinkToReading mms={metadata.mms_id} title={metadata.title}/>;
+            thumbnail = <LinkToReading mms={metadata.mms_id} title={thumbnail}/>
         }
 
         const additionalPerson = (metadata.additional_person_name) ? `; ${metadata.additional_person_name}` : '';
 
         return (
             <li className="physical-book">
-                <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>
+                {thumbnail}
                 <div className="item-metadata">
                     <div><cite>{displayTitle}</cite></div>
                     <div>{metadata.author}{additionalPerson}</div>

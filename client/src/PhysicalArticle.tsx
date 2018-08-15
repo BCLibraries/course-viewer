@@ -2,6 +2,8 @@ import * as React from 'react';
 import PDFIcon from './img/file-pdf.svg';
 import LinkToReading from './LinkToReading';
 
+const thumbnail = <img src={PDFIcon} className="thumbnail" alt=""/>;
+
 class PhysicalArticle extends React.Component<{ reading: any }, {}> {
     private static publisherInformation(metadata: any): JSX.Element | null {
         if (metadata.publisher && metadata.place_of_publication) {
@@ -21,7 +23,7 @@ class PhysicalArticle extends React.Component<{ reading: any }, {}> {
 
         return (
             <li className="physical-article">
-                <img src={PDFIcon} className="thumbnail" alt=""/>
+                <LinkToReading mms={metadata.mms_id} title={thumbnail}/>
                 <div className="item-metadata">
                     <div className={"cite-title"}><cite><LinkToReading mms={metadata.mms_id} title={title}/></cite>
                     </div>

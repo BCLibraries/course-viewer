@@ -6,10 +6,11 @@ class ElectronicArticle extends React.Component<{ reading: any }, {}> {
     public render() {
         const metadata = this.props.reading.metadata;
         const dateString = this.dateString(metadata);
+        const thumbnail = <img src={FileIcon} className="thumbnail" alt=""/>;
 
         return (
             <li className="physical-article">
-                <img src={FileIcon} className="thumbnail" alt=""/>
+                <LinkToReading mms={metadata.mms_id} title={thumbnail}/>
                 <div className="item-metadata">
                     <div className={"cite-title"}>
                         <cite><LinkToReading mms={metadata.mms_id} title={metadata.article_title}/></cite></div>

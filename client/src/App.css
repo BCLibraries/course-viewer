@@ -20,7 +20,8 @@
     padding: 0;
 }
 
-a[target="_blank"]::after {
+.library-info a[target="_blank"]::after, cite a[target="_blank"]::after, .research-guides a[target="_blank"]::after,
+.librarian-box figcaption a[target="_blank"]::after {
     content: '';
     display: inline-block;
     background-size: 14px 14px;
