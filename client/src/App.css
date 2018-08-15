@@ -43,6 +43,10 @@
     grid-row: 1;
 }
 
+.libraries-style .library-info {
+    display: none;
+}
+
 @media only screen and (min-width: 600px) {
     .App .app-container, .App.loading .app-container {
         grid-template-columns: 66% 33%;
@@ -59,6 +63,10 @@
         grid-row: 3;
     }
 
+    .App.libraries-style .librarian, .App.loading.libraries-style .librarian {
+        grid-row: 2;
+    }
+
     .App .library-info, .App.loading .library-info {
         grid-column: 2;
         -ms-grid-row: 1;
@@ -69,6 +77,10 @@
         grid-column: 2;
         -ms-grid-row: 2;
         grid-row: 2;
+    }
+
+    .App.libraries-style .research-guides, .App.loading.libraries-style .research-guides {
+        grid-row: 1;
     }
 }
 
