@@ -1,17 +1,24 @@
 import * as React from 'react';
+import LinkToReading from "./LinkToReading";
 
 class Book extends React.Component<{ reading: any }, {}> {
     public render() {
         const reading = this.props.reading;
         const metadata = reading.metadata;
         const availabilityInfo = reading.availability ? buildAvailabilityLine(reading.availability[0]) : '';
+        let displayTitle = metadata.title;
+
+        if (!reading.availability) {
+            displayTitle = <LinkToReading mms={metadata.mms_id} title={metadata.title}/>
+        }
+
         const additionalPerson = (metadata.additional_person_name) ? `; ${metadata.additional_person_name}` : '';
 
         return (
             <li className="physical-book">
                 <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>
                 <div className="item-metadata">
-                    <div><cite>{metadata.title}</cite></div>
+                    <div><cite>{displayTitle}</cite></div>
                     <div>{metadata.author}{additionalPerson}</div>
                     <div>{metadata.publisher} {metadata.year} {metadata.edition}</div>
                     <div>{availabilityInfo}</div>
@@ -30,6 +37,11 @@ function buildAvailabilityLine(availability: any) {
         return (
             <div className="availability">
                 <strong>Available</strong> at {availability.library} {availability.location}</div>
+        );
+    } else if (availability.availability === 'unavailable') {
+        return (
+            <div className="availability">
+                <strong>Unavailable</strong></div>
         );
     }
     return null;
