@@ -5,13 +5,14 @@ class Book extends React.Component<{ reading: any }, {}> {
     public render() {
         const reading = this.props.reading;
         const metadata = reading.metadata;
-        const availabilityInfo = reading.availability ? buildAvailabilityLine(reading.availability[0]) : '';
+        const availabilityInfo = reading.availability ? buildAvailabilityLine(reading.availability[0], metadata) : '';
+        const callNumber = reading.availability ? reading.availability[0].call_number : '';
         let displayTitle = metadata.title;
         let thumbnail = <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>;
 
         if (!reading.availability) {
             displayTitle = <LinkToReading mms={metadata.mms_id} title={metadata.title}/>;
-            thumbnail = <LinkToReading mms={metadata.mms_id} title={thumbnail}/>
+            thumbnail = <LinkToReading mms={metadata.mms_id} title={thumbnail}/>;
         }
 
         const additionalPerson = (metadata.additional_person_name) ? `; ${metadata.additional_person_name}` : '';
@@ -23,6 +24,7 @@ class Book extends React.Component<{ reading: any }, {}> {
                     <div><cite>{displayTitle}</cite></div>
                     <div>{metadata.author}{additionalPerson}</div>
                     <div>{metadata.publisher} {metadata.year} {metadata.edition}</div>
+                    <div>{callNumber}</div>
                     <div>{availabilityInfo}</div>
                 </div>
             </li>
@@ -34,19 +36,29 @@ function thumbnailURL(isbn: any) {
     return `https://proxy-na.hosted.exlibrisgroup.com/exl_rewrite/syndetics.com/index.aspx?isbn=${isbn}/MC.JPG&client=primo`;
 }
 
-function buildAvailabilityLine(availability: any) {
+function buildAvailabilityLine(availability: any, metadata: any) {
     if (availability.availability === 'available') {
         return (
             <div className="availability">
-                <strong>Available</strong> at {availability.library} {availability.location}</div>
+                {availability.library} {availability.location}<br/>
+                {availability.call_number}
+            </div>
         );
     } else if (availability.availability === 'unavailable') {
         return (
-            <div className="availability">
-                <strong>Unavailable</strong></div>
+            <div className="availability checked-out">
+                <strong>Currently checked out</strong><br/>
+                {availability.library} {availability.location}<br/>
+                {availability.call_number}
+            </div>
         );
+    } else {
+        return (
+            <div className="availability">
+                <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'}/></strong>
+            </div>
+        )
     }
-    return null;
 }
 
 export default Book;

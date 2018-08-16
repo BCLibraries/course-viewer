@@ -171,10 +171,18 @@ a.link-to-libraries:hover {
     margin-bottom: 1em;
     clear: left;
     min-height: 100px;
+    overflow: hidden;
 }
 
 .readings li cite {
-    font-weight: 400;
+    font-weight: 600;
+}
+
+.item-metadata {
+    float: left;
+    margin-bottom: 1em;
+    max-width: 75%;
+    overflow: hidden;
 }
 
 .physical-article cite, .electronic-article cite {
@@ -187,16 +195,21 @@ a.link-to-libraries:hover {
 
 .cite-journal-title {
     font-style: italic;
-    margin-left: 5em
 }
 
 .availability strong {
-    font-weight: 400;
+    font-weight: 600;
     color: green;
 }
 
 .availability {
+    font-weight: 600;
     color: green;
+    font-size: .9em;
+}
+
+.availability.checked-out {
+    color: black;
 }
 
 a {
