@@ -1,10 +1,11 @@
-import axios from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import cache from "../Cache";
 import Citation from "./Citation";
 import Course from './Course';
 import ReadingList from './ReadingList';
 
-const webClient = axios.create({timeout: 10000});
+const webClient = axios.create({timeout: 20000});
+scheduleRequests(webClient, 200);
 
 const activeListStatuses: any = ['complete', 'beingprepared', 'being prepared'];
 
@@ -26,7 +27,7 @@ async function fetchCourse(course: Course) {
     // Load availability information for physical books.
     try {
         const physicalBooks = readingList.citations.filter(isPhysicalBook);
-        const promises = physicalBooks.map((cite: any) => {
+        const promises = physicalBooks.map( (cite: any) => {
             return fetchAvailability(cite);
         });
         const availabilityResults = await Promise.all(promises);
@@ -96,7 +97,7 @@ function listIsActive(list:any) {
     return activeListStatuses.includes(list.status.value.toLowerCase());
 }
 
-function fetchFromAlma(url: string, localParams: any) {
+async function fetchFromAlma(url: string, localParams: any) {
     const baseParams = {
         apikey: process.env.ALMA_APIKEY,
         format: "json",
@@ -125,6 +126,36 @@ function isEBook(cite: Citation) {
 function fetchAvailability(cite: Citation) {
     const mms_id = cite.metadata.mms_id;
     return fetchFromAlma('/bibs/' + mms_id, {expand: 'p_avail'});
+}
+
+/**
+ * Throttle Alma requests to keep in line with API limits
+ *
+ * Courtesy galenus@StackOverflow
+ * https://stackoverflow.com/questions/43482639/throttling-axios-requests
+ */
+function scheduleRequests(axiosInstance:AxiosInstance, intervalMs: number) {
+    let lastInvocationTime:number = 0;
+
+    const scheduler = (config:any) => {
+        const now = Date.now();
+        if (lastInvocationTime) {
+            lastInvocationTime += intervalMs;
+            const waitPeriodForThisRequest = lastInvocationTime - now;
+            if (waitPeriodForThisRequest > 0) {
+                return new Promise((resolve) => {
+                    setTimeout(
+                        () => resolve(config),
+                        waitPeriodForThisRequest);
+                });
+            }
+        }
+
+        lastInvocationTime = now;
+        return config;
+    };
+
+    axiosInstance.interceptors.request.use(scheduler);
 }
 
 module.exports = {

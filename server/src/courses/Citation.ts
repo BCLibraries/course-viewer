@@ -13,6 +13,13 @@ const avaCodeMap: IStringMap = {
     'e': 'availability'
 };
 
+const libraryCodeMap: IStringMap = {
+    'BAPST': 'Bapst Library',
+    'ERC': 'Educational Resource Center',
+    'ONL': "O'Neill Library",
+    'TML': 'Theology and Ministry Library'
+};
+
 class Citation {
     public sortTitle: string = '';
     public id: string;
@@ -88,6 +95,9 @@ function parseAVAFields(datafields: any) {
                         availability[fieldName] = subfield._;
                     }
                 });
+                if (availability.library && libraryCodeMap[availability.library] ) {
+                    availability.library = libraryCodeMap[availability.library];
+                }
                 availabilities.push(availability);
             }
         );
