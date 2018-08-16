@@ -1,11 +1,10 @@
-import axios, {AxiosInstance} from 'axios';
 import cache from "../Cache";
 import Citation from "./Citation";
 import Course from './Course';
 import ReadingList from './ReadingList';
+import buildThrottledClient from './ThrottledWebClient'
 
-const webClient = axios.create({timeout: 20000});
-scheduleRequests(webClient, 200);
+const webClient = buildThrottledClient();
 
 const activeListStatuses: any = ['complete', 'beingprepared', 'being prepared'];
 
@@ -127,36 +126,6 @@ function isEBook(cite: Citation) {
 function fetchAvailability(cite: Citation) {
     const mms_id = cite.metadata.mms_id;
     return fetchFromAlma('/bibs/' + mms_id, {expand: 'p_avail'});
-}
-
-/**
- * Throttle Alma requests to keep in line with API limits
- *
- * Courtesy galenus@StackOverflow
- * https://stackoverflow.com/questions/43482639/throttling-axios-requests
- */
-function scheduleRequests(axiosInstance:AxiosInstance, intervalMs: number) {
-    let lastInvocationTime:number = 0;
-
-    const scheduler = (config:any) => {
-        const now = Date.now();
-        if (lastInvocationTime) {
-            lastInvocationTime += intervalMs;
-            const waitPeriodForThisRequest = lastInvocationTime - now;
-            if (waitPeriodForThisRequest > 0) {
-                return new Promise((resolve) => {
-                    setTimeout(
-                        () => resolve(config),
-                        waitPeriodForThisRequest);
-                });
-            }
-        }
-
-        lastInvocationTime = now;
-        return config;
-    };
-
-    axiosInstance.interceptors.request.use(scheduler);
 }
 
 module.exports = {
