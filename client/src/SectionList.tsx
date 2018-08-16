@@ -23,7 +23,7 @@ class SectionList extends React.Component<{ sections: any }, {}> {
         const currentSections = this.props.sections.filter(currentSectionFilter);
         let mainContent = <div className="no-courses-box">
             <div className="no-courses-message">
-                We could not find any Fall 2019 courses that you are registered for. If you believe you have received
+                We could not find any Fall 2018 courses that you are registered for. If you believe you have received
                 this
                 message in error, please <a href="https://library.bc.edu/feedback/">contact Boston College Libraries
                 support</a>.
@@ -35,7 +35,7 @@ class SectionList extends React.Component<{ sections: any }, {}> {
         }
         return (
             <div className={"schedule"}>
-                <h3>Fall 2019 courses</h3>
+                <h3>Fall 2018 courses</h3>
                 <ul>{mainContent}</ul>
             </div>
         );
