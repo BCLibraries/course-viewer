@@ -157,6 +157,10 @@ a.link-to-libraries:hover {
     background-image: url("img/book.svg");
 }
 
+.loaded .physical-video .thumbnail {
+    background-image: url("img/film.svg");
+}
+
 .library-info li {
     list-style: none;
 }
@@ -189,7 +193,7 @@ a.link-to-libraries:hover {
     font-style: normal;
 }
 
-.physical-book cite {
+.physical-book cite, .physical-video cite {
     font-style: italic;
 }
 

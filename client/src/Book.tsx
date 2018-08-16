@@ -15,10 +15,12 @@ class Book extends React.Component<{ reading: any }, {}> {
             thumbnail = <LinkToReading mms={metadata.mms_id} title={thumbnail}/>;
         }
 
+        const typeClass = reading.type.secondary && reading.type.secondary==='Video' ? 'physical-video' : 'physical-book';
+
         const additionalPerson = (metadata.additional_person_name) ? `; ${metadata.additional_person_name}` : '';
 
         return (
-            <li className="physical-book">
+            <li className={typeClass}>
                 {thumbnail}
                 <div className="item-metadata">
                     <div><cite>{displayTitle}</cite></div>

@@ -26,7 +26,7 @@ async function fetchCourse(course: Course) {
 
     // Load availability information for physical books.
     try {
-        const physicalBooks = readingList.citations.filter(isPhysicalBook);
+        const physicalBooks = readingList.citations.filter(isPhysicalItem);
         const promises = physicalBooks.map( (cite: any) => {
             return fetchAvailability(cite);
         });
@@ -36,6 +36,7 @@ async function fetchCourse(course: Course) {
             }
         );
     } catch (e) {
+        console.log(e.message);
         // Don't fail if availability information isn't available, just return the list.
     }
 
@@ -112,9 +113,9 @@ function isActive(course: Course) {
     return course.status === "ACTIVE";
 }
 
-function isPhysicalBook(cite: Citation) {
-    const isBook = cite.type.primary === 'Physical Book' && cite.type.secondary !== 'Video';
-    return isBook && !isEBook(cite);
+function isPhysicalItem(cite: Citation) {
+    const isPhysical = cite.type.primary === 'Physical Book';
+    return isPhysical && !isEBook(cite);
 }
 
 function isEBook(cite: Citation) {
