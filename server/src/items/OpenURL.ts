@@ -18,7 +18,9 @@ class OpenURL {
 
     parseXML(err: any, parsed: any): void {
         this.raw = parsed;
-        this._targetLink = parsed.uresolver_content.context_services[0].context_service[0].target_url[0];
+        if (parsed.uresolver_content.context_services[0].context_service[0].target_url) {
+            this._targetLink = parsed.uresolver_content.context_services[0].context_service[0].target_url[0];
+        }
     }
 }
 
