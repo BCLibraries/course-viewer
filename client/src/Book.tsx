@@ -6,7 +6,6 @@ class Book extends React.Component<{ reading: any }, {}> {
         const reading = this.props.reading;
         const metadata = reading.metadata;
         const availabilityInfo = reading.availability ? buildAvailabilityLine(reading.availability[0], metadata) : '';
-        const callNumber = reading.availability ? reading.availability[0].call_number : '';
         let displayTitle = metadata.title;
         let thumbnail = <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>;
 
@@ -26,7 +25,6 @@ class Book extends React.Component<{ reading: any }, {}> {
                     <div><cite>{displayTitle}</cite></div>
                     <div>{metadata.author}{additionalPerson}</div>
                     <div>{metadata.publisher} {metadata.year} {metadata.edition}</div>
-                    <div>{callNumber}</div>
                     <div>{availabilityInfo}</div>
                 </div>
             </li>
