@@ -17,7 +17,8 @@ const libraryCodeMap: IStringMap = {
     'BAPST': 'Bapst Library',
     'ERC': 'Educational Resource Center',
     'ONL': "O'Neill Library",
-    'TML': 'Theology and Ministry Library'
+    'TML': 'Theology and Ministry Library',
+    'SWK': 'Social Work Library'
 };
 
 class Citation {
@@ -48,9 +49,32 @@ class Citation {
         this.sortTitle = this.buildSortTitle();
     }
 
-    public setAvailability(availabilityXML: string) {
+    public setAvailability(availabilityXML: string, library: string) {
         xml2js.parseString(availabilityXML, (err: any, result: any) => {
             const avaData = parseAVAFields(result.record.datafield);
+            avaData.sort((a:any, b:any) => {
+
+                if (a.library === library && b.library !== library) {
+                    return -1;
+                }
+
+                if (a.library !== library && b.library === library) {
+                    return 1;
+                }
+
+                if (a.library !== library && b.library !== library) {
+                    return 0;
+                }
+
+                if (a.location.includes('Reserves')) {
+                    return -1;
+                }
+
+                if (b.location.includes('Reserves')) {
+                    return 1
+                }
+                return 0;
+            });
             if (avaData.length > 0) {
                 this.availability = avaData;
             }
@@ -95,7 +119,7 @@ function parseAVAFields(datafields: any) {
                         availability[fieldName] = subfield._;
                     }
                 });
-                if (availability.library && libraryCodeMap[availability.library] ) {
+                if (availability.library && libraryCodeMap[availability.library]) {
                     availability.library = libraryCodeMap[availability.library];
                 }
                 availabilities.push(availability);

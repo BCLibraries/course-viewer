@@ -31,11 +31,10 @@ async function fetchCourse(course: Course) {
         });
         const availabilityResults = await Promise.all(promises);
         availabilityResults.forEach((result: any, citationNumber: number) => {
-                physicalBooks[citationNumber].setAvailability(result.data.anies[0]);
+                physicalBooks[citationNumber].setAvailability(result.data.anies[0], readingList.processDept);
             }
         );
     } catch (e) {
-        console.log(e.message);
         // Don't fail if availability information isn't available, just return the list.
     }
 
@@ -86,11 +85,12 @@ async function fetchReadingList(course: Course) {
             const filteredLists = courseFetchResponse.data.reading_lists.reading_list.filter(listIsActive);
             if (filteredLists[0]) {
                 readingList = filteredLists[0];
+                readingList.processing_department = courseFetchResponse.data.processing_department.value;
                 cache.saveReadingList(course, readingList);
             }
         }
     }
-    return new ReadingList(readingList);
+    return new ReadingList(readingList, readingList.processing_department);
 }
 
 function listIsActive(list:any) {
