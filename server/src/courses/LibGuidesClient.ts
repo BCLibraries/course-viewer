@@ -3,7 +3,7 @@ import Course from "./Course";
 import Guide from "./Guide";
 
 async function fetchGuides(course: Course) {
-    const dept = course.department.toUpperCase();
+    const dept = course.code.substring(0, 4);
     const fullCourse = `${dept}${course.number}`;
     const withSection = `${fullCourse}-${course.section}`;
     const response = await fetchFromLibGuides(dept, fullCourse, withSection);
