@@ -16,6 +16,7 @@ function fetchFromLibGuides(dept: string, fullCourse: string, withSection: strin
         dept,
         fullCourse,
         withSection,
+        withSection.replace('-', '.'),
         fullCourse.substring(0, 5) + 'xxx',
         fullCourse.substring(0, 6) + 'xx',
         fullCourse.substring(0, 7) + 'x'
