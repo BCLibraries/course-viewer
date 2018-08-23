@@ -1,25 +1,20 @@
 import axios from 'axios';
-import Course from "./Course";
 import Guide from "./Guide";
 
-async function fetchGuides(course: Course) {
-    const dept = course.code.substring(0, 4);
-    const fullCourse = `${dept}${course.number}`;
-    const withSection = `${fullCourse}-${course.section}`;
-    const response = await fetchFromLibGuides(dept, fullCourse, withSection);
-    course.research_guides = response.data.map(buildGuide);
-    return course;
+async function fetchGuides(code: string, section: string) {
+    const response = await fetchFromLibGuides(code, section);
+    return response.data.map(buildGuide);
 }
 
-function fetchFromLibGuides(dept: string, fullCourse: string, withSection: string) {
+function fetchFromLibGuides(code: string, section: string) {
     const tagNames = [
-        dept,
-        fullCourse,
-        withSection,
-        withSection.replace('-', '.'),
-        fullCourse.substring(0, 5) + 'xxx',
-        fullCourse.substring(0, 6) + 'xx',
-        fullCourse.substring(0, 7) + 'x'
+        code.substring(0, 4),
+        code,
+        `${code}-${section}`,
+        `${code}.${section}`,
+        code.substring(0, 5) + 'xxx',
+        code.substring(0, 6) + 'xx',
+        code.substring(0, 7) + 'x'
     ];
     const params = {
         site_id: process.env.LIBGUIDS_SITE_ID,

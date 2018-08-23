@@ -13,6 +13,7 @@ class Course {
     public research_guides: any = [];
     public has_research_guides: boolean = false;
     public subject_info: any = {};
+    public isActive: boolean = false;
 
     public addList(list: any): void {
         this.has_readings = true;
@@ -38,6 +39,7 @@ class Course {
         this.instructors = instructors || null;
         this.note = alma_course.note || null;
         this.reading_lists = [];
+        this.isActive = true;
     }
 
 }

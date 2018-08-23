@@ -1,7 +1,7 @@
 import cache from '../Cache';
 
-function lookup(subjectCode: string) {
+function fetchSubject(subjectCode: string) {
     return cache.lookupSubject(subjectCode);
 }
 
-export default lookup;
+export default fetchSubject;
