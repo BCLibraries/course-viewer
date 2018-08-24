@@ -5,3 +5,27 @@
 .login-form .form-input-group label {
     width: 6em;
 }
+
+.login-form-container {
+    background-color: hsla(53, 20%, 84%, 0.32941176470588235);
+    padding: 1em;
+}
+
+.login-form-container form {
+    display: block;
+    width: 100%;
+    padding-top: 1em;
+}
+
+.login-form-container input[type=text], .login-form-container input[type=password] {
+    width: 100%;
+}
+
+.login-error {
+    color: #900;
+    padding: .5em;
+}
+
+.logout-link {
+    cursor: pointer;
+}

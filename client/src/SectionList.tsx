@@ -8,7 +8,7 @@ const currentSemester = 'F';
 
 function sectionFactory(section: any) {
     const sectionDisplay = `${section.subjectCode}${section.courseNum}.${section.sectionNum}`;
-    const url = `${process.env.PUBLIC_URL}/${section.subjectCode}${section.courseNum}/section/${section.sectionNum}`;
+    const url = `/${section.subjectCode}${section.courseNum}/section/${section.sectionNum}`;
     return (<li key={sectionDisplay}>
         <Link to={url}>{sectionDisplay}</Link>
     </li>);
@@ -31,12 +31,13 @@ class SectionList extends React.Component<{ sections: any }, {}> {
         </div>;
 
         if (currentSections.length !== 0) {
-            mainContent = currentSections.map(sectionFactory);
+            const sectionListItems = currentSections.map(sectionFactory);
+            mainContent = <ul>{sectionListItems}</ul>;
         }
         return (
             <div className={"schedule"}>
                 <h3>Fall 2018 courses</h3>
-                <ul>{mainContent}</ul>
+                {mainContent}
             </div>
         );
     }

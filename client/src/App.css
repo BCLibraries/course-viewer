@@ -234,3 +234,7 @@ h2.course-name .course-id {
 .megamenu-container {
     margin-bottom: 2em;
 }
+
+form label {
+    display: block;
+}

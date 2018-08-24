@@ -16,7 +16,7 @@ class Course {
 
     public static buildFromCourseAndSection(courseId: string, sectionId: string): Course {
         const course = new Course;
-        const match = courseId.match(/([A-Z]{4})(\d{4})/);
+        const match = courseId.match(/([A-Z]+)(\d+)/);
         if (match) {
             course.subject = match[1];
             course.number = match[2];

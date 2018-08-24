@@ -5,7 +5,6 @@ import searchForCourse from "./CourseSearcher";
 import fetchReadings from "./CourseFetcher";
 
 const router = require('express').Router();
-const {fetchCourse} = require('./AlmaClient');
 
 require('events').EventEmitter.defaultMaxListeners = 15;
 
@@ -14,7 +13,8 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
 
     const code = req.params.course_code ? req.params.course_code : req.params.searchable_id;
     const section = req.params.section_id ? req.params.section_id : '';
-    const subject = code.substring(0, 4);
+    const codeParts = code.match(/([a-zA-Z]+)(\d+)/);
+    const subject = (codeParts && codeParts[1]) ? codeParts[1] : '';
 
     const course = await searchForCourse(code, section);
 
@@ -33,7 +33,6 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
     // When we have received responses from all data sources, send response.
     Promise.all(fetchPromises)
         .then((response: any[]) => {
-
             // Add subject info to course;
             if (response[0]) {
                 course.subject_info = JSON.parse(response[0]);

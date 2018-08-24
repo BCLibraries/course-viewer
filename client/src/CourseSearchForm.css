@@ -1,0 +1,11 @@
+#course-code-input {
+    width: 298px;
+}
+
+.query-example {
+    font-style: italic;
+}
+
+.search-form input[type=submit] {
+    border-width: 1px;
+}
