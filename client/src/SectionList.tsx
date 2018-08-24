@@ -36,7 +36,6 @@ class SectionList extends React.Component<{ sections: any }, {}> {
         }
         return (
             <div className={"schedule"}>
-                <h3>Fall 2018 courses</h3>
                 {mainContent}
             </div>
         );
