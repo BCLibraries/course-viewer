@@ -28,7 +28,7 @@ app.use((req: Request, res: Response, next: Function) => {
 
     // Handle CORS preflight requests
     if ('OPTIONS' === req.method) {
-        res.send(200);
+        res.sendStatus(200);
     } else {
         next();
     }

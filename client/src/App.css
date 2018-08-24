@@ -238,3 +238,8 @@ h2.course-name .course-id {
 form label {
     display: block;
 }
+
+.report-a-problem {
+    font-size: .9em;
+    margin-top: 3em;
+}

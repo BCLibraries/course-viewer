@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Route} from "react-router";
+import {Redirect, Route} from "react-router";
 import Client from "./Client";
 import Course from "./Course";
 import LibrarianBox from "./LibrarianBox";
@@ -8,7 +8,9 @@ import './Placeholder.css';
 import ReadingList from "./ReadingList";
 import ResearchGuidesBox from "./ResearchGuidesBox";
 
-class CourseDisplay extends React.Component<{ match: any }, { course: Course, loading: boolean }> {
+/* tslint:disable */
+
+class CourseDisplay extends React.Component<{ match: any, user: any }, { course: Course, loading: boolean }> {
     public constructor(params: any) {
         super(params);
         this.state = {
@@ -54,6 +56,10 @@ class CourseDisplay extends React.Component<{ match: any }, { course: Course, lo
             } catch (e) {
                 return true;
             }
+        }
+
+        if (!inIframe() && !this.props.user) {
+            return <Redirect push={true} to={{pathname: `${process.env.PUBLIC_URL}/`,}}/>
         }
 
         if (this.state.loading) {

@@ -10,6 +10,9 @@ class Homepage extends React.Component<{ user: any, setUser: any }, {}> {
     }
 
     public render() {
+        const searchDisplay = (this.props.user) ? <CourseSearchForm/> : <span/>;
+        const orBlock = (this.props.user) ? <div className="form-or">or</div> : <span/>
+
         return (
             <div>
                 <h2 className="course-name">Course reserves</h2>
@@ -53,9 +56,9 @@ class Homepage extends React.Component<{ user: any, setUser: any }, {}> {
                 <div className="col-md-5">
                     <div className="homepage-forms">
                         <h3>Find your readings</h3>
-                        <CourseSearchForm/>
-                        <div className="form-or">or</div>
                         <LoginPage user={this.props.user} setUser={this.props.setUser}/>
+                        {orBlock}
+                        {searchDisplay}
                     </div>
                 </div>
             </div>

@@ -17,14 +17,11 @@ class CourseSearchForm extends React.Component<{}, { query: string, submitted: b
             let url = `${process.env.PUBLIC_URL}/${this.state.query}/section/_`;
 
             const found = this.state.query.match(/([a-zA-Z]+\d+)\.(\d\d?)/);
-
             if (found && found[1]) {
                 url = `${process.env.PUBLIC_URL}/${found[1]}/section/${found[2]}`;
             }
 
-            return <Redirect
-                to={{pathname: url,}}
-            />;
+            return <Redirect push={true} to={{pathname: url,}}/>;
         } else {
             return <div>
                 <form className="search-form" onSubmit={this.handleSubmit}>
