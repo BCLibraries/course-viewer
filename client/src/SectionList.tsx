@@ -8,7 +8,7 @@ const currentSemester = 'F';
 
 function sectionFactory(section: any) {
     const sectionDisplay = `${section.subjectCode}${section.courseNum}.${section.sectionNum}`;
-    const url = `/${section.subjectCode}${section.courseNum}/section/${section.sectionNum}`;
+    const url = `${process.env.PUBLIC_URL}/${section.subjectCode}${section.courseNum}/section/${section.sectionNum}`;
     return (<li key={sectionDisplay}>
         <Link to={url}>{sectionDisplay}</Link>
     </li>);
