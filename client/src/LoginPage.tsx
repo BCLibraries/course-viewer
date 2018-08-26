@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './LoginPage.css';
+import UserStorage from './UserStorage';
 
 // Fetch polyfill
 import "promise/polyfill"
@@ -93,6 +94,7 @@ class LoginPage extends React.Component<{ user: any, setUser: any }, { username:
     }
 
     private handleLogout(event: any) {
+        UserStorage.clear();
         this.props.setUser(null);
     }
 }

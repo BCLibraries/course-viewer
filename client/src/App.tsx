@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
+import UserStorage from './UserStorage';
+
 
 import CourseDisplay from "./CourseDisplay";
 import Homepage from './Homepage';
@@ -10,15 +12,18 @@ const alternateBase = '/reserves';
 class App extends React.Component<{}, { user: any }> {
     public constructor(props: any) {
         super(props);
-        this.state = {user: null};
+        this.state = {user: UserStorage.get()};
     }
 
 
     public render() {
-        const setUser = (user:any) => {this.setState({user})};
+        const setUser = (user: any) => {
+            UserStorage.store(user);
+            this.setState({user})
+        };
 
         const homepageRender = (props: any) => <Homepage user={this.state.user} setUser={setUser}/>;
-        const courseRender = (props: any) => <CourseDisplay {...props} user={this.state.user} />;
+        const courseRender = (props: any) => <CourseDisplay {...props} user={this.state.user}/>;
 
         return (
             <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
@@ -35,7 +40,8 @@ class App extends React.Component<{}, { user: any }> {
                     <Route path={`${alternateBase}/lti`} render={courseRender}/>
                     <Route path={`${process.env.PUBLIC_URL}/lti`} render={courseRender}/>
 
-                    <div className="col-md-12 report-a-problem">Problems? <a href="mailto:reserves-ggroup@bc.edu">Send us an email</a></div>
+                    <div className="col-md-12 report-a-problem">Problems? <a href="mailto:reserves-ggroup@bc.edu">Send
+                        us an email</a></div>
                 </div>
             </BrowserRouter>
         );

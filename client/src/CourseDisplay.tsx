@@ -8,8 +8,6 @@ import './Placeholder.css';
 import ReadingList from "./ReadingList";
 import ResearchGuidesBox from "./ResearchGuidesBox";
 
-/* tslint:disable */
-
 class CourseDisplay extends React.Component<{ match: any, user: any }, { course: Course, loading: boolean }> {
     public constructor(params: any) {
         super(params);
