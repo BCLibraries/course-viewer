@@ -16,7 +16,7 @@ async function authenticate(uid: string, passwd: string): Promise<User> {
         return Promise.reject('no anonymous binds');
     }
 
-    const client = ldap.createClient({url: process.env.LDAP_URL, log: logger});
+    const client = ldap.createClient({url: process.env.LDAP_URL});
 
     const rdn = `uid=${uid},ou=${ou},dc=bc,dc=edu`;
     const promisifiedBind = promisify(client.bind).bind(client);

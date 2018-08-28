@@ -4,6 +4,8 @@ import Citation from "./Citation";
 import Course from './Course';
 import ReadingList from './ReadingList';
 
+import logger from '../Logger';
+
 const activeListStatuses: any = ['complete', 'beingprepared', 'being prepared'];
 
 async function fetchReadings(course: Course) {
@@ -26,6 +28,7 @@ async function fetchReadings(course: Course) {
             }
         );
     } catch (e) {
+        logger.error({e});
         // Don't fail if availability information isn't available, just return the list.
     }
 
@@ -52,7 +55,7 @@ async function fetchReadingList(course: Course) {
 }
 
 function isPhysicalItem(cite: Citation) {
-    const isPhysical = cite.type.primary === 'Physical Book';
+    const isPhysical = cite.type.primary === 'Physical Book' && cite.type.secondary !== 'Video';
     return isPhysical && !isEBook(cite);
 }
 
