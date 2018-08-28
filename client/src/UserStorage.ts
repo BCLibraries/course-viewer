@@ -13,11 +13,12 @@ class UserStorage {
     public static get() {
         let user = null;
         const userString = localStorage.getItem(storageKey);
-        const tenMinutesAgo = Date.now() / 1000 - (minutesToLive * 60);
+        const twentyMinutesAgo = Date.now() / 1000 - (minutesToLive * 60);
         if (userString) {
             const userStringData = JSON.parse(userString);
-            if (userStringData.added > tenMinutesAgo) {
+            if (userStringData.added > twentyMinutesAgo) {
                 user = userStringData.user;
+                UserStorage.store(user);
             }
         }
         return user;
