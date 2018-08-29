@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import validate from './LTIValidator';
+import logger from '../Logger';
 
 const router = require('express').Router();
 
@@ -29,12 +30,13 @@ function launch(req: Request, res: Response) {
             courseId = match[1];
             sectionId = match[2];
         } else {
-            courseId= req.body.lis_course_offering_sourcedid;
+            courseId = req.body.lis_course_offering_sourcedid;
         }
     } else {
         courseId = req.body.context_label;
     }
-    const url = `https://${req.get('host')}/reserves/course/${courseId}/section/${sectionId}`;
+    const url = `https://library.bc.edu/courses/${courseId}/section/${sectionId}`;
+    logger.info({type: 'lti-launch-request', body: req.body, courseId: courseId, sectionId: sectionId, url: url});
     res.redirect(303, url);
 }
 
