@@ -55,7 +55,7 @@ async function fetchReadingList(course: Course) {
 }
 
 function isPhysicalItem(cite: Citation) {
-    const isPhysical = cite.type.primary === 'Physical Book' && cite.type.secondary !== 'Video';
+    const isPhysical = cite.type.primary === 'Physical Book' && ! cite.metadata.title.includes('streaming');
     return isPhysical && !isEBook(cite);
 }
 
