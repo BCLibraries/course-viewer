@@ -51,9 +51,10 @@ class PhysicalArticle extends React.Component<{ reading: any }, {}> {
                 <div className="item-metadata">
                     <div className={"cite-title"}><cite><LinkToReading mms={metadata.mms_id} title={title}/></cite>
                     </div>
-                    {partInfo ? (<div>{partInfo}</div>) : (<span />)}
                     <div className={"cite-author"}>{metadata.author}</div>
-                    <div className={"cite-journal-title"}>{metadata.journal_title}</div>
+                    <div className={"cite-journal-title"}>{metadata.journal_title}{partInfo ? (
+                        <span>, {partInfo}</span>) : (<span/>)}
+                    </div>
                     {publisherInfo}
                 </div>
             </li>
