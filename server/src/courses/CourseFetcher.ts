@@ -20,7 +20,12 @@ async function fetchReadings(course: Course) {
     try {
         const physicalBooks = readingList.citations.filter(isPhysicalItem);
         const promises = physicalBooks.map( (cite: any) => {
-            return fetchAvailability(cite);
+            return fetchAvailability(cite).catch(err => {
+                // For now, if an availability lookup fails just let it fail. The user can
+                // still click on the link.
+                logger.error(err);
+                return err;
+            });
         });
         const availabilityResults = await Promise.all(promises);
         availabilityResults.forEach((result: any, citationNumber: number) => {
