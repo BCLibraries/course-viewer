@@ -18,7 +18,9 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
 
     const course = await searchForCourse(code, section);
 
-    fetchPromises.push(fetchSubject(subject));
+    const subjects: string[] = (code === 'HIST1511' || code === 'BIOL1503') ? ['HIST', 'BIOL'] : [subject];
+
+    fetchPromises.push(fetchSubject(subjects));
 
     // Send request for LibGuides.
     fetchPromises.push(fetchGuides(code, section));
@@ -35,7 +37,8 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
         .then((response: any[]) => {
             // Add subject info to course;
             if (response[0]) {
-                course.subject_info = JSON.parse(response[0]);
+                const subjectResponse = (response[0] && response[0][1]) ? response[0][0] : response[0];
+                course.subject_info = JSON.parse(subjectResponse);
             }
 
             // Add guides to course

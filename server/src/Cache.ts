@@ -4,6 +4,7 @@ import Course from "./courses/Course";
 
 const client = redis.createClient();
 const getAsync = promisify(client.get).bind(client);
+const mgetAsync = promisify(client.mget).bind(client);
 
 const minuteInSeconds = 60;
 const dayInSeconds = 24 * 60 * 60;
@@ -17,8 +18,9 @@ class Cache {
         return `bcreserves-alma-reading-list-${course.id}`;
     }
 
-    public lookupSubject(subjectCode: string) {
-        return getAsync(`bc-subj-${subjectCode}`);
+    public lookupSubject(subjectCodes: string[]) {
+        subjectCodes = subjectCodes.map(code => (`bc-subj-${code}`));
+        return mgetAsync(subjectCodes);
     }
 
     public saveCourseSearch(course: Course, almaSearchResult: any) {
