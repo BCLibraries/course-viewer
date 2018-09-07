@@ -41,7 +41,7 @@ class LibrarianBox extends React.Component<{ course: Course, loading: boolean },
 
                 {experts.map((expert: any, index: any) => {
                         const imgKey = `${expert.firstName}${expert.lastName}`;
-                        const hiddenClass = this.state.hiddenImgs.indexOf(imgKey) > -1 ? 'hidden' : '';
+                        const hiddenClass = this.state.hiddenImgs.indexOf(imgKey) > -1 ? 'would-hide' : '';
 
                         const filterSmallImages = ({target: img}: any) => {
                             if (img.offsetWidth < 200) {

@@ -82,6 +82,18 @@
     .App.libraries-style .research-guides, .App.loading.libraries-style .research-guides {
         grid-row: 1;
     }
+
+    .App.no-readings .readings {
+        grid-column: 2;
+    }
+
+    .App.no-readings .librarian, .App.no-readings .research-guides, .App.no-readings .library-info {
+        grid-column: 1;
+    }
+
+    .App.no-readings .librarian-box {
+        display: inline-block;
+    }
 }
 
 .readings {
