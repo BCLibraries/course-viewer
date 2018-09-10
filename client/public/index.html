@@ -35,10 +35,10 @@
             attachCSS('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700');
             attachCSS('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css');
             attachCSS('https://library.bc.edu/theme/modular/header/css/lib-header.css');
-            attachCSS('https://library.bc.edu/theme/css/megamenu.css?version=20180620');
-            attachCSS('https://library.bc.edu/theme/css/refresh.css?version=20180620');
+            attachCSS('https://library.bc.edu/theme/css/megamenu.css?version=20180912');
+            attachCSS('https://library.bc.edu/theme/css/refresh.css?version=20180912');
             attachCSS('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-            attachCSS('https://library.bc.edu/theme/css/megamenu.css?version=20170804');
+            attachCSS('https://library.bc.edu/theme/css/megamenu.css?version=20180912');
         } else {
             attachCSS('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900');
         }
@@ -54,13 +54,17 @@
 
     <!-- Load megamenu scripts if this is not an LTI call -->
     <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script>$(document).on('click','.yamm .dropdown-menu',function(e){e.stopPropagation()});</script>
     <script>
         if (!isLTICall) {
             var toLoad = [
                 'https://code.jquery.com/ui/1.9.2/jquery-ui.min.js',
                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js',
+                'https://library.bc.edu/theme/js/libhoursv2.js',
                 'https://library.bc.edu/theme/js/bootstrap-hover-dropdown.min.js',
-                'https://library.bc.edu/theme/js/megamenu.js'
+                'https://library.bc.edu/theme/js/jquery.hoverIntent.minified.js',
+                'https://library.bc.edu/theme/js/megamenu.js',
+                'https://library.bc.edu/theme/js/libraryinfo.js'
             ];
             for (var i = 0, len = toLoad.length; i < len; i++) {
                 var scriptLink = document.createElement('script');
@@ -70,6 +74,7 @@
             }
         }
     </script>
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -108,8 +113,8 @@
         </div>
     </div>
 </div>
-<div class="megamenu-container" style="position: relative">
-    <!-- MENU BEGINS HERE -->
+<!-- MENU BEGINS HERE -->
+<div class="megamenu-container">
     <div id="megamenu-refresh" class="container">
         <!-- BEGIN NAVBAR -->
         <nav class="navbar yamm navbar-default" role="navigation">
@@ -130,11 +135,11 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" id="megamenu" data-tag="ga-tag">
                         <!-- Find list -->
                         <li class="dropdown yamm-fw">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle menu-option" id="mm-find-header" aria-expanded="false">Find</a>
-                            <ul class="dropdown-menu" style="">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle menu-option" id="mm-find-header">Find</a>
+                            <ul class="dropdown-menu">
                                 <li>
                                     <!-- Content container to add padding -->
                                     <div class="yamm-content">
@@ -150,13 +155,13 @@
                                                     <a href="https://library.bc.edu/catalog" id="mm-find-books-catalog-simple-search">Catalog
                                                         Simple Search</a></li>
                                                 <li>
-                                                    <a href="https://bclib.bc.edu/advanced-search" id="mm-find-books-catalog-advanced-search">Catalog
+                                                    <a href="http://bclib.bc.edu/advanced-search" id="mm-find-books-catalog-advanced-search">Catalog
                                                         Advanced Search</a></li>
                                                 <li>
                                                     <a href="https://libguides.bc.edu/popcollection" id="mm-find-books-popular">Popular
                                                         Books &amp; DVDs</a></li>
                                                 <li>
-                                                    <a href="https://arc.bc.edu/reserves" id="mm-find-books-course-reserves">Course
+                                                    <a href="https://library.bc.edu/courses" id="mm-find-books-course-reserves">Course
                                                         Reserves</a></li>
                                                 <li>
                                                     <a href="https://libguides.bc.edu/dataportal" id="mm-find-books-gis">Data/GIS/Statistics</a>
@@ -173,14 +178,13 @@
                                                 <li>
                                                     <a href="https://libguides.bc.edu/az.php" id="mm-find-articles-databases">Databases</a>
                                                 </li>
-                                                <li>
-                                                    <a href="https://bclib.bc.edu/a-to-z" id="mm-find-articles-journals">Journals</a>
+                                                <li><a href="http://bclib.bc.edu/a-to-z" id="mm-find-articles-journals">Journals</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://bc-primo.hosted.exlibrisgroup.com/primo-explore/search?tab=pci_only&amp;vid=bclib_new&amp;sortby=rank" id="mm-find-articles-search">Article
+                                                    <a href="https://bc-primo.hosted.exlibrisgroup.com/primo-explore/search?tab=pci_only&vid=bclib_new&sortby=rank" id="mm-find-articles-search">Article
                                                         search</a></li>
                                                 <li>
-                                                    <a href="https://bclib.bc.edu/find-by-citation" id="mm-find-articles-citation">Find
+                                                    <a href="http://bclib.bc.edu/find-by-citation" id="mm-find-articles-citation">Find
                                                         by Citation</a></li>
                                             </ul>
 
@@ -235,8 +239,8 @@
 
                         <!-- Services list -->
                         <li class="dropdown yamm-fw">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle menu-option" id="mm-using-header" aria-expanded="false">Services</a>
-                            <ul class="dropdown-menu" style="">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle menu-option" id="mm-using-header">Services</a>
+                            <ul class="dropdown-menu">
                                 <li>
                                     <!-- Content container to add padding -->
                                     <div class="yamm-content">
@@ -252,10 +256,10 @@
                                                     <a href="https://libguides.bc.edu/borrowing" id="mm-using-services-borrowing">Borrowing</a>
                                                 </li>
                                                 <li>
-                                                    <a href="https://libguides.bc.edu/request-materials" id="mm-using-services-requesting">Requesting
-                                                        &amp; Interlibrary Loan</a></li>
+                                                    <a href="https://libguides.bc.edu/interlibrary-loan" id="mm-using-services-requesting">Interlibrary
+                                                        Loan</a></li>
                                                 <li>
-                                                    <a href="https://libguides.bc.edu/course-reserves" id="mm-using-services-course-reserves">Course
+                                                    <a href="https://library.bc.edu/courses" id="mm-using-services-course-reserves">Course
                                                         Reserves</a></li>
                                                 <li>
                                                     <a href="https://libguides.bc.edu/library-instruction" id="mm-using-services-library-instruction">Library
@@ -393,10 +397,10 @@
                                                         <a href="https://libguides.bc.edu/ask-a-librarian" id="mm-help-ref">Visit
                                                             a Reference Desk</a></li>
                                                     <li class="faq_pane">
-                                                        <a href="https://answers.bc.edu/" id="mm-help-faq">Frequently
+                                                        <a href="https://answers.bc.edu" id="mm-help-faq">Frequently
                                                             Asked Questions</a></li>
-                                                    <li class="chat_pane selected">
-                                                        <a href="#" onclick="window.open('https://libraryh3lp.com/chat/ajcu-consortium@chat.libraryh3lp.com?skin=19965&amp;title=Boston College/AJCU+Librarians&amp;profile=cs-bostoncoll','chat', 'resizable=1,width=320,height=300'); return false;" style="cursor: pointer;" id="mm-help-chat">Chat
+                                                    <li class="chat_pane">
+                                                        <a href="#" onClick="window.open('https://libraryh3lp.com/chat/ajcu-consortium@chat.libraryh3lp.com?skin=19965&title=Boston College/AJCU+Librarians&profile=cs-bostoncoll','chat', 'resizable=1,width=320,height=300'); return false;" style="cursor: pointer;" id="mm-help-chat">Chat
                                                             with us</a></li>
                                                     <li class="email_pane">
                                                         <a href="https://answers.bc.edu/q.php" id="mm-help-email">Send
@@ -411,12 +415,12 @@
                                                             <a href="https://libguides.bc.edu/ask-a-librarian" id="mm-t-help-aal">Ask
                                                                 A Librarian</a></div>
                                                     </li>
-                                                    <li class="ref_pane"><a href="#" id="msm-t-help-ref">Visit a
+                                                    <li class="ref_pane"><a href="#" id="mm-t-help-ref">Visit a
                                                         Reference Desk</a></li>
                                                     <li class="faq_pane"><a href="#" id="mm-t-help-faq">Frequently Asked
                                                         Questions</a></li>
-                                                    <li class="chat_pane selected"><a href="#" id="mm-t-help-email">Send
-                                                        us an Email</a></li>
+                                                    <li class="chat_pane"><a href="#" id="mm-t-help-email">Send us an
+                                                        Email</a></li>
                                                     <li class="call_pane"><a href="#" id="mm-t-help-call">Call us</a>
                                                     </li>
                                                 </ul>
@@ -425,7 +429,7 @@
                                                 <div class="h4style accessibility-text">Help from anywhere</div>
 
                                                 <!-- REFERENCE PANE BEGINS HERE -->
-                                                <div id="ref_pane" class="item_pane col-sm-5" style="display: none;">
+                                                <div id="ref_pane" class="item_pane col-sm-5">
                                                     <div class="pane_info">
                                                         <a href="https://libguides.bc.edu/ask-a-librarian" id="mm-help-pane-ref-header">
                                                             <div class="askicon ask_ref"></div>
@@ -439,14 +443,14 @@
                                                 <!-- END REF PANE. RIGHT UP THERE-->
 
                                                 <!-- FAQ PANE BEGINS HERE -->
-                                                <div id="faq_pane" class="item_pane col-sm-5" style="display: none;">
+                                                <div id="faq_pane" class="item_pane col-sm-5">
                                                     <div class="pane_info">
-                                                        <a href="https://answers.bc.edu/index.php" id="mm-help-pane-faq-header">
+                                                        <a href="https://answers.bc.edu" id="mm-help-pane-faq-header">
                                                             <div class="askicon ask_faq"></div>
                                                             <div class="h2style">Frequently Asked Questions</div>
                                                         </a>
                                                         <p>Get answers to frequently asked questions on the
-                                                            <a href="https://answers.bc.edu/" id="mm-help-pane-faq-link">Library's
+                                                            <a href="https://answers.bc.edu" id="mm-help-pane-faq-link">Library's
                                                                 FAQ</a>.</p>
                                                     </div>
                                                 </div>
@@ -455,20 +459,20 @@
                                                 <!-- CHAT PANE BEGINS HERE -->
                                                 <div id="chat_pane" class="item_pane col-sm-5">
                                                     <div class="pane_info">
-                                                        <a href="#" onclick="window.open('https://libraryh3lp.com/chat/ajcu-consortium@chat.libraryh3lp.com?skin=19965&amp;title=Boston College/AJCU+Librarians&amp;profile=cs-bostoncoll','chat','resizable=1,width=320,height=300'); return false;" style="cursor: pointer;" id="mm-help-pane-chat-header">
+                                                        <a href="#" onClick="window.open('https://libraryh3lp.com/chat/ajcu-consortium@chat.libraryh3lp.com?skin=19965&title=Boston College/AJCU+Librarians&profile=cs-bostoncoll','chat','resizable=1,width=320,height=300'); return false;" style="cursor: pointer;" id="mm-help-pane-chat-header">
                                                             <div class="askicon ask_chat"></div>
                                                             <div class="h2style">Chat with us</div>
                                                         </a>
                                                         <p>24/7 research help from Librarians at BC and at participating
                                                             Jesuit institutions across the country.
-                                                            <a onclick="window.open('https://libraryh3lp.com/chat/ajcu-consortium@chat.libraryh3lp.com?skin=19965&amp;title=Boston College/AJCU+Librarians&amp;profile=cs-bostoncoll','chat', 'resizable=1,width=320,height=300'); return false;" style="cursor: pointer;" id="mm-help-pane-chat">Click
+                                                            <a onClick="window.open('https://libraryh3lp.com/chat/ajcu-consortium@chat.libraryh3lp.com?skin=19965&title=Boston College/AJCU+Librarians&profile=cs-bostoncoll','chat', 'resizable=1,width=320,height=300'); return false;" style="cursor: pointer;" id="mm-help-pane-chat">Click
                                                                 here to chat with a Librarian.</a></p>
                                                     </div>
                                                 </div>
                                                 <!-- END CHAT PANE. RIGHT UP THERE-->
 
                                                 <!-- EMAIL PANE BEGINS HERE -->
-                                                <div id="email_pane" class="item_pane col-sm-5" style="display: none;">
+                                                <div id="email_pane" class="item_pane col-sm-5">
                                                     <div class="pane_info">
                                                         <a href="https://answers.bc.edu/q.php" id="mm-help-pane-email">
                                                             <div class="askicon ask_email"></div>
@@ -482,7 +486,7 @@
                                                 <!-- END EMAIL PANE. RIGHT UP THERE-->
 
                                                 <!-- CALL PANE BEGINS HERE -->
-                                                <div id="call_pane" class="item_pane col-sm-5" style="display: none;">
+                                                <div id="call_pane" class="item_pane col-sm-5">
                                                     <div class="pane_info">
                                                         <div class="askicon ask_call"></div>
                                                         <div class="h2style">Call us</div>
@@ -574,7 +578,7 @@
                                                     <li class="oconnor_pane">
                                                         <a href="https://libguides.bc.edu/oconnor" id="mm-pane-oconnor">O'Connor
                                                             Library</a></li>
-                                                    <li class="oneill_pane selected">
+                                                    <li class="oneill_pane">
                                                         <a href="https://libguides.bc.edu/oneill" id="mm-pane-oneill">O'Neill
                                                             Library</a></li>
                                                     <li class="swl_pane">
@@ -599,8 +603,7 @@
                                                     </li>
                                                     <li class="law_pane"><a href="#">Law Library</a></li>
                                                     <li class="oconnor_pane"><a href="#">O'Connor Library</a></li>
-                                                    <li class="oneill_pane selected"><a href="#">O'Neill Library</a>
-                                                    </li>
+                                                    <li class="oneill_pane"><a href="#">O'Neill Library</a></li>
                                                     <li class="swl_pane"><a href="#">Social Work Library</a></li>
                                                     <li class="tml_pane"><a href="#">Theology &amp; Ministry Library</a>
                                                     </li>
@@ -612,7 +615,7 @@
                                                 <div class="h4style accessibility-text">Libraries</div>
 
                                                 <!-- BAPST PANE BEGINS HERE -->
-                                                <div id="bapst_pane" class="item_pane" style="display: none;">
+                                                <div id="bapst_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style"><a href="https://libguides.bc.edu/bapst">Bapst
                                                             Library
@@ -646,7 +649,7 @@
                                                 <!-- END BAPST PANE. RIGHT UP THERE-->
 
                                                 <!-- BURNS PANE BEGINS HERE -->
-                                                <div id="burns_pane" class="item_pane" style="display: none;">
+                                                <div id="burns_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style"><a href="https://libguides.bc.edu/burns">Burns
                                                             Library
@@ -684,7 +687,7 @@
                                                 <!-- END BURNS PANE. RIGHT UP THERE-->
 
                                                 <!-- ERC PANE BEGINS HERE -->
-                                                <div id="erc_pane" class="item_pane" style="display: none;">
+                                                <div id="erc_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style"><a href="https://libguides.bc.edu/erc">Educational
                                                             Resource Center
@@ -719,7 +722,7 @@
                                                 <!-- END ERC PANE. RIGHT UP THERE-->
 
                                                 <!-- LAW PANE BEGINS HERE -->
-                                                <div id="law_pane" class="item_pane" style="display: none;">
+                                                <div id="law_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style"><a href="https://www.bc.edu/lawlibrary">Law
                                                             Library
@@ -755,13 +758,13 @@
                                                 <!-- END LAW PANE. RIGHT UP THERE-->
 
                                                 <!-- O'CONNOR PANE BEGINS HERE -->
-                                                <div id="oconnor_pane" class="item_pane" style="display: none;">
+                                                <div id="oconnor_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style"><a href="https://libguides.bc.edu/oconnor">Catherine
                                                             O'Connor Library
                                                             <i class="fa fa-lg fa-arrow-circle-o-right" aria-hidden="true"></i></a>
                                                         </div>
-                                                        <p class="address">381 Concord Road <br> Weston, MA 02493</p>
+                                                        <p class="address">381 Concord Road <br/> Weston, MA 02493</p>
                                                         <p>Located at Weston Observatory, this library contains a
                                                             specialized collection of earth sciences monographs,
                                                             periodicals, and maps, particularly in the areas of
@@ -827,7 +830,7 @@
                                                 <!-- END O'NEILL PANE. RIGHT UP THERE-->
 
                                                 <!-- SWL PANE BEGINS HERE -->
-                                                <div id="swl_pane" class="item_pane" style="display: none;">
+                                                <div id="swl_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style">
                                                             <a href="https://libguides.bc.edu/socialwork">Social Work
@@ -863,7 +866,7 @@
                                                 <!-- END SWL PANE. RIGHT UP THERE-->
 
                                                 <!-- TML PANE BEGINS HERE -->
-                                                <div id="tml_pane" class="item_pane" style="display: none;">
+                                                <div id="tml_pane" class="item_pane">
                                                     <div class="pane_info">
                                                         <div class="h3style"><a href="https://libguides.bc.edu/tml">Theology
                                                             &amp; Ministry Library
@@ -872,8 +875,8 @@
                                                         <p class="address">Boston College Theology and Ministry Library
                                                             <br>117 Lake Street <br>Brighton, MA 02135 </p>
                                                         <p>The Theology &amp; Ministry Library (TML) supports research,
-                                                            teaching, and learning at the School of Theology &amp;
-                                                            Ministry and Saint John's Seminary. </p>
+                                                            teaching, and learning at the School of Theology & Ministry
+                                                            and Saint John's Seminary. </p>
 
                                                         <ul class="col-sm-12">
                                                             <li>
@@ -924,7 +927,7 @@
                                             <ul class="col-sm-12 col-md-10 col-md-offset-1 hours_menu_list">
                                                 <li>
                                                     <div class="hours-todays-date-container">Library hours for
-                                                        <span class="hours-todays-date">June 20, 2018</span></div>
+                                                        <span class="hours-todays-date"></span></div>
                                                     <div class="table table-hours top-table-hours">
                                                         <table class="table table-condensed table-bordered">
                                                             <caption class="accessibility-text">Today's Library Hours
@@ -939,40 +942,38 @@
                                                             <tr>
                                                                 <td><a href="https://libguides.bc.edu/oneill/hours">O'Neill
                                                                     Library</a></td>
-                                                                <td class="lib-hours lib-oneill">
-                                                                    <span class="font-small">7:30am - 11pm</span></td>
+                                                                <td class="lib-hours lib-oneill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                                             </tr>
                                                             <tr>
                                                                 <td><a href="https://libguides.bc.edu/bapst/hours">Bapst
                                                                     Library</a></td>
-                                                                <td class="lib-hours lib-bapst">9am - 5pm</td>
+                                                                <td class="lib-hours lib-bapst"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td><a href="https://libguides.bc.edu/burns">Burns
                                                                     Library</a></td>
-                                                                <td class="lib-hours lib-burns">9am - 5pm</td>
+                                                                <td class="lib-hours lib-burns"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td><a href="https://libguides.bc.edu/erc/hours">Educational
                                                                     Resource Center</a></td>
-                                                                <td class="lib-hours lib-erc">9am - 7pm</td>
+                                                                <td class="lib-hours lib-erc"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
                                                                     <a href="https://www.bc.edu/bc-web/schools/law/sites/current-students/library/using/hours.html">Law
                                                                         Library</a></td>
-                                                                <td class="lib-hours lib-law">9am - 5pm</td>
+                                                                <td class="lib-hours lib-law"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td><a href="https://libguides.bc.edu/socialwork/hours">Social
                                                                     Work Library</a></td>
-                                                                <td class="lib-hours lib-swl"><span class="font-small">8:30am - 5pm</span>
-                                                                </td>
+                                                                <td class="lib-hours lib-swl"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td><a href="https://libguides.bc.edu/tml/hours">Theology
                                                                     &amp; Ministry Library</a></td>
-                                                                <td class="lib-hours lib-tml">8am - 5pm</td>
+                                                                <td class="lib-hours lib-tml"></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
@@ -1001,7 +1002,7 @@
                                     <div class="yamm-content">
                                         <div class="row">
                                             <!-- Catalog -->
-                                            <ul class="col-sm-4 menu_list">
+                                            <ul class="col-sm-3 menu_list">
                                                 <li>
                                                     <div class="h3style">
                                                         <a href="https://bc-primo.hosted.exlibrisgroup.com/primo-explore/account?vid=bclib_new">Library
@@ -1011,7 +1012,7 @@
                                             </ul>
 
                                             <!-- ILL -->
-                                            <ul class="col-sm-4 menu_list">
+                                            <ul class="col-sm-3 menu_list">
                                                 <li>
                                                     <div class="h3style">
                                                         <a href="https://illiad.bc.edu/illiad/bxm/logon.html">Interlibrary
@@ -1021,21 +1022,30 @@
                                                 </li>
                                             </ul>
 
-                                            <!-- RefWorks -->
-                                            <ul class="col-sm-4 menu_list end">
+                                            <!-- Burns -->
+                                            <ul class="col-sm-3 menu_list">
+                                                <li>
+                                                    <div class="h3style"><a href="https://burnsaccount.bc.edu">Burns
+                                                        Library account</a></div>
+                                                    <p>Register to research, schedule visits, and order copies at Burns
+                                                        Library</p>
+                                                </li>
+                                            </ul>
+
+                                            <!-- OverDrive -->
+                                            <ul class="col-sm-3 menu_list end">
                                                 <li>
                                                     <div class="h3style">
-                                                        <a href="https://libguides.bc.edu/refworks-login">RefWorks
+                                                        <a href="https://bc.overdrive.com/account/loans">OverDrive
                                                             account</a></div>
-                                                    <p>Import citations; organize references; <br>create bibliographies
-                                                    </p>
+                                                    <p>Borrow and renew popular ebooks and audiobooks</p>
                                                 </li>
                                             </ul>
                                         </div>
 
                                         <div class="row bottom_row">
                                             <div class="more">
-                                                <a href="https://libguides.bc.edu/my-accounts" id="more-about-accounts">More
+                                                <a href="https://libguides.bc.edu/my-accounts" id="mm-find-more">More
                                                     about Accounts
                                                     <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
                                             </div>
@@ -1052,7 +1062,9 @@
         </nav>
         <!-- END NAVBAR -->
     </div>
-    <!-- END MEGAMENU --></div>
+</div>
+<!-- END MEGAMENU -->
+<!-- END MEGAMENU -->
 <div class="container">
     <div id="root"></div>
 </div>
