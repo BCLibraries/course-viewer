@@ -38,7 +38,10 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
             // Add subject info to course;
             if (response[0]) {
                 const subjectResponse = (response[0] && response[0][1]) ? response[0][0] : response[0];
-                course.subject_info = JSON.parse(subjectResponse);
+                if (subjectResponse[0] !== null) {
+                    console.log(subjectResponse);
+                    course.subject_info = JSON.parse(subjectResponse);
+                }
             }
 
             // Add guides to course
@@ -51,6 +54,8 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
 
             res.send(JSON.stringify(course));
         }).catch((error: any) => {
+        /* tslint:disable */
+        console.log(error);
         res.send(JSON.stringify({message: error.message}));
     });
 }
