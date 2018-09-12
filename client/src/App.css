@@ -243,7 +243,8 @@ h2.course-name .course-id {
     font-weight: 600;
 }
 
-.megamenu-container {
+.homepagerefresh .megamenu-container {
+    position: relative;
     margin-bottom: 2em;
 }
 
