@@ -39,7 +39,6 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
             if (response[0]) {
                 const subjectResponse = (response[0] && response[0][1]) ? response[0][0] : response[0];
                 if (subjectResponse[0] !== null) {
-                    console.log(subjectResponse);
                     course.subject_info = JSON.parse(subjectResponse);
                 }
             }

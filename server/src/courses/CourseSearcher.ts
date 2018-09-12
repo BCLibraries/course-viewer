@@ -30,7 +30,7 @@ async function searchForCourse(code: string, section: string): Promise<Course> {
     }
 
     // If that fails, use just the course code as an identifier.
-    if (!courseFromAlma) {
+    if (!courseFromAlma && code.match(/[Xx]\d/)) {
         courseFromAlma = await findActiveCourse(`searchable_ids~${code}`);
     }
 
