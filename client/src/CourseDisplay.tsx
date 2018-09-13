@@ -47,6 +47,15 @@ class CourseDisplay extends React.Component<{ match: any, user: any }, { course:
     public render() {
         const classes: string[] = ['App'];
         const course = this.state.course;
+        const libLink = {
+            text: 'Boston College Libraries',
+            url: 'https://library.bc.edu"'
+        };
+
+        if (this.props.match.params.course_id.indexOf('LAWS') !== -1) {
+            libLink.text = 'Boston College Law Library';
+            libLink.url = 'https://www.bc.edu/bc-web/schools/law/sites/current-students/library';
+        }
 
         function inIframe() {
             try {
@@ -96,10 +105,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any }, { course:
                         {readingsBox}
                     </div>
                     <div className="library-info">
-                        <ul>
-                            <li><a href="https://library.bc.edu" target="_blank" className="link-to-libraries">The
-                                Boston College Libraries</a></li>
-                        </ul>
+                        <a href={libLink.url} target="_blank" className="link-to-libraries">{libLink.text}</a>
                     </div>
                     <div className="research-guides">
                         <ResearchGuidesBox course={course} loading={this.state.loading}/>
