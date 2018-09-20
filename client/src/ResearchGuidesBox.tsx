@@ -17,11 +17,11 @@ class ResearchGuidesBox extends React.Component<{ course: Course, loading: boole
 
         const course = this.props.course;
 
-        if (!course.subjectInfo || !course.subjectInfo.slug) {
-            return (<span/>);
+        let subjectInfoLink = <span />
+        if (!course.researchGuides && (!course.subjectInfo || !course.subjectInfo.slug)) {
+            const url = `https://libguides.bc.edu/${course.subjectInfo.slug}`;
+            subjectInfoLink = <li><a href={url} target="_blank">{course.subjectInfo.name} resources</a></li>;
         }
-
-        const url = `https://libguides.bc.edu/${course.subjectInfo.slug}`;
 
         const guides = course.researchGuides.map(guideFactory);
 
@@ -30,7 +30,7 @@ class ResearchGuidesBox extends React.Component<{ course: Course, loading: boole
                 <h4>Research guides</h4>
                 <ul>
                     {guides}
-                    <li><a href={url} target="_blank">{course.subjectInfo.name} resources</a></li>
+                    {subjectInfoLink}
                 </ul>
             </div>
         );
@@ -38,7 +38,8 @@ class ResearchGuidesBox extends React.Component<{ course: Course, loading: boole
 }
 
 function guideFactory(guide: any) {
-    return (<li key={guide.friendlyUrl}><a href={guide.friendlyUrl} target="_blank">{guide.title}</a></li>);
+    const guideUrl = guide.friendlyUrl ? guide.friendlyUrl : guide.url;
+    return (<li key={guide.friendlyUrl}><a href={guideUrl} target="_blank">{guide.title}</a></li>);
 }
 
 export default ResearchGuidesBox;
