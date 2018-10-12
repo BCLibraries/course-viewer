@@ -1,4 +1,5 @@
 import cache from "../Cache";
+import fetchAvailability from './AvailabilityClient';
 import fetchFromAlma from './AlmaClient';
 import Citation from "./Citation";
 import Course from './Course';
@@ -19,19 +20,18 @@ async function fetchReadings(course: Course) {
     // Load availability information for physical books.
     try {
         const physicalBooks = readingList.citations.filter(isPhysicalItem);
-        const promises = physicalBooks.map( (cite: any) => {
-            return fetchAvailability(cite).catch(err => {
-                // For now, if an availability lookup fails just let it fail. The user can
-                // still click on the link.
-                logger.error(err);
-                return err;
-            });
-        });
-        const availabilityResults = await Promise.all(promises);
-        availabilityResults.forEach((result: any, citationNumber: number) => {
-                physicalBooks[citationNumber].setAvailability(result.data.anies[0], readingList.processDept);
+        const mmsIds = physicalBooks.map((cite: any) => cite.metadata.mms_id);
+        const availabilityResults = await fetchAvailability(mmsIds);
+
+        const availabilityData = availabilityResults.data;
+
+        physicalBooks.forEach((book: Citation) => {
+            const itemAvail = availabilityData[book.metadata.mms_id];
+
+            if (itemAvail[0]) {
+                book.setAvailability(itemAvail,readingList.processDept);
             }
-        );
+        });
     } catch (e) {
         logger.error({e});
         // Don't fail if availability information isn't available, just return the list.
@@ -60,22 +60,17 @@ async function fetchReadingList(course: Course) {
 }
 
 function isPhysicalItem(cite: Citation) {
-    const isPhysical = cite.type.primary === 'Physical Book' && ! cite.metadata.title.includes('streaming');
+    const isPhysical = cite.type.primary === 'Physical Book' && !cite.metadata.title.includes('streaming');
     return isPhysical && !isEBook(cite);
 }
 
 function isEBook(cite: Citation) {
     const typeIsEbook = cite.type.primary === 'Physical Book' && cite.type.secondary === 'E-book';
-    const hasEbookInTitle = cite.metadata.title.match(/[eE]-?book/);
+    const hasEbookInTitle = cite.metadata.title.match(/\([eE]-?book/);
     return typeIsEbook || hasEbookInTitle;
 }
 
-function fetchAvailability(cite: Citation) {
-    const mms_id = cite.metadata.mms_id;
-    return fetchFromAlma('/bibs/' + mms_id, {expand: 'p_avail'});
-}
-
-function listIsActive(list:any) {
+function listIsActive(list: any) {
     return activeListStatuses.includes(list.status.value.toLowerCase());
 }
 

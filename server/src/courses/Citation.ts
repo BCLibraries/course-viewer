@@ -1,25 +1,4 @@
-import xml2js from 'xml2js';
-
-interface IStringMap {
-    [index: string]: string;
-}
-
 const ebookLabel = 'E-book';
-
-const avaCodeMap: IStringMap = {
-    'b': 'library',
-    'c': 'location',
-    'd': 'call_number',
-    'e': 'availability'
-};
-
-const libraryCodeMap: IStringMap = {
-    'BAPST': 'Bapst Library',
-    'ERC': 'Educational Resource Center',
-    'ONL': "O'Neill Library",
-    'TML': 'Theology and Ministry Library',
-    'SWK': 'Social Work Library'
-};
 
 class Citation {
     public sortTitle: string = '';
@@ -49,36 +28,40 @@ class Citation {
         this.sortTitle = this.buildSortTitle();
     }
 
-    public setAvailability(availabilityXML: string, library: string) {
-        xml2js.parseString(availabilityXML, (err: any, result: any) => {
-            const avaData = parseAVAFields(result.record.datafield);
-            avaData.sort((a:any, b:any) => {
+    public setAvailability(availabilityJson: any, homeLibrary: string) {
+        const availabilities = availabilityJson.map((json: any) => {
+            return {
+                availability: json.available_count > 0 ? 'available' : 'unavailable',
+                call_number: json.call_number,
+                library: json.location.library_name,
+                location: json.location.location_name.replace(/-(\d+) Ho/, '- $1 Ho')
+            };
+        });
 
-                if (a.library === library && b.library !== library) {
-                    return -1;
-                }
-
-                if (a.library !== library && b.library === library) {
-                    return 1;
-                }
-
-                if (a.library !== library && b.library !== library) {
-                    return 0;
-                }
-
-                if (a.location.includes('Reserves')) {
-                    return -1;
-                }
-
-                if (b.location.includes('Reserves')) {
-                    return 1
-                }
-                return 0;
-            });
-            if (avaData.length > 0) {
-                this.availability = avaData;
+        this.availability = availabilities.sort((a: any, b: any) => {
+            if (a.library === homeLibrary && b.library !== homeLibrary) {
+                return -1;
             }
-        })
+
+            if (a.library !== homeLibrary && b.library === homeLibrary) {
+                return 1;
+            }
+
+            if (a.library !== homeLibrary && b.library !== homeLibrary) {
+                return 0;
+            }
+
+            if (a.location.includes('Reserves')) {
+                return -1;
+            }
+
+            if (b.location.includes('Reserves')) {
+                return 1
+            }
+
+            return 0;
+        });
+
     }
 
     private buildSortTitle() {
@@ -100,33 +83,6 @@ function isEbook(almaCite: any) {
         return true;
     }
     return almaCite.metadata.pages && almaCite.metadata.pages.includes('online');
-}
-
-function parseAVAFields(datafields: any) {
-    const availabilities: any[] = [];
-
-    const avaDatafields = datafields.filter((field: any) => {
-        return field.$.tag === 'AVA';
-    });
-
-    if (avaDatafields.length > 0) {
-        avaDatafields.forEach((datafield: any) => {
-                const availability: IStringMap = {};
-                datafield.subfield.forEach((subfield: any) => {
-                    const subfieldCode: any = subfield.$.code;
-                    const fieldName = avaCodeMap[subfieldCode];
-                    if (fieldName) {
-                        availability[fieldName] = subfield._;
-                    }
-                });
-                if (availability.library && libraryCodeMap[availability.library]) {
-                    availability.library = libraryCodeMap[availability.library];
-                }
-                availabilities.push(availability);
-            }
-        );
-    }
-    return availabilities;
 }
 
 export default Citation;
