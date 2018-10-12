@@ -14,21 +14,30 @@ class Book extends React.Component<{ reading: any }, {}> {
             thumbnail = <LinkToReading mms={metadata.mms_id} title={thumbnail}/>;
         }
 
-        const typeClass = reading.type.secondary && reading.type.secondary==='Video' ? 'physical-video' : 'physical-book';
-
-        const additionalPerson = (metadata.additional_person_name) ? `; ${metadata.additional_person_name}` : '';
+        const typeClass = reading.type.secondary && reading.type.secondary === 'Video' ? 'physical-video' : 'physical-book';
 
         return (
             <li className={typeClass}>
                 {thumbnail}
                 <div className="item-metadata">
                     <div><cite>{displayTitle}</cite></div>
-                    <div>{metadata.author}{additionalPerson}</div>
+                    <div>{this.creatorsLine(metadata)}</div>
                     <div>{metadata.publisher} {metadata.year} {metadata.edition}</div>
                     <div>{availabilityInfo}</div>
                 </div>
             </li>
         )
+    }
+
+    private creatorsLine(metadata: any) {
+        const creators = [];
+        if (metadata.author) {
+            creators.push(metadata.author);
+        }
+        if (metadata.additional_person_name) {
+            creators.push(metadata.additional_person_name);
+        }
+        return creators.join('; ');
     }
 }
 
