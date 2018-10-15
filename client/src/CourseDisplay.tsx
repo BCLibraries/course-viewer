@@ -7,8 +7,9 @@ import LibrariesHeader from "./LibrariesHeader";
 import './Placeholder.css';
 import ReadingList from "./ReadingList";
 import ResearchGuidesBox from "./ResearchGuidesBox";
+import UserStorage from "./UserStorage";
 
-class CourseDisplay extends React.Component<{ match: any, user: any }, { course: Course, loading: boolean }> {
+class CourseDisplay extends React.Component<{ match: any, user: any, location: any }, { course: Course, loading: boolean }> {
     public constructor(params: any) {
         super(params);
         this.state = {
@@ -66,6 +67,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any }, { course:
         }
 
         if (!inIframe() && !this.props.user) {
+            UserStorage.setReturnUrl(this.props.location.pathname);
             return <Redirect push={true} to={{pathname: `${process.env.PUBLIC_URL}/`,}}/>
         }
 

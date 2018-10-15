@@ -1,10 +1,11 @@
 import * as React from 'react';
 import './Homepage.css'
 
+import {Redirect} from "react-router";
 import CourseSearchForm from "./CourseSearchForm";
 import LoginPage from "./LoginPage";
 
-class Homepage extends React.Component<{ user: any, setUser: any }, {}> {
+class Homepage extends React.Component<{ user: any, setUser: any, redirectUrl: string | null }, {}> {
     public constructor(props: any) {
         super(props);
     }
@@ -13,6 +14,10 @@ class Homepage extends React.Component<{ user: any, setUser: any }, {}> {
         const readingsHeading = (this.props.user) ? <h3>Your Fall 2018 courses</h3> : <h3>Find your readings</h3>;
         const searchDisplay = (this.props.user) ? <CourseSearchForm/> : <span/>;
         const orBlock = (this.props.user) ? <div className="form-or">or</div> : <span/>;
+
+        if (this.props.redirectUrl) {
+            return <Redirect to={this.props.redirectUrl}/>
+        }
 
         return (
             <div>

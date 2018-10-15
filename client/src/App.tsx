@@ -22,7 +22,10 @@ class App extends React.Component<{}, { user: any }> {
             this.setState({user})
         };
 
-        const homepageRender = (props: any) => <Homepage user={this.state.user} setUser={setUser}/>;
+        const returnUrl = UserStorage.getReturnUrl();
+        const redirect = returnUrl ? returnUrl : null;
+
+        const homepageRender = (props: any) => <Homepage user={this.state.user} setUser={setUser} redirectUrl={redirect}/>;
         const courseRender = (props: any) => <CourseDisplay {...props} user={this.state.user}/>;
 
         return (

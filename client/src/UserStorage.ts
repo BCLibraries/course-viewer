@@ -13,6 +13,16 @@ class UserStorage {
         }
     }
 
+    public static setReturnUrl(url: string) {
+        localStorage.setItem('return-to', url);
+    }
+
+    public static getReturnUrl() {
+        const returnTo = localStorage.getItem('return-to');
+        localStorage.removeItem('return-to');
+        return returnTo;
+    }
+
     public static get() {
         let user = null;
         if (window.self === window.top) {
