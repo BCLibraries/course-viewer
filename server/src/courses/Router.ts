@@ -18,7 +18,11 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
 
     const course = await searchForCourse(code, section);
 
-    const subjects: string[] = (code === 'HIST1511' || code === 'BIOL1503') ? ['HIST', 'BIOL'] : [subject];
+    let subjects: string[] = (code === 'HIST1511' || code === 'BIOL1503') ? ['HIST', 'BIOL'] : [subject];
+
+    if (code === 'ENGL1010') {
+        subjects = ['FWS'];
+    }
 
     fetchPromises.push(fetchSubject(subjects));
 

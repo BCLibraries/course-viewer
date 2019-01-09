@@ -11,7 +11,7 @@ class Homepage extends React.Component<{ user: any, setUser: any, redirectUrl: s
     }
 
     public render() {
-        const readingsHeading = (this.props.user) ? <h3>Your Fall 2018 courses</h3> : <h3>Find your readings</h3>;
+        const readingsHeading = (this.props.user) ? <h3>Your Spring 2019 courses</h3> : <h3>Find your readings</h3>;
         const searchDisplay = (this.props.user) ? <CourseSearchForm/> : <span/>;
         const orBlock = (this.props.user) ? <div className="form-or">or</div> : <span/>;
 

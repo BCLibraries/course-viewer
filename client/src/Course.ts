@@ -1,7 +1,7 @@
 class Course {
     public static buildFromId(courseSisId: string): Course {
         const course = new Course;
-        const match = courseSisId.match(/([A-Z]{4})(\d{4})(\d{2})(\d{4}[SFU])/);
+        const match = courseSisId.match(/([A-Z]{4,5})(\d{4})(\d{2})(\d{4}[SFU])/);
 
         course.id = courseSisId;
         if (match) {
@@ -16,10 +16,12 @@ class Course {
 
     public static buildFromCourseAndSection(courseId: string, sectionId: string): Course {
         const course = new Course;
-        const match = courseId.match(/([A-Z]+)(\d+)/);
+        const match = courseId.match(/([A-Z]{4,6})(\d+)/);
         if (match) {
             course.subject = match[1];
             course.number = match[2];
+        } else {
+            course.subject = courseId;
         }
         course.section = sectionId;
         return course;
