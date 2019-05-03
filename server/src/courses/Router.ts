@@ -22,6 +22,8 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
 
     if (code === 'ENGL1010') {
         subjects = ['FWS'];
+    } else if (code === 'HIST1513' || code === 'EESC1507') {
+        subjects = ['EES1']
     }
 
     fetchPromises.push(fetchSubject(subjects));

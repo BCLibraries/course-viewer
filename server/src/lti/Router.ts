@@ -21,7 +21,7 @@ function launch(req: Request, res: Response) {
         res.send({status: false});
     }
 
-    const regExp = /([A-Z]{4}\d{4})([X[0-9]\d)\d{4}[SFU]/;
+    const regExp = /([A-Z]{4}\d{4})(X\w|\d\d)\d{4}[SFU]/;
     let courseId = '';
     let sectionId = 'X';
     if (req.body.lis_course_offering_sourcedid) {
