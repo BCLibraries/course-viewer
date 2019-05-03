@@ -50,7 +50,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
         const course = this.state.course;
         const libLink = {
             text: 'Boston College Libraries',
-            url: 'https://library.bc.edu"'
+            url: 'https://library.bc.edu'
         };
 
         if (this.props.match.params.course_id.indexOf('LAWS') !== -1) {
@@ -67,7 +67,11 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
         }
 
         if (!inIframe() && !this.props.user) {
-            UserStorage.setReturnUrl(this.props.location.pathname);
+            try {
+                UserStorage.setReturnUrl(this.props.location.pathname);
+            } catch (e) {
+                // no op
+            }
             return <Redirect push={true} to={{pathname: `${process.env.PUBLIC_URL}/`,}}/>
         }
 

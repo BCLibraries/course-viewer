@@ -61,7 +61,7 @@ class LibrarianBox extends React.Component<{ course: Course, loading: boolean },
                                         <div className="name">
                                             <a href={expert.url} target="_blank">{expert.firstName} {expert.lastName}</a>
                                         </div>
-                                        <div className="title">Subject Librarian for {course.subjectInfo.name}</div>
+                                        <div className="title">Subject Librarian</div>
                                     </figcaption>
                                 </figure>
                             </div>

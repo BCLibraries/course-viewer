@@ -12,20 +12,29 @@ const alternateBase = '/reserves';
 class App extends React.Component<{}, { user: any }> {
     public constructor(props: any) {
         super(props);
-        this.state = {user: UserStorage.get()};
+        try {
+            this.state = {user: UserStorage.get()};
+        } catch (e) {
+            this.state = {user: null}
+        }
     }
 
 
     public render() {
         const setUser = (user: any) => {
-            UserStorage.store(user);
+            try {
+                UserStorage.store(user);
+            } catch (e) {
+                // no-op
+            }
             this.setState({user})
         };
 
         const returnUrl = UserStorage.getReturnUrl();
         const redirect = returnUrl ? returnUrl : null;
 
-        const homepageRender = (props: any) => <Homepage user={this.state.user} setUser={setUser} redirectUrl={redirect}/>;
+        const homepageRender = (props: any) =>
+            <Homepage user={this.state.user} setUser={setUser} redirectUrl={redirect}/>;
         const courseRender = (props: any) => <CourseDisplay {...props} user={this.state.user}/>;
 
         return (
