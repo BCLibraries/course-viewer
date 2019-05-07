@@ -99,6 +99,10 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
             return (<LibrariesHeader course={course}/>);
         }
 
+        const openChat = () => {
+            window.open('https://library.bc.edu/chat','chat', 'resizable=1,width=320,height=300')
+        };
+
         return (
             <div className={classes.join(' ')}>
                 <Route path={`${process.env.PUBLIC_URL}/:course_id/section/:section_id`} render={renderHeader}/>
@@ -118,6 +122,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
                     </div>
                     <div className="librarian">
                         <LibrarianBox course={course} loading={this.state.loading}/>
+                        <a onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"} /></a>
                     </div>
                 </div>
             </div>

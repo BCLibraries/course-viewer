@@ -34,9 +34,6 @@ class LibrarianBox extends React.Component<{ course: Course, loading: boolean },
         const experts = course.subjectInfo.experts;
         const libTerm = (experts.length > 1) ? 'librarians' : 'librarian';
 
-        const openChat = () => {
-            window.open('https://library.bc.edu/chat','chat', 'resizable=1,width=320,height=300')
-        };
 
         return (
             <div>
@@ -72,7 +69,6 @@ class LibrarianBox extends React.Component<{ course: Course, loading: boolean },
                     }
                 )}
 
-                <a onClick={openChat} className={"chat-link"}>Chat with us</a>
             </div>
         );
     }
