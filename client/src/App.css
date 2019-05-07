@@ -218,6 +218,10 @@ a.link-to-libraries:hover {
     font-style: italic;
 }
 
+.cite-journal-part {
+    font-style: normal;
+}
+
 .availability strong {
     font-weight: 600;
     color: green;

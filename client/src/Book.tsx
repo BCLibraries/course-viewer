@@ -1,73 +1,80 @@
 import * as React from 'react';
 import LinkToReading from "./LinkToReading";
+import {creatorsLine, thumbnail} from "./MetadataDisplay";
 
-class Book extends React.Component<{ reading: any }, {}> {
-    public render() {
-        const reading = this.props.reading;
-        const metadata = reading.metadata;
-        const availabilityInfo = reading.availability ? buildAvailabilityLine(reading.availability[0], metadata) : '';
-        let displayTitle = metadata.title;
-        let thumbnail = <img src={thumbnailURL(metadata.isbn)} className="thumbnail" alt=""/>;
+function Book({reading}: { reading: any }) {
+    return (
+        <li className={typeClass(reading.type)}>
+            {buildThumbnail(reading)}
+            <div className="item-metadata">
+                <div><cite>{buildDisplayTitle(reading)}</cite></div>
+                <div>{creatorsLine(reading.metadata)}</div>
+                <div>{reading.metadata.publisher} {reading.metadata.year} {reading.metadata.edition}</div>
+                <div>{availabilityInfo(reading)}</div>
+            </div>
+        </li>
+    )
+}
 
-        if (!reading.availability) {
-            displayTitle = <LinkToReading mms={metadata.mms_id} title={metadata.title}/>;
-            thumbnail = <LinkToReading mms={metadata.mms_id} title={thumbnail}/>;
-        }
+function typeClass(type: any): string {
+    return type.secondary && type.secondary === 'Video' ? 'physical-video' : 'physical-book'
+}
 
-        const typeClass = reading.type.secondary && reading.type.secondary === 'Video' ? 'physical-video' : 'physical-book';
+function buildDisplayTitle(reading: any) {
+    const displayTitle = reading.metadata.title;
+    return reading.availability ? displayTitle : <LinkToReading mms={reading.metadata.mms_id} title={displayTitle}/>;
+}
 
-        return (
-            <li className={typeClass}>
-                {thumbnail}
-                <div className="item-metadata">
-                    <div><cite>{displayTitle}</cite></div>
-                    <div>{this.creatorsLine(metadata)}</div>
-                    <div>{metadata.publisher} {metadata.year} {metadata.edition}</div>
-                    <div>{availabilityInfo}</div>
-                </div>
-            </li>
-        )
+function buildThumbnail(reading: any) {
+    const thumb = thumbnail(reading.metadata.isbn);
+    return reading.availability ? thumb : <LinkToReading mms={reading.metadata.mms_id} title={thumb}/>;
+}
+
+function availabilityInfo(reading: any) {
+    if (!reading.availability) {
+        return '';
     }
 
-    private creatorsLine(metadata: any) {
-        const creators = [];
-        if (metadata.author) {
-            creators.push(metadata.author);
+    const availability = reading.availability[0];
+
+    switch (availability.availability) {
+        case 'available': {
+            return available(availability);
         }
-        if (metadata.additional_person_name) {
-            creators.push(metadata.additional_person_name);
+        case 'unavailable': {
+            return checkedOut(availability);
         }
-        return creators.join('; ');
+        default: {
+            return checkForAvailability(reading.metadata);
+        }
     }
 }
 
-function thumbnailURL(isbn: any) {
-    return `https://proxy-na.hosted.exlibrisgroup.com/exl_rewrite/syndetics.com/index.aspx?isbn=${isbn}/MC.JPG&client=primo`;
+function available(availability: any) {
+    return (
+        <div className="availability">
+            {availability.library} {availability.location}<br/>
+            {availability.call_number}
+        </div>
+    )
 }
 
-function buildAvailabilityLine(availability: any, metadata: any) {
-    if (availability.availability === 'available') {
-        return (
-            <div className="availability">
-                {availability.library} {availability.location}<br/>
-                {availability.call_number}
-            </div>
-        );
-    } else if (availability.availability === 'unavailable') {
-        return (
-            <div className="availability checked-out">
-                <strong>Currently checked out</strong><br/>
-                {availability.library} {availability.location}<br/>
-                {availability.call_number}
-            </div>
-        );
-    } else {
-        return (
-            <div className="availability">
-                <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'}/></strong>
-            </div>
-        )
-    }
+function checkedOut(availability: any) {
+    return (
+        <div className="availability checked-out">
+            <strong>Currently checked out</strong><br/>
+            {availability.library} {availability.location}<br/>
+            {availability.call_number}
+        </div>
+    );
+}
+
+function checkForAvailability(metadata:any) {
+    return (
+        <div className="availability">
+            <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'}/></strong>
+        </div>
+    )
 }
 
 export default Book;
