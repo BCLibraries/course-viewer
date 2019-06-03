@@ -24,7 +24,12 @@ function launch(req: Request, res: Response) {
     const regExp = /([A-Z]{4}\d{4})(X\w|\d\d)\d{4}[SFU]/;
     let courseId = '';
     let sectionId = 'X';
-    if (req.body.lis_course_offering_sourcedid) {
+    if (!req.body.lis_course_offering_sourcedid) {
+        courseId = req.body.context_label;
+    } else if (req.body.lis_course_offering_sourcedid === 'LIBS503X') {
+        courseId = 'LIBS503X';
+        sectionId = '01';
+    } else {
         const match = req.body.lis_course_offering_sourcedid.match(regExp);
         if (match) {
             courseId = match[1];
@@ -32,8 +37,6 @@ function launch(req: Request, res: Response) {
         } else {
             courseId = req.body.lis_course_offering_sourcedid;
         }
-    } else {
-        courseId = req.body.context_label;
     }
     const url = `https://library.bc.edu/courses/${courseId}/section/${sectionId}`;
     logger.info({type: 'lti-launch-request', body: req.body, courseId: courseId, sectionId: sectionId, url: url});
