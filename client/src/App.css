@@ -40,7 +40,10 @@
     font-weight: 300;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: max-content max-content max-content max-content;
+}
+
+.App.lti-style .app-container {
+    grid-template-rows: max-content max-content 1fr;
 }
 
 .library-info {
@@ -55,7 +58,6 @@
 @media only screen and (min-width: 600px) {
     .App .app-container, .App.loading .app-container {
         grid-template-columns: 66% 33%;
-        grid-template-rows: max-content max-content;
     }
 
     .App .readings, .App.loading .readings {
@@ -189,7 +191,7 @@ a.link-to-libraries:hover {
 
 .readings li {
     list-style: none;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
     clear: left;
     min-height: 100px;
     overflow: hidden;
