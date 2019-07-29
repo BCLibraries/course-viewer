@@ -20,7 +20,7 @@ class UserStorage {
     public static getReturnUrl() {
         const returnTo = localStorage.getItem('return-to');
         localStorage.removeItem('return-to');
-        return returnTo;
+        return this.isHist2015(returnTo) ? null : returnTo;
     }
 
     public static get() {
@@ -43,6 +43,19 @@ class UserStorage {
         if (window.self === window.top) {
             localStorage.removeItem(storageKey);
         }
+    }
+
+    // Check for
+    private static isHist2015(value: string | null) {
+        if (value === null) {
+            return false;
+        }
+
+        if (value.includes('HIST2015') || value.includes('hist2015') || value.includes('HISIT')) {
+            return true;
+        }
+
+        return false;
     }
 }
 

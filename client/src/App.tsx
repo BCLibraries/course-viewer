@@ -30,8 +30,7 @@ class App extends React.Component<{}, { user: any }> {
             this.setState({user})
         };
 
-        const returnUrl = UserStorage.getReturnUrl();
-        const redirect = returnUrl ? returnUrl : null;
+        const redirect = UserStorage.getReturnUrl();
 
         const homepageRender = (props: any) =>
             <Homepage user={this.state.user} setUser={setUser} redirectUrl={redirect}/>;
