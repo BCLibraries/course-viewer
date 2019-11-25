@@ -26,7 +26,7 @@ function buildDisplayTitle(reading: any) {
 }
 
 function buildThumbnail(reading: any) {
-    const thumb = thumbnail(reading.metadata.isbn);
+    const thumb = thumbnail(reading.metadata.isbn, reading.metadata.title);
     return reading.availability ? thumb : <LinkToReading mms={reading.metadata.mms_id} title={thumb}/>;
 }
 

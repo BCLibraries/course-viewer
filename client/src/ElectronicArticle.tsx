@@ -3,9 +3,10 @@ import FileIcon from './img/file-text.svg';
 import LinkToReading from './LinkToReading';
 import {partInformation} from './MetadataDisplay';
 
-const thumbnail = <img src={FileIcon} className="thumbnail" alt=""/>;
 
 function ElectronicArticle({reading}: { reading: any }) {
+    const thumbnail = <img src={FileIcon} className="thumbnail" alt={reading.metadata.article_title}/>;
+
     return (
         <li className="physical-article">
             <LinkToReading mms={reading.metadata.mms_id} title={thumbnail}/>

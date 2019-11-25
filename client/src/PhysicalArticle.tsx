@@ -3,15 +3,16 @@ import PDFIcon from './img/file-pdf.svg';
 import LinkToReading from './LinkToReading';
 import {partInformation, publisherInformation} from './MetadataDisplay';
 
-const thumbnail = <img src={PDFIcon} className="thumbnail" alt=""/>;
-
 function PhysicalArticle({reading}: { reading: any }) {
+    const title = buildTitle(reading.metadata);
+    const thumbnail = <img src={PDFIcon} className="thumbnail" alt={title}/>;
+
     return (
         <li className="physical-article">
             <LinkToReading mms={reading.metadata.mms_id} title={thumbnail}/>
             <div className="item-metadata">
                 <div className={"cite-title"}>
-                    <cite><LinkToReading mms={reading.metadata.mms_id} title={buildTitle(reading.metadata)}/></cite>
+                    <cite><LinkToReading mms={reading.metadata.mms_id} title={title}/></cite>
                 </div>
                 <div className={"cite-author"}>{reading.metadata.author}</div>
                 <div className={"cite-journal-title"}>

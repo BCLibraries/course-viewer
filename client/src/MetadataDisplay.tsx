@@ -52,6 +52,6 @@ export function thumbnailURL(isbn: any) {
     return `https://proxy-na.hosted.exlibrisgroup.com/exl_rewrite/syndetics.com/index.aspx?isbn=${isbn}/MC.JPG&client=primo`;
 }
 
-export function thumbnail(isbn: any) {
-    return <img src={thumbnailURL(isbn)} className="thumbnail" alt=""/>;
+export function thumbnail(isbn: any, title: string) {
+    return <img src={thumbnailURL(isbn)} className="thumbnail" alt={title}/>;
 }
