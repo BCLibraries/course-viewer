@@ -2,7 +2,7 @@ import * as React from "react";
 import {Redirect, Route} from "react-router";
 import Client from "./Client";
 import Course from "./Course";
-import LibrarianBox from "./LibrarianBox";
+import LibrariansBox from "./LibrariansBox";
 import LibrariesHeader from "./LibrariesHeader";
 import './Placeholder.css';
 import ReadingList from "./ReadingList";
@@ -124,7 +124,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
                         <ResearchGuidesBox course={course} loading={this.state.loading}/>
                     </div>
                     <div className="librarian">
-                        <LibrarianBox course={course} loading={this.state.loading}/>
+                        <LibrariansBox course={course} loading={this.state.loading}/>
                         <a onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"}/></a>
                     </div>
                 </div>

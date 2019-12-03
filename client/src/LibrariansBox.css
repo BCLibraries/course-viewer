@@ -38,3 +38,7 @@ figcaption .name {
     margin-bottom: 1.5em;
     margin-right: 2em;
 }
+
+.too-small-thumb {
+    display: none;
+}
