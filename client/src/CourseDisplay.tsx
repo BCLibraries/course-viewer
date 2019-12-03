@@ -26,8 +26,9 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
         if (params.course_id && params.section_id) {
             params.course_id = params.course_id.toUpperCase();
             course = Course.buildFromCourseAndSection(params.course_id, params.section_id);
-        } else if (queryVars.course_sis_id) {
-            course = Course.buildFromId(queryVars.course_sis_id);
+        } else if (queryVars.has('course_sis_id') && queryVars.get('course_sis_id')) {
+            const course_sis_id:any = queryVars.get('course_sis_id');
+            course = Course.buildFromId(course_sis_id ? course_sis_id : '');
         } else {
             course = new Course;
         }
@@ -100,7 +101,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
         }
 
         const openChat = () => {
-            window.open('https://library.bc.edu/chat','chat', 'resizable=1,width=320,height=300')
+            window.open('https://library.bc.edu/chat', 'chat', 'resizable=1,width=320,height=300')
         };
 
         return (
@@ -122,7 +123,7 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
                     </div>
                     <div className="librarian">
                         <LibrarianBox course={course} loading={this.state.loading}/>
-                        <a onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"} /></a>
+                        <a onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"}/></a>
                     </div>
                 </div>
             </div>
@@ -160,12 +161,12 @@ function readingsLoading(): any {
     );
 }
 
-function parseQueryString(): any {
-    const queryPairs = location.search.substring(1).split('&');
-    const queryObject = {};
+function parseQueryString(): Map<string, string> {
+    const queryPairs = window.location.search.substring(1).split('&');
+    const queryObject: Map<string, string> = new Map();
     queryPairs.forEach(val => {
         const parts = val.split('=');
-        queryObject[parts[0]] = parts[1];
+        queryObject.set(parts[0], parts[1]);
     });
     return queryObject;
 }
