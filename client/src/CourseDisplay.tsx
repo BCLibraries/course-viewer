@@ -8,6 +8,7 @@ import './Placeholder.css';
 import ReadingList from "./ReadingList";
 import ResearchGuidesBox from "./ResearchGuidesBox";
 import UserStorage from "./UserStorage";
+import QueryString from "./QueryString";
 
 class CourseDisplay extends React.Component<{ match: any, user: any, location: any }, { course: Course, loading: boolean }> {
     public constructor(params: any) {
@@ -20,14 +21,15 @@ class CourseDisplay extends React.Component<{ match: any, user: any, location: a
 
     public async componentDidMount() {
         const params = this.props.match.params;
-        const queryVars = parseQueryString();
+        const queryString = new QueryString();
+
         let course: Course;
 
         if (params.course_id && params.section_id) {
             params.course_id = params.course_id.toUpperCase();
             course = Course.buildFromCourseAndSection(params.course_id, params.section_id);
-        } else if (queryVars.has('course_sis_id') && queryVars.get('course_sis_id')) {
-            const course_sis_id:any = queryVars.get('course_sis_id');
+        } else if (queryString.hasValue('course_sis_id')) {
+            const course_sis_id:any = queryString.getValue('course_sis_id');
             course = Course.buildFromId(course_sis_id ? course_sis_id : '');
         } else {
             course = new Course;
@@ -159,16 +161,6 @@ function readingsLoading(): any {
             <div className="book-ph-line"/>
         </li>
     );
-}
-
-function parseQueryString(): Map<string, string> {
-    const queryPairs = window.location.search.substring(1).split('&');
-    const queryObject: Map<string, string> = new Map();
-    queryPairs.forEach(val => {
-        const parts = val.split('=');
-        queryObject.set(parts[0], parts[1]);
-    });
-    return queryObject;
 }
 
 
