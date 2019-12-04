@@ -1,3 +1,10 @@
+/**
+ * Represents a HTTP query string
+ *
+ * Parses a query string (e.g. "?course_sis_id=THEO1000&source=lti") into component key/value pairs and makes them
+ * queryable.
+ *
+ */
 class QueryString {
     private queryPairs: Map<string, string>;
 
@@ -12,10 +19,24 @@ class QueryString {
         });
     }
 
+    /**
+     * Does a value exist in a query string?
+     *
+     * Returns true if the query string contains a value for the given key, false otherwise.
+     *
+     * @param key
+     */
     public hasValue(key: string): boolean {
         return this.queryPairs.has(key);
     }
 
+    /**
+     * Get a query string value
+     *
+     * Returns the value for the given key. Returns an empty string if no value is found.
+     *
+     * @param key
+     */
     public getValue(key: string): string {
         if (!this.queryPairs.has(key)) {
             return '';
