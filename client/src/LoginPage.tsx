@@ -1,67 +1,55 @@
 import * as React from 'react';
+import {useState} from 'react';
 import './LoginPage.css';
-import UserStorage from './UserStorage';
-
 // Fetch polyfill
 import "promise/polyfill"
 import "whatwg-fetch"
-import SectionList from "./SectionList";
 
-class LoginPage extends React.Component<{ user: any, setUser: any }, { username: string, password: string, error: boolean }> {
-    public constructor(props: any) {
-        super(props);
-        this.state = {username: '', password: '', error: false};
+type LoginPageProps = {
+    user: any,
+    setUser: any
+}
 
-        this.handleLogout = this.handleLogout.bind(this);
-        this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
-        this.handleUsernameUpdate = this.handleUsernameUpdate.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+function LoginPage({user, setUser}: LoginPageProps) {
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [isError, setIsError] = useState(false);
 
-    public render() {
-        let errorMessage = <span/>;
-
-        if (this.state.error) {
-            errorMessage = <div className="login-error">There was a problem with your username or password</div>;
-        }
-
-        let mainContent =
+    return (
+        <div className="login-form" onSubmit={handleSubmit}>
             <div className="login-form-container">
                 <p><strong>Login</strong> to view courses in your schedule.</p>
                 <form>
                     <div className="form-input-group">
                         <label htmlFor="login-uid">Username</label>
-                        <input type="text" name="username" id="login-uid" value={this.state.username} onChange={this.handleUsernameUpdate}/>
+                        <input type="text" name="username" id="login-uid" value={userName} onChange={handleUserNameUpdate}/>
                     </div>
                     <div className="form-input-group">
                         <label htmlFor="login-password">Password</label>
-                        <input type="password" name="password" id="login-password" value={this.state.password} onChange={this.handlePasswordUpdate}/>
+                        <input type="password" name="password" id="login-password" value={password} onChange={handlePasswordUpdate}/>
                     </div>
                     <input type="submit" value="Login"/>
-                    {errorMessage}
+                    {isError && <div className="login-error">There was a problem with your username or password</div>}
                 </form>
-            </div>;
-
-        if (this.props.user) {
-            mainContent = <div>
-                <SectionList sections={this.props.user.sections._sectionsAsStudent}/>
-                <a className="logout-link" onClick={this.handleLogout}>Logout</a>
-            </div>;
-        }
+            </div>
+        </div>
+    );
 
 
-        return (
-            <div className="login-form" onSubmit={this.handleSubmit}>
-                {mainContent}
-            </div>);
-    }
+    /**
+     * Send a login request to the API
+     *
+     * @param event
+     */
+    function handleSubmit(event: React.FormEvent<HTMLDivElement>) {
 
-    private handleSubmit(event: React.FormEvent<HTMLDivElement>) {
+        // The payload to send to the login API.
         const loginPayload: any = {
-            password: this.state.password,
-            username: this.state.username
+            password: password,
+            username: userName
         };
 
+        // Send the request
         fetch(`${process.env.REACT_APP_API_BASE}/auth`, {
             body: JSON.stringify(loginPayload),
             headers: {
@@ -69,34 +57,54 @@ class LoginPage extends React.Component<{ user: any, setUser: any }, { username:
             },
             method: 'post',
             mode: "cors"
-        }).then((response: any) => {
-            return response.json();
-        }).then((data: any) => {
-            if (data.success) {
-                this.props.setUser(data.user);
-                this.setState({error: false});
-            } else {
-                this.setState({error: true});
-            }
-        });
-        this.setState({username: '', password: ''});
+        })
+
+        // Process the request and return the json.
+            .then((response: any) => {
+                return response.json();
+            })
+
+            // Evaluate response.
+            .then((data: any) => {
+
+                if (data.success) {
+
+                    // Success! Set the user and reset the error flag.
+                    setUser(data.user);
+                    setIsError(false);
+                } else {
+
+                    // We have an error.
+                    setIsError(true);
+                }
+            });
+
+        // Reset username and password inputs after submitting.
+        setUserName('');
+        setPassword('');
+
+        // Don't let the page reload.
         event.preventDefault();
     }
 
-    private handlePasswordUpdate(event: any) {
-        const value = event.target.value;
-        this.setState({password: value});
+    /**
+     * Handle typing in password input
+     *
+     * @param event
+     */
+    function handlePasswordUpdate(event: any) {
+        setPassword(event.target.value);
     }
 
-    private handleUsernameUpdate(event: any) {
-        const value = event.target.value;
-        this.setState({username: value})
-    }
-
-    private handleLogout(event: any) {
-        UserStorage.clear();
-        this.props.setUser(null);
+    /**
+     * Handle typing in username input
+     *
+     * @param event
+     */
+    function handleUserNameUpdate(event: any) {
+        setUserName(event.target.value);
     }
 }
+
 
 export default LoginPage;

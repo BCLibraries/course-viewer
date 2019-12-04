@@ -4,6 +4,8 @@ import './Homepage.css'
 import {Redirect} from "react-router";
 import CourseSearchForm from "./CourseSearchForm";
 import LoginPage from "./LoginPage";
+import SectionList from "./SectionList";
+import UserStorage from "./UserStorage";
 
 class Homepage extends React.Component<{ user: any, setUser: any, redirectUrl: string | null }, {}> {
     public constructor(props: any) {
@@ -14,6 +16,13 @@ class Homepage extends React.Component<{ user: any, setUser: any, redirectUrl: s
         const readingsHeading = (this.props.user) ? <h3>Your Fall 2019 courses</h3> : <h3>Find your readings</h3>;
         const searchDisplay = (this.props.user) ? <CourseSearchForm/> : <span/>;
         const orBlock = (this.props.user) ? <div className="form-or">or</div> : <span/>;
+
+        const setUser = this.props.setUser;
+
+        function handleLogout(event: any) {
+            UserStorage.clear();
+            setUser(null);
+        }
 
         if (this.props.redirectUrl) {
             return <Redirect to={this.props.redirectUrl}/>
@@ -62,7 +71,14 @@ class Homepage extends React.Component<{ user: any, setUser: any, redirectUrl: s
                 <div className="col-md-5">
                     <div className="homepage-forms">
                         {readingsHeading}
-                        <LoginPage user={this.props.user} setUser={this.props.setUser}/>
+                        {this.props.user ?
+                            <div>
+                                <SectionList sections={this.props.user.sections._sectionsAsStudent}/>
+                                <a className="logout-link" onClick={handleLogout}>Logout</a>
+                            </div>
+                            :
+                            <LoginPage user={this.props.user} setUser={this.props.setUser}/>
+                        }
                         {orBlock}
                         {searchDisplay}
                     </div>
