@@ -1,19 +1,29 @@
 import * as React from 'react';
 import Course from './Course';
 
-class LibrariesHeader extends React.Component<{ course: Course }, {}> {
-    public render() {
+type LibrariesHeaderProps = {
+    course: Course
+};
 
-        if (!this.props.course.number) {
-            return (<h2 className="course-name placeholder"/>);
-        }
-        return (
-            <h2 className="course-name">
-                <span className="course-id">{this.props.course.subject}{this.props.course.number}-{this.props.course.section} </span>
-                {this.props.course.name}
-            </h2>
-        );
+/**
+ * Header for page
+ *
+ * @param course
+ * @constructor
+ */
+function LibrariesHeader({course}: LibrariesHeaderProps) {
+
+    // If we don't have a viable course, don't display a header.
+    if (!course.number) {
+        return (<h2 className="course-name placeholder"/>);
     }
+
+    return (
+        <h2 className="course-name">
+            <span className="course-id">{course.subject}{course.number}-{course.section} </span>
+            {course.name}
+        </h2>
+    );
 }
 
 export default LibrariesHeader;
