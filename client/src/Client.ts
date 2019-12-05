@@ -1,20 +1,35 @@
 import Course from "./Course";
 
-function buildStateCourse(courseJson: any, course: Course) {
+/**
+ * Translate the JSON result into the a client-side Course object
+ *
+ * @param courseJson
+ */
+function buildCourse(courseJson: any): Course{
+    const course = new Course();
     course.code = courseJson.code;
     course.name = courseJson.name;
-    course.lists = courseJson.reading_lists;
     course.hasReadings = courseJson.has_readings;
     course.subjectInfo = courseJson.subject_info;
     course.researchGuides = courseJson.research_guides;
+
+    // If the course has no readings, return an empty course readings list.
+    course.lists = course.hasReadings ? courseJson.reading_lists : [{citations: []}];
+
+    Object.freeze(course);
     return course;
 }
 
+/**
+ * Fetch a course
+ *
+ * @param course
+ */
 async function fetchCourse(course: Course) {
     const courseId = course.subject + course.number;
     const API = buildAPIURL(courseId, course.section);
     const apiResult = await fetch(API);
-    return buildStateCourse(await apiResult.json(), course);
+    return buildCourse(await apiResult.json());
 }
 
 function buildAPIURL(courseId: string, sectionId: string) {

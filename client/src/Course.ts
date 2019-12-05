@@ -1,22 +1,22 @@
+/**
+ * A course
+ *
+ * Full courses can be populated from a Client, or stub courses may be build with just identifying strings
+ * using static builder methods.
+ *
+ */
 class Course {
-    public static buildFromId(courseSisId: string): Course {
-        const course = new Course;
-        const match = courseSisId.match(/([A-Z]{4,5})(\d{4})(\d{2})(\d{4}[SFU])/);
 
-        course.id = courseSisId;
-        if (match) {
-            course.subject = match[1];
-            course.number = match[2];
-            course.section = match[3];
-            course.semester = match[4];
-        }
-
-        return course;
-    }
-
+    /**
+     * Build from a course ID ("THEO1075") and section ID ("01")
+     *
+     * @param courseId
+     * @param sectionId
+     */
     public static buildFromCourseAndSection(courseId: string, sectionId: string): Course {
-        const course = new Course;
         const match = courseId.match(/([A-Z]{4,6})(\d+X?)/);
+
+        const course = new Course();
         if (match) {
             course.subject = match[1];
             course.number = match[2];
@@ -24,7 +24,35 @@ class Course {
             course.subject = courseId;
         }
         course.section = sectionId;
+        Object.freeze(course);
         return course;
+    }
+
+    /**
+     * Build from an Alma course_sis_id
+     *
+     * @param courseSisId
+     */
+    public static buildFromId(courseSisId: string): Course {
+        const match = courseSisId.match(/([A-Z]{4,5})(\d{4})(\d{2})(\d{4}[SFU])/);
+
+        const course = new Course();
+        course.id = courseSisId;
+        if (match) {
+            course.subject = match[1];
+            course.number = match[2];
+            course.section = match[3];
+            course.semester = match[4];
+        }
+        Object.freeze(course);
+        return course;
+    }
+
+    /**
+     * Is this a Law School course?
+     */
+    public isLawSchool(): boolean {
+        return this.subject.indexOf('LAWS') !== -1;
     }
 
     public id: string = '';
