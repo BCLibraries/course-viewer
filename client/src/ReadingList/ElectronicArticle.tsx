@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FileIcon from './img/file-text.svg';
+import FileIcon from '../img/file-text.svg';
 import LinkToReading from './LinkToReading';
 import {partInformation} from './MetadataDisplay';
 

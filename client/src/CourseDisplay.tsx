@@ -6,12 +6,13 @@ import Course from "./Course";
 import LibrariansBox from "./LibrariansBox";
 import LibrariesHeader from "./LibrariesHeader";
 import './Placeholder.css';
-import ReadingList from "./ReadingList";
 import ResearchGuidesBox from "./ResearchGuidesBox";
 import UserStorage from "./UserStorage";
 import QueryString from "./QueryString";
 import {IN_IFRAME} from "./InIFrame";
 import LinkToLibrary from "./LinkToLibrary";
+import ReadingsListPlaceholder from "./ReadingList/ReadingsListPlaceholder";
+import ReadingListContainer from "./ReadingList/ReadingListContainer";
 
 type CourseDisplayProps = {
     match: any,           // Result of a regex query for course and section info in the request URI
@@ -53,6 +54,9 @@ function CourseDisplay({match, user, location}: CourseDisplayProps) {
     // Function to display the appropriate library header.
     const renderHeader = () => <LibrariesHeader course={course}/>;
 
+    // List of readings objects.
+     const readingsList = course.hasReadings ? course.lists[0].citations : [];
+
     return (
         <div className={classes.join(' ')}>
             <Route path={`${process.env.PUBLIC_URL}/:course_id/section/:section_id`} render={renderHeader}/>
@@ -62,7 +66,7 @@ function CourseDisplay({match, user, location}: CourseDisplayProps) {
                     <div className={"readings-header"}>
                         <h2>Readings</h2>
                     </div>
-                    {isLoading ? loadingPage() : readingsDisplay(course)}
+                    {isLoading ? <ReadingsListPlaceholder/> : <ReadingListContainer readings={readingsList}/> }
                 </div>
                 <LinkToLibrary course={course}/>
                 <div className="research-guides">
@@ -122,18 +126,11 @@ function determineDisplayClasses(isLoading: boolean, course: Course) {
     classes.push(IN_IFRAME ? 'lti-style' : 'libraries-style');
 
     // Just show resources if there are no readings.
-    if (isLoading) {
+    if (!isLoading) {
         classes.push(course.hasReadings ? 'has-readings' : 'no-readings');
     }
 
     return classes;
-}
-
-function readingsDisplay(course: Course) {
-    return (course.hasReadings) ? (<ReadingList readings={course.lists[0].citations}/>) :
-        (<div className="no-readings-box">
-            <div className="no-readings-message">No reserve readings were found for this section.</div>
-        </div>);
 }
 
 /**
@@ -143,35 +140,12 @@ function readingsDisplay(course: Course) {
  */
 function redirectToLogin(location: any) {
     try {
-        // Store the current URL so we can send them back to it after login.
+        // Store the current URL so we can send the user back to it after login.
         UserStorage.setReturnUrl(location.pathname);
     } catch (e) {
-        // Storage failed? Don't worry.
+        // Storage failed? Don't worry—they'll figure it out.
     }
     return <Redirect push={true} to={{pathname: `${process.env.PUBLIC_URL}/`,}}/>
-}
-
-function loadingPage(): any {
-    return (
-        <ul className="is-loading">
-            {readingsLoading()}
-            {readingsLoading()}
-            {readingsLoading()}
-            {readingsLoading()}
-            {readingsLoading()}
-        </ul>
-    );
-}
-
-function readingsLoading(): any {
-    return (
-        <li className="physical-book ph-item">
-            <div className="thumbnail"/>
-            <div className="book-ph-line"/>
-            <div className="book-ph-line"/>
-            <div className="book-ph-line"/>
-        </li>
-    );
 }
 
 /**
