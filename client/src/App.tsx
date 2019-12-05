@@ -6,6 +6,7 @@ import UserStorage from './UserStorage';
 
 import CourseDisplay from "./CourseDisplay";
 import Homepage from './Homepage';
+import CourseDisplayContainer from "./CourseDisplayContainer";
 
 const alternateBase = '/reserves';
 
@@ -34,7 +35,7 @@ class App extends React.Component<{}, { user: any }> {
 
         const homepageRender = (props: any) =>
             <Homepage user={this.state.user} setUser={setUser} redirectUrl={redirect}/>;
-        const courseRender = (props: any) => <CourseDisplay {...props} user={this.state.user}/>;
+        const courseRender = (props: any) => <CourseDisplayContainer {...props} user={this.state.user}/>;
 
         return (
             <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
