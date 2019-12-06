@@ -28,4 +28,5 @@
 
 .logout-link {
     cursor: pointer;
+    float: right;
 }

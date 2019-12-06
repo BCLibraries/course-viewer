@@ -2,11 +2,9 @@ import * as React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
 import UserStorage from './UserStorage';
-
-
-import CourseDisplay from "./CourseDisplay";
 import Homepage from './Homepage';
 import CourseDisplayContainer from "./CourseDisplayContainer";
+import LogoutButton from "./LogoutButton";
 
 const alternateBase = '/reserves';
 
@@ -40,6 +38,7 @@ class App extends React.Component<{}, { user: any }> {
         return (
             <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
                 <div>
+                    <LogoutButton user={this.state.user} setUser={setUser}/>
                     <Route exact={true} path={`${alternateBase}/`} render={homepageRender}/>
                     <Route exact={true} path={`${process.env.PUBLIC_URL}/`} render={homepageRender}/>
 
