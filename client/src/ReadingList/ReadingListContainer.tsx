@@ -1,5 +1,5 @@
 import React from "react";
-import PhysicalArticle from "../PhysicalArticle";
+import PhysicalArticle from "./PhysicalArticle";
 import ElectronicArticle from "./ElectronicArticle";
 import EBook from "./Ebook";
 import Book from "./Book";

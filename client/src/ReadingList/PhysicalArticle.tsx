@@ -1,7 +1,7 @@
 import * as React from 'react';
-import PDFIcon from './img/file-pdf.svg';
-import LinkToReading from './ReadingList/LinkToReading';
-import {partInformation, publisherInformation} from './ReadingList/MetadataDisplay';
+import PDFIcon from '../img/file-pdf.svg';
+import LinkToReading from './LinkToReading';
+import {partInformation, publisherInformation} from './MetadataDisplay';
 
 function PhysicalArticle({reading}: { reading: any }) {
     const title = buildTitle(reading.metadata);
