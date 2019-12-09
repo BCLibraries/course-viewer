@@ -32,6 +32,8 @@ function CourseDisplayContainer({match, user, location}: CourseDisplayContainerP
     const [course, setCourse] = useState(seedCourse(match));
     const [isLoading, setIsLoading] = useState(false);
 
+    const abortController = new AbortController();
+
     // Send what we know about the course for Alma to build a more complete course.
     useEffect(() => {
 
@@ -45,10 +47,13 @@ function CourseDisplayContainer({match, user, location}: CourseDisplayContainerP
                     setIsLoading(false);
                     setCourse(newCourse);
                 });
+            return function cleanup() {
+                abortController.abort();
+            }
         };
         fetchCourse();
 
-    }, []);
+    });
 
     // If we are not in an IFrame and don't have a user, redirect to the front page where the user can log in.
     if (IN_IFRAME && !user) {
