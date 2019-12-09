@@ -15,7 +15,7 @@ function LibrariesHeader({course}: LibrariesHeaderProps) {
 
     // If we don't have a viable course, don't display a header.
     if (!course.number) {
-        return (<h2 className="course-name placeholder"/>);
+        return (<div className="course-name placeholder"/>);
     }
 
     return (
