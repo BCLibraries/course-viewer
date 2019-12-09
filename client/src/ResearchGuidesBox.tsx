@@ -36,7 +36,7 @@ function ResearchGuidesBox({loading, course}: { course: Course, loading: boolean
  */
 function guideFactory(guide: any) {
     const guideUrl = guide.friendlyUrl ? guide.friendlyUrl : guide.url;
-    return <li key={guide.friendlyUrl}><a href={guideUrl} target="_blank">{guide.title}</a></li>;
+    return <li key={guide.friendlyUrl}><a href={guideUrl} target="_blank" rel="noopener noreferrer">{guide.title}</a></li>;
 }
 
 /**
@@ -47,7 +47,7 @@ function guideFactory(guide: any) {
 function subjectInfoLink(course: Course) {
     if (!course.researchGuides && (!course.subjectInfo || !course.subjectInfo.slug)) {
         const url = `https://libguides.bc.edu/${course.subjectInfo.slug}`;
-        return <li><a href={url} target="_blank">{course.subjectInfo.name} resources</a></li>;
+        return <li><a href={url} target="_blank" rel="noopener noreferrer">{course.subjectInfo.name} resources</a></li>;
     }
     return <span/>;
 }

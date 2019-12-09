@@ -39,7 +39,7 @@ function LibrarianCard({expert}: LibrarianCardProps) {
                 <img src={expert.imageUrl} className={imgClasses} alt={expertName} onLoad={filterSmallImages}/>
                 <figcaption>
                     <div className="name">
-                        <a href={expert.url} target="_blank">{expertName}</a>
+                        <a href={expert.url} target="_blank" rel="noopener noreferrer">{expertName}</a>
                     </div>
                     <div className="title">Subject Librarian</div>
                 </figcaption>

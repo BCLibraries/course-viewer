@@ -18,7 +18,7 @@ function LinkToLibrary({course}: LinkToLibraryProps) {
 
     return (
         <div className="library-info">
-            <a href={url} target="_blank" className="link-to-libraries">{text}</a>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="link-to-libraries">{text}</a>
         </div>
     );
 }
