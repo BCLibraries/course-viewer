@@ -41,7 +41,7 @@ function CourseDisplay({classes, renderHeader, readingList, researchGuides, link
                 </div>
                 <div className="librarian">
                     {librarians}
-                    <a onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"}/></a>
+                    <button onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"}/></button>
                 </div>
             </div>
         </div>

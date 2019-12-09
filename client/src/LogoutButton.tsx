@@ -13,7 +13,7 @@ function LogoutButton({user, setUser}: LogoutButtonProps) {
         setUser(null);
     }
 
-    return user ? <a className="logout-link" onClick={handleLogout}>Logout</a> :
+    return user ? <button className="logout-link" onClick={handleLogout}>Logout</button> :
         <Redirect to={process.env.PUBLIC_URL}/>;
 }
 
