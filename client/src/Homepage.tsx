@@ -4,7 +4,7 @@ import './Homepage.css'
 import {Redirect} from "react-router";
 import CourseSearchForm from "./CourseSearchForm";
 import LoginPage from "./LoginPage";
-import SectionList from "./SectionList";
+import SectionList from "./Schedule/SectionList";
 
 type HomepageProps = {
     user: any,
