@@ -41,9 +41,7 @@ function CourseDisplayContainer({match, user, location}: CourseDisplayContainerP
 
     // If we are not in an IFrame and don't have a user, redirect to the front page where the user can log in.
     if (!IN_IFRAME && !user) {
-        // @TODO: reactivate redirection to login when user save issue is fixed
-        console.log('not in IFrame and no user');
-        //return redirectToLogin(location);
+        return redirectToLogin(location);
     }
 
     // There are lots of parameters that effect how to display the course information. Build a list of

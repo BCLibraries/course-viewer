@@ -23,7 +23,7 @@ function App() {
 
     const redirect = UserStorage.getReturnUrl();
     const homepageRender = (props: any) =>
-        <Homepage user={user} setUser={setUser} redirectUrl={redirect}/>;
+        <Homepage user={user} setUser={storeNewUser} redirectUrl={redirect}/>;
     const courseRender = (props: any) => <CourseDisplayContainer {...props} user={user}/>;
 
     return (
