@@ -1,7 +1,6 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Redirect} from "react-router";
-import Client from "./Client";
 import Course from "./Course";
 import LibrariansBox from "./LibrariansBox";
 import LibrariesHeader from "./LibrariesHeader";
@@ -13,6 +12,7 @@ import LinkToLibrary from "./LinkToLibrary";
 import ReadingsListPlaceholder from "./ReadingList/ReadingsListPlaceholder";
 import ReadingListContainer from "./ReadingList/ReadingListContainer";
 import CourseDisplay from "./CourseDisplay";
+import useFetchCourse from "./UseFetchCourse";
 
 type CourseDisplayContainerProps = {
     match: any,           // Result of a regex query for course and section info in the request URI
@@ -29,35 +29,21 @@ type CourseDisplayContainerProps = {
  * @constructor
  */
 function CourseDisplayContainer({match, user, location}: CourseDisplayContainerProps) {
-    const [course, setCourse] = useState(seedCourse(match));
-    const [isLoading, setIsLoading] = useState(false);
 
-    const abortController = new AbortController();
+    // Extract the course code from the URL and send an API request to fetch the course information.
+    const seedCourse = buildCourseFromURL(match);
+    const [{isLoading, course}] =useFetchCourse(seedCourse.subject, seedCourse.number, seedCourse.section);
 
-    // Send what we know about the course for Alma to build a more complete course.
+    // Set the page title based on the course code.
     useEffect(() => {
-
-        // The page title is a side effect, so set it here in useEffect.
-        document.title = `${course.subject}${course.number}-${course.section} resources - Boston College Libraries`;
-
-        const fetchCourse = async () => {
-            setIsLoading(true);
-            Client.fetchCourse(course)
-                .then((newCourse: Course) => {
-                    setIsLoading(false);
-                    setCourse(newCourse);
-                });
-            return function cleanup() {
-                abortController.abort();
-            }
-        };
-        fetchCourse();
-
-    });
+        document.title = `${seedCourse.subject}${seedCourse.number}-${seedCourse.section} resources - Boston College Libraries`;
+    },[seedCourse]);
 
     // If we are not in an IFrame and don't have a user, redirect to the front page where the user can log in.
-    if (IN_IFRAME && !user) {
-        return redirectToLogin(location);
+    if (!IN_IFRAME && !user) {
+        // @TODO: reactivate redirection to login when user save issue is fixed
+        console.log('not in IFrame and no user');
+        //return redirectToLogin(location);
     }
 
     // There are lots of parameters that effect how to display the course information. Build a list of
@@ -89,7 +75,7 @@ function CourseDisplayContainer({match, user, location}: CourseDisplayContainerP
  *
  * @param match
  */
-function seedCourse(match: any): Course {
+function buildCourseFromURL(match: any): Course {
 
     // Prefer to build the course from course and section IDs if we have them.
     const params = match.params;
