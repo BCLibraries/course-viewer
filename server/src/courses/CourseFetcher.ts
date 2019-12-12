@@ -21,17 +21,20 @@ async function fetchReadings(course: Course) {
     try {
         const physicalBooks = readingList.citations.filter(isPhysicalItem);
         const mmsIds = physicalBooks.map((cite: any) => cite.metadata.mms_id);
-        const availabilityResults = await fetchAvailability(mmsIds);
 
-        const availabilityData = availabilityResults.data;
+        if (mmsIds.length > 0) {
+            const availabilityResults = await fetchAvailability(mmsIds);
 
-        physicalBooks.forEach((book: Citation) => {
-            const itemAvail = availabilityData[book.metadata.mms_id];
+            const availabilityData = availabilityResults.data;
 
-            if (itemAvail[0]) {
-                book.setAvailability(itemAvail,readingList.processDept);
-            }
-        });
+            physicalBooks.forEach((book: Citation) => {
+                const itemAvail = availabilityData[book.metadata.mms_id];
+
+                if (itemAvail[0]) {
+                    book.setAvailability(itemAvail, readingList.processDept);
+                }
+            });
+        }
     } catch (e) {
         logger.error({e});
         // Don't fail if availability information isn't available, just return the list.
