@@ -40,7 +40,7 @@ function CourseDisplayContainer({match, user, location}: CourseDisplayContainerP
     },[seedCourse]);
 
     // If we are not in an IFrame and don't have a user, redirect to the front page where the user can log in.
-    if (!IN_IFRAME && !user) {
+    if (!IN_IFRAME && !user && location) {
         return redirectToLogin(location);
     }
 
