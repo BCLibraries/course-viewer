@@ -6,6 +6,7 @@ import UserStorage from './UserStorage';
 import Homepage from './Homepage';
 import CourseDisplayContainer from "./CourseDisplayContainer";
 import LogoutButton from "./LogoutButton";
+import {IN_IFRAME} from "./InIFrame";
 
 const alternateBase = '/reserves';
 
@@ -29,7 +30,8 @@ function App() {
     return (
         <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
             <div>
-                <LogoutButton user={user} setUser={storeNewUser}/>
+                {!IN_IFRAME && <LogoutButton user={user} setUser={storeNewUser}/>}
+
                 <Route exact={true} path={`${alternateBase}/`} render={homepageRender}/>
                 <Route exact={true} path={`${process.env.PUBLIC_URL}/`} render={homepageRender}/>
 

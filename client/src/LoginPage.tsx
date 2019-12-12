@@ -4,16 +4,16 @@ import './LoginPage.css';
 // Fetch polyfill
 import "promise/polyfill"
 import "whatwg-fetch"
+import useFetchLogin from "./UseFetchLogin";
 
 type LoginPageProps = {
-    user: any,
     setUser: any
 }
 
-function LoginPage({user, setUser}: LoginPageProps) {
-    const [userName, setUserName] = useState('');
+function LoginPage({setUser}: LoginPageProps) {
+    const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [isError, setIsError] = useState(false);
+    const [{isError}, setLoginPayload] = useFetchLogin(setUser);
 
     return (
         <div className="login-form" onSubmit={handleSubmit}>
@@ -22,11 +22,21 @@ function LoginPage({user, setUser}: LoginPageProps) {
                 <form>
                     <div className="form-input-group">
                         <label htmlFor="login-uid">Username</label>
-                        <input type="text" name="username" id="login-uid" value={userName} onChange={handleUserNameUpdate}/>
+                        <input type="text"
+                               name="username"
+                               id="login-uid"
+                               value={username}
+                               onChange={(event) => setUserName(event.target.value)}
+                        />
                     </div>
                     <div className="form-input-group">
                         <label htmlFor="login-password">Password</label>
-                        <input type="password" name="password" id="login-password" value={password} onChange={handlePasswordUpdate}/>
+                        <input type="password"
+                               name="password"
+                               id="login-password"
+                               value={password}
+                               onChange={(event) => setPassword(event.target.value)}
+                        />
                     </div>
                     <input type="submit" value="Login"/>
                     {isError && <div className="login-error">There was a problem with your username or password</div>}
@@ -35,7 +45,6 @@ function LoginPage({user, setUser}: LoginPageProps) {
         </div>
     );
 
-
     /**
      * Send a login request to the API
      *
@@ -43,41 +52,7 @@ function LoginPage({user, setUser}: LoginPageProps) {
      */
     function handleSubmit(event: React.FormEvent<HTMLDivElement>) {
 
-        // The payload to send to the login API.
-        const loginPayload: any = {
-            password: password,
-            username: userName
-        };
-
-        // Send the request
-        fetch(`${process.env.REACT_APP_API_BASE}/auth`, {
-            body: JSON.stringify(loginPayload),
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            method: 'post',
-            mode: "cors"
-        })
-
-        // Process the request and return the json.
-            .then((response: any) => {
-                return response.json();
-            })
-
-            // Evaluate response.
-            .then((data: any) => {
-
-                if (data.success) {
-
-                    // Success! Set the user and reset the error flag.
-                    setUser(data.user);
-                    setIsError(false);
-                } else {
-
-                    // We have an error.
-                    setIsError(true);
-                }
-            });
+        setLoginPayload({password, username});
 
         // Reset username and password inputs after submitting.
         setUserName('');
@@ -85,24 +60,6 @@ function LoginPage({user, setUser}: LoginPageProps) {
 
         // Don't let the page reload.
         event.preventDefault();
-    }
-
-    /**
-     * Handle typing in password input
-     *
-     * @param event
-     */
-    function handlePasswordUpdate(event: any) {
-        setPassword(event.target.value);
-    }
-
-    /**
-     * Handle typing in username input
-     *
-     * @param event
-     */
-    function handleUserNameUpdate(event: any) {
-        setUserName(event.target.value);
     }
 }
 

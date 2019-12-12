@@ -1,6 +1,5 @@
 import * as React from 'react';
 import UserStorage from "./UserStorage";
-import {Redirect} from "react-router";
 
 type LogoutButtonProps = {
     user: any,
@@ -13,8 +12,8 @@ function LogoutButton({user, setUser}: LogoutButtonProps) {
         setUser(null);
     }
 
-    return user ? <button className="logout-link" onClick={handleLogout}>Logout</button> :
-        <Redirect to={process.env.PUBLIC_URL}/>;
+
+    return user ? <button className="logout-link" onClick={handleLogout}>Logout</button> : <span/>;
 }
 
 export default LogoutButton;

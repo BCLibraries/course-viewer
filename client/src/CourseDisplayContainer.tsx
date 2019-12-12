@@ -32,12 +32,12 @@ function CourseDisplayContainer({match, user, location}: CourseDisplayContainerP
 
     // Extract the course code from the URL and send an API request to fetch the course information.
     const seedCourse = buildCourseFromURL(match);
-    const [{isLoading, course}] =useFetchCourse(seedCourse.subject, seedCourse.number, seedCourse.section);
+    const [{isLoading, course}] = useFetchCourse(seedCourse.subject, seedCourse.number, seedCourse.section);
 
     // Set the page title based on the course code.
     useEffect(() => {
         document.title = `${seedCourse.subject}${seedCourse.number}-${seedCourse.section} resources - Boston College Libraries`;
-    },[seedCourse]);
+    }, [seedCourse]);
 
     // If we are not in an IFrame and don't have a user, redirect to the front page where the user can log in.
     if (!IN_IFRAME && !user && location) {

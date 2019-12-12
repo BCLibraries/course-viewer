@@ -14,7 +14,7 @@ type HomepageProps = {
 
 function Homepage({user, setUser, redirectUrl}: HomepageProps) {
 
-    if (redirectUrl) {
+    if (redirectUrl && user) {
         return <Redirect to={redirectUrl}/>
     }
 
@@ -69,7 +69,7 @@ function Homepage({user, setUser, redirectUrl}: HomepageProps) {
                         <SectionList sections={user.sections._sectionsAsStudent}/>
                         :
                         // Otherwise, prompt for login
-                        <LoginPage user={user} setUser={setUser}/>
+                        <LoginPage setUser={setUser}/>
                     }
 
                     {user && <div className="form-or">or</div>}
