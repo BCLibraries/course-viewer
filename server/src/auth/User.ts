@@ -10,10 +10,16 @@ class User {
         this.uid = uid;
     }
 
+    /**
+     * Has the user been populated?
+     */
     get empty(): boolean {
         return this._empty;
     }
 
+    /**
+     * Mark the user as populated
+     */
     public found() {
         this._empty = false;
     }

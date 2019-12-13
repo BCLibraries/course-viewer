@@ -4,6 +4,7 @@ import User from "./User";
 
 let router = require('express').Router();
 
+// Handle login requests.
 router.post('', (req: Request, res: Response) => {
     authenticate(req.body.username, req.body.password)
         .then((user: User) => {

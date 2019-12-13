@@ -1,3 +1,6 @@
+/**
+ * A single course section
+ */
 class Section {
     public readonly ldapIdentifier: string;
     public readonly subjectCode: string;
