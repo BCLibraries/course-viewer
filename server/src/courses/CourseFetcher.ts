@@ -9,6 +9,11 @@ import logger from '../Logger';
 
 const activeListStatuses: any = ['complete', 'beingprepared', 'being prepared'];
 
+/**
+ * Fetch readings for a course
+ *
+ * @param course
+ */
 async function fetchReadings(course: Course) {
 
     // Load any reading lists.
@@ -44,30 +49,53 @@ async function fetchReadings(course: Course) {
 }
 
 async function fetchReadingList(course: Course) {
-    let readingList = await cache.fetchReadingList(course);
+
+    // First look for a cached reading list. Reading lists are cached as the reified object taken from the
+    // API JSON response.
+    let readingListJSON = await cache.fetchReadingList(course);
 
     // If list wasn't cached, fetch it.
-    if (!readingList) {
+    if (!readingListJSON) {
+
+        // Query the Alma course API.
         const courseFetchResponse = await fetchFromAlma('/courses/' + course.id, {});
 
+        // Check if the course has any reading lists.
         if (courseFetchResponse.data.reading_lists.reading_list) {
+
+            // Use the first active reading list.
             const filteredLists = courseFetchResponse.data.reading_lists.reading_list.filter(listIsActive);
             if (filteredLists[0]) {
-                readingList = filteredLists[0];
-                readingList.processing_department = courseFetchResponse.data.processing_department.value;
-                cache.saveReadingList(course, readingList);
+                readingListJSON = filteredLists[0];
+                readingListJSON.processing_department = courseFetchResponse.data.processing_department.value;
+                cache.saveReadingList(course, readingListJSON);
             }
         }
     }
-    return new ReadingList(readingList, readingList.processing_department);
+    return new ReadingList(readingListJSON, readingListJSON.processing_department);
 }
 
+/**
+ * Is this a physical item?
+ *
+ * @param cite
+ */
 function isPhysicalItem(cite: Citation) {
+
+    // eBooks are sometimes typed as physical books in reserves, as are streaming videos. Only
+    // call a book a physical book if it is neither one of those things.
     const isPhysical = cite.type.primary === 'Physical Book' && !cite.metadata.title.includes('streaming');
     return isPhysical && !isEBook(cite);
 }
 
+/**
+ * Is this an eBook?
+ *
+ * @param cite
+ */
 function isEBook(cite: Citation) {
+
+    // It's an eBook if it says "eBook", even if it's typed as a physical book.
     const typeIsEbook = cite.type.primary === 'Physical Book' && cite.type.secondary === 'E-book';
     const hasEbookInTitle = cite.metadata.title.match(/\([eE]-?book/);
     return typeIsEbook || hasEbookInTitle;

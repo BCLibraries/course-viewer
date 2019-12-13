@@ -1,3 +1,6 @@
+/**
+ * A LibGuide
+ */
 class Guide {
     public title: string = '';
     public tags: string[] = [];

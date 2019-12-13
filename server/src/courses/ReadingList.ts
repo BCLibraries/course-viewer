@@ -4,6 +4,9 @@ interface IStringMap {
     [index: string]: string;
 }
 
+/**
+ * Map Reserves processing department to a reserves access point
+ */
 const deptToLibMap: IStringMap = {
     'BAPSTCR': 'Bapst Library',
     'TMLCR': 'Theology and Ministry Library',
@@ -12,6 +15,9 @@ const deptToLibMap: IStringMap = {
     'SWKCR': 'Social Work Library'
 };
 
+/**
+ * An Alma reading list
+ */
 class ReadingList {
     public id: string;
     public code: string;

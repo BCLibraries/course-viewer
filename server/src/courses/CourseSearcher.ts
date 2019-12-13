@@ -13,30 +13,33 @@ async function searchForCourse(code: string, section: string): Promise<Course> {
     course.code = code;
     course.section = section;
 
-    // Hopefully it's cached and we won't have to fetch from Alma.
-    let courseFromAlma = await cache.fetchCourseSearch(course);
+    // Hopefully it's cached and we won't have to fetch from Alma. The cached form of the course is the reified
+    // course object from the Alma API JSON response, not a Course object.
+    let courseJSON = await cache.fetchCourseSearch(course);
 
-    if (courseFromAlma) {
-        course.loadFromAlma(courseFromAlma);
+    // If the course was in cache, convert it to a Course object and return.
+    if (courseJSON) {
+        course.loadFromAlma(courseJSON);
         return course;
     }
 
-    // First look up by course and section.
-    courseFromAlma = await findActiveCourse(`code~${code} AND section~${section}`);
+    // Not in cache? First look up by course and section.
+    courseJSON = await findActiveCourse(`code~${code} AND section~${section}`);
 
     // If that fails, look up with an identifier built from the course and section.
-    if (!courseFromAlma) {
-        courseFromAlma = await findActiveCourse(`searchable_ids~${code}.${section}`);
+    if (!courseJSON) {
+        courseJSON = await findActiveCourse(`searchable_ids~${code}.${section}`);
     }
 
     // If that fails, use just the course code as an identifier.
-    if (!courseFromAlma) {
-        courseFromAlma = await findActiveCourse(`searchable_ids~${code}`);
+    if (!courseJSON) {
+        courseJSON = await findActiveCourse(`searchable_ids~${code}`);
     }
 
-    if (courseFromAlma) {
-        course.loadFromAlma(courseFromAlma);
-        cache.saveCourseSearch(course, courseFromAlma);
+    // If we found a course, convert it to a Course object and cache it.
+    if (courseJSON) {
+        course.loadFromAlma(courseJSON);
+        cache.saveCourseSearch(course, courseJSON);
     }
 
     return course;
@@ -63,12 +66,8 @@ function searchParams(query: string) {
  * @param query
  */
 async function findActiveCourse(query: string) {
-    let courseFromAlma = null;
-    const courseSearchResponse = await fetchFromAlma('/courses', searchParams(query));
-    if (courseSearchResponse.data.course) {
-        courseFromAlma = getActiveCourse(courseSearchResponse.data.course);
-    }
-    return courseFromAlma;
+    const searchResponse = await fetchFromAlma('/courses', searchParams(query));
+    return searchResponse.data.course ? getActiveCourse(searchResponse.data.course) : null;
 }
 
 /**

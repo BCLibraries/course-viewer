@@ -1,5 +1,8 @@
 import axios, {AxiosInstance} from 'axios';
 
+/**
+ * Return a throttled Web client
+ */
 function buildThrottledClient() {
     const webClient = axios.create({timeout: 20000});
     scheduleRequests(webClient, 200);
@@ -8,6 +11,10 @@ function buildThrottledClient() {
 
 /**
  * Throttle Alma requests to keep in line with API limits
+ *
+ * Alma only allows only allows 25 API calls/second per institution. Because there are other
+ * services using the Alma API, we limit the reserves service to one call every 200ms, or 5
+ * calls per second.
  *
  * Courtesy galenus@StackOverflow
  * https://stackoverflow.com/questions/43482639/throttling-axios-requests
