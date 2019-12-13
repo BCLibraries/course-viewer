@@ -1,9 +1,11 @@
 const parseString = require('xml2js').parseString;
 
+/**
+ * Parse a Primo OpenURL XML response
+ */
 class OpenURL {
 
-    private _targetLink: string;
-    private raw: any;
+    private _targetLink: string = '';
 
     constructor(xml: string) {
         this._targetLink = '';
@@ -12,12 +14,20 @@ class OpenURL {
         });
     }
 
+    /**
+     * Item target link
+     */
     get targetLink(): string {
         return this._targetLink;
     }
 
+    /**
+     * Extract target link from XML
+     *
+     * @param err
+     * @param parsed
+     */
     parseXML(err: any, parsed: any): void {
-        this.raw = parsed;
         if (parsed.uresolver_content.context_services[0].context_service[0].target_url) {
             this._targetLink = parsed.uresolver_content.context_services[0].context_service[0].target_url[0];
         }
