@@ -2,13 +2,20 @@ import redis from 'redis';
 import {promisify} from "util";
 import Course from "./courses/Course";
 
+/**
+ * Promisified redis lookup to avoid callback hell
+ */
 const client = redis.createClient();
 const getAsync = promisify(client.get).bind(client);
 const mgetAsync = promisify(client.mget).bind(client);
 
-const minuteInSeconds = 60;
-const dayInSeconds = 24 * 60 * 60;
+// Convenience constants to avoid mystery numbers.
+const MINUTE_IN_SECONDS = 60;
+const DAY_IN_SECONDS = 24 * 60 * MINUTE_IN_SECONDS;
 
+/**
+ * Cache for storing values locally
+ */
 class Cache {
     private static courseSearchKey(course: Course) {
         return `bcreserves-alma-course-search-${course.code}${course.section}`;
@@ -25,7 +32,7 @@ class Cache {
 
     public saveCourseSearch(course: Course, almaSearchResult: any) {
         const courseJSON = JSON.stringify(almaSearchResult);
-        client.set(Cache.courseSearchKey(course), courseJSON, 'EX', dayInSeconds);
+        client.set(Cache.courseSearchKey(course), courseJSON, 'EX', DAY_IN_SECONDS);
     }
 
     public async fetchCourseSearch(course: Course) {
@@ -35,7 +42,7 @@ class Cache {
 
     public saveReadingList(course: Course, courseFromAlma: any) {
         const courseJSON = JSON.stringify(courseFromAlma);
-        client.set(Cache.readingListKey(course), courseJSON, 'EX', 5 * minuteInSeconds);
+        client.set(Cache.readingListKey(course), courseJSON, 'EX', 5 * MINUTE_IN_SECONDS);
     }
 
     public async fetchReadingList(course: Course) {

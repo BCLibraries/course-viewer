@@ -1,6 +1,9 @@
 import bunyan from "bunyan";
 import path from "path";
 
+/**
+ * Log to rotating text files
+ */
 const logger = bunyan.createLogger({
     name: 'main-logger',
     streams: [{

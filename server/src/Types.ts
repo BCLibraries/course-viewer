@@ -1,3 +1,6 @@
+// Custom types
+// TODO: Move other custom types from ad hoc declarations to here
+
 export type TYear =
     2010
     | 2011
