@@ -17,7 +17,7 @@ function App() {
         try {
             UserStorage.store(newUser);
         } catch (e) {
-            // no-op
+            newUser = null;
         }
         setUser(newUser);
     }

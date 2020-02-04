@@ -4,7 +4,7 @@ import './SectionList.css';
 import NoCoursesMessage from "./NoCoursesMessage";
 
 const currentYear = 2020;
-const currentSemester = 'F';
+const currentSemester = 'S';
 
 type SectionListProps = {
     sections: any[]
