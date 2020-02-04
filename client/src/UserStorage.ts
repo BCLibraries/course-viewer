@@ -1,4 +1,4 @@
-const storageKey = 'reserves-user';
+const storageKey = 'library-reserves-user';
 const minutesToLive = 20;
 
 class UserStorage {
@@ -20,6 +20,9 @@ class UserStorage {
     public static getReturnUrl() {
         const returnTo = localStorage.getItem('return-to');
         localStorage.removeItem('return-to');
+        if (returnTo === null || !returnTo.startsWith('http')) {
+            return null;
+        }
         return this.isHist2015(returnTo) ? null : returnTo;
     }
 
@@ -30,7 +33,7 @@ class UserStorage {
             const twentyMinutesAgo = Date.now() / 1000 - (minutesToLive * 60);
             if (userString) {
                 const userStringData = JSON.parse(userString);
-                if (userStringData.added > twentyMinutesAgo) {
+                if (userStringData.added && userStringData.added > twentyMinutesAgo) {
                     user = userStringData.user;
                     UserStorage.store(user);
                 }
