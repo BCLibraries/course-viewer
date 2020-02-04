@@ -23,9 +23,11 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
     if (code === 'ENGL1010') {
         subjects = ['FWS'];
     } else if (code === 'HIST1513' || code === 'EESC1507') {
-        subjects = ['EES1']
+        subjects = ['EES1'];
     } else if (code === 'EDUC7308') {
-        subjects = ['ERME']
+        subjects = ['ERME'];
+    } else if (code === 'ISYS2267' || code === 'CSCI2267' || code === 'PHIL6670' || code === 'SOCY6670') {
+        subjects = ['CSCI'];
     }
 
     fetchPromises.push(fetchSubject(subjects));
