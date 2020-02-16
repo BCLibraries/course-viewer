@@ -32,7 +32,8 @@ class ReadingList {
         this.code = listFromAlma.code;
         this.name = listFromAlma.name;
         this.status = listFromAlma.status;
-        this.citations = listFromAlma.citations.citation.map((citation: any) => new Citation(citation));
+        const sourceCitations = listFromAlma.citations.citation ? listFromAlma.citations.citation : [];
+        this.citations = sourceCitations.map((citation: any) => new Citation(citation));
         this.processDept = deptToLibMap[processDept] ? deptToLibMap[processDept] : processDept;
     }
 }
