@@ -26,7 +26,7 @@ function ReadingListContainer({readings}: ReadingListContainerProps) {
 
     return (
         <ReadingList>
-            {readings.map(readingFactory).sort(compareReadingsByTitle)}
+            {readings.sort(compareReadingsByTitle).map(readingFactory)}
         </ReadingList>
     );
 }
@@ -56,10 +56,10 @@ function readingFactory(reading: any) {
  * @param b
  */
 function compareReadingsByTitle(a: any, b: any) {
-    if (a.props.reading.sortTitle < b.props.reading.sortTitle) {
+    if (a.sortTitle < b.sortTitle) {
         return -1;
     }
-    if (a.props.reading.sortTitle > b.props.reading.sortTitle) {
+    if (a.sortTitle > b.sortTitle) {
         return 1;
     }
     return 0;
