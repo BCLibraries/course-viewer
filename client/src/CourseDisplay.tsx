@@ -14,7 +14,7 @@ type CourseDisplayProps = {
 
 /**
  * Display a course
- * 
+ *
  * @param classes
  * @param renderHeader
  * @param readingList
@@ -30,6 +30,13 @@ function CourseDisplay({classes, renderHeader, readingList, researchGuides, link
 
             <div className={'app-container'}>
                 <div className="readings">
+
+                    <div className="chrome-error-notice">
+                        <h4><i className="fa fa-file-pdf-o" aria-hidden="true"/> Trouble accessing PDFs in Chrome?</h4>
+                        <p>A bug in Google Chrome prevents many PDFs from opening. For now, we recommned using a different browser (Firefox, Edge, Safari).</p>
+                    </div>
+
+
                     <div className={"readings-header"}>
                         <h2>Readings</h2>
                     </div>
@@ -41,7 +48,8 @@ function CourseDisplay({classes, renderHeader, readingList, researchGuides, link
                 </div>
                 <div className="librarian">
                     {librarians}
-                    <button onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"}/></button>
+                    <button onClick={openChat} className={"chat-link btn btn-primary"}>Chat with us <i className={"fa fa-commenting-o"}/>
+                    </button>
                 </div>
             </div>
         </div>
