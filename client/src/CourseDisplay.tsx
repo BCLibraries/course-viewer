@@ -33,7 +33,7 @@ function CourseDisplay({classes, renderHeader, readingList, researchGuides, link
 
                     <div className="chrome-error-notice">
                         <h4><i className="fa fa-file-pdf-o" aria-hidden="true"/> Trouble accessing PDFs in Chrome?</h4>
-                        <p>A bug in Google Chrome prevents many PDFs from opening. For now, we recommned using a different browser (Firefox, Edge, Safari).</p>
+                        <p>A bug in Google Chrome prevents many PDFs from opening. For now, we recommend using a different browser (Firefox, Edge, Safari).</p>
                     </div>
 
 
