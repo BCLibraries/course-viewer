@@ -11,11 +11,11 @@ function ElectronicArticle({reading}: { reading: any }) {
 
     return (
         <li className={buildReadingClassNames('physical-article', reading.status)}>
-            <LinkToReading mms={reading.metadata.mms_id} title={thumbnail} status={reading.metadata.status}/>
+            <LinkToReading mms={reading.metadata.mms_id} title={thumbnail} status={reading.status}/>
             <div className="item-reading.metadata">
                 <div className={"cite-title"}>
                     <cite>
-                        <LinkToReading mms={reading.metadata.mms_id} title={reading.metadata.article_title} status={reading.metadata.status}/>
+                        <LinkToReading mms={reading.metadata.mms_id} title={reading.metadata.article_title} status={reading.status}/>
                     </cite>
                 </div>
                 <div className={"cite-author"}>{reading.metadata.author}</div>

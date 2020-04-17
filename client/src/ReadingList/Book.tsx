@@ -41,7 +41,7 @@ function getReadingClass(type: any): string {
 function buildDisplayTitle(reading: any) {
     const displayTitle = reading.metadata.title;
     return reading.availability ? displayTitle :
-        <LinkToReading mms={reading.metadata.mms_id} title={displayTitle} status={reading.metadata.status}/>;
+        <LinkToReading mms={reading.metadata.mms_id} title={displayTitle} status={reading.status}/>;
 }
 
 /**
@@ -54,7 +54,7 @@ function buildDisplayTitle(reading: any) {
 function buildThumbnail(reading: any) {
     const thumb = thumbnail(reading.metadata.isbn, reading.metadata.title);
     return reading.availability ? thumb :
-        <LinkToReading mms={reading.metadata.mms_id} title={thumb} status={reading.metadata.status}/>;
+        <LinkToReading mms={reading.metadata.mms_id} title={thumb} status={reading.status}/>;
 }
 
 /**
@@ -79,7 +79,7 @@ function availabilityInfo(reading: any) {
             return checkedOut(availability);
         }
         default: {
-            return checkForAvailability(reading.metadata);
+            return checkForAvailability(reading.metadata, reading.status);
         }
     }
 }
@@ -117,11 +117,12 @@ function checkedOut(availability: any) {
  * Link to Primo for unknown availability status
  *
  * @param metadata
+ * @param status
  */
-function checkForAvailability(metadata: any) {
+function checkForAvailability(metadata: any, status: any) {
     return (
         <div className="availability">
-            <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'} status={metadata.status}/></strong>
+            <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'} status={status}/></strong>
         </div>
     )
 }
