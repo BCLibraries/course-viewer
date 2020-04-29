@@ -197,6 +197,23 @@ a.link-to-libraries:hover {
     overflow: hidden;
 }
 
+.readings li.being-prepared {
+    color: #aaa;
+}
+
+.readings li.being-prepared .availability {
+    color: #aaa;
+}
+
+.readings li.being-prepared .being-prepared-message {
+    color: #444;
+    font-weight: 400;
+}
+
+.readings li.being-prepared .thumbnail {
+    opacity: 0.6;
+}
+
 .readings li cite {
     font-weight: 600;
 }

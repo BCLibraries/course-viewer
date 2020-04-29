@@ -42,7 +42,7 @@ class Cache {
 
     public saveReadingList(course: Course, courseFromAlma: any) {
         const courseJSON = JSON.stringify(courseFromAlma);
-        client.set(Cache.readingListKey(course), courseJSON, 'EX', 5 * MINUTE_IN_SECONDS);
+        client.set(Cache.readingListKey(course), courseJSON, 'EX', MINUTE_IN_SECONDS);
     }
 
     public async fetchReadingList(course: Course) {

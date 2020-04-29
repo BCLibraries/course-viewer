@@ -12,10 +12,11 @@ class Citation {
      * Constructor
      *
      * @param {} almaCite a citation record from the Alma reserves API
+     * @param processDept
      */
-    constructor(almaCite: any) {
+    constructor(almaCite: any, processDept: string) {
         this.id = almaCite.id;
-        this.status = almaCite.status.value;
+        this.status = processDept !== 'ONLCR' ? 'Complete' : almaCite.status.value;
 
         // Use Alma types, unless it's an eBook which requires some special logic.
         this.type = {
