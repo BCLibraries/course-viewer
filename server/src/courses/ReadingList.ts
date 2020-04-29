@@ -12,7 +12,8 @@ const deptToLibMap: IStringMap = {
     'TMLCR': 'Theology and Ministry Library',
     'ONLCR': "O'Neill Library",
     'ERCCR': 'Educational Resource Center',
-    'SWKCR': 'Social Work Library'
+    'SWKCR': 'Social Work Library',
+    'LAWCR': 'Law School Course Reserves'
 };
 
 /**
@@ -33,7 +34,7 @@ class ReadingList {
         this.name = listFromAlma.name;
         this.status = listFromAlma.status;
         const sourceCitations = listFromAlma.citations.citation ? listFromAlma.citations.citation : [];
-        this.citations = sourceCitations.map((citation: any) => new Citation(citation));
+        this.citations = sourceCitations.map((citation: any) => new Citation(citation, processDept));
         this.processDept = deptToLibMap[processDept] ? deptToLibMap[processDept] : processDept;
     }
 }
