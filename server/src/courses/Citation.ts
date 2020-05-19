@@ -16,7 +16,7 @@ class Citation {
      */
     constructor(almaCite: any, processDept: string) {
         this.id = almaCite.id;
-        this.status = processDept !== 'ONLCR' ? 'Complete' : almaCite.status.value;
+        this.status = usesIncomplete(processDept) ?  almaCite.status.value: 'Complete';
 
         // Use Alma types, unless it's an eBook which requires some special logic.
         this.type = {
@@ -130,6 +130,16 @@ function isEbook(almaCite: any) {
     }
 
     // Otherwise, it's not an eBook.
+    return false;
+}
+
+function usesIncomplete(processDept: string) {
+    switch (processDept) {
+        case 'TMLCR':
+        case 'ONLCR':
+        case 'ERCCR':
+            return true;
+    }
     return false;
 }
 
