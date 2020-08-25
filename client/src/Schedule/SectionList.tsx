@@ -3,8 +3,8 @@ import {Link} from "react-router-dom";
 import './SectionList.css';
 import NoCoursesMessage from "./NoCoursesMessage";
 
-const currentYear = 2020;
-const currentSemester = 'U';
+const currentYear = 2021;
+const currentSemester = 'F';
 
 type SectionListProps = {
     sections: any[]

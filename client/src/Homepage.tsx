@@ -61,7 +61,7 @@ function Homepage({user, setUser, redirectUrl}: HomepageProps) {
             <div className="col-md-5">
                 <div className="homepage-forms">
 
-                    {user ? <h3>Your Summer 2020 courses</h3> : <h3>Find your readings</h3>}
+                    {user ? <h3>Your Fall 2020 courses</h3> : <h3>Find your readings</h3>}
 
                     {user ?
 
