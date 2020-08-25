@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Maintenance
+
+### Changing semesters
+
+After the end of a semester, update `REACT_APP_CURRENT_SEMESTER` and `REACT_APP_CURRENT_YEAR` values in the *.env* and *.env.production* files.
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -2,9 +2,9 @@ import * as React from 'react';
 import {Link} from "react-router-dom";
 import './SectionList.css';
 import NoCoursesMessage from "./NoCoursesMessage";
+import Semester from "../Semester";
 
-const currentYear = 2021;
-const currentSemester = 'F';
+const currentSemester = Semester.currentSemester();
 
 type SectionListProps = {
     sections: any[]
@@ -47,7 +47,7 @@ function sectionFactory(section: any) {
  * @param section
  */
 function currentSectionFilter(section: any) {
-    return (section.year === currentYear && section.semester === currentSemester);
+    return (section.year === currentSemester.codeYear && section.semester === currentSemester.codeSemester);
 }
 
 export default SectionList;

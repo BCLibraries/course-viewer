@@ -5,12 +5,15 @@ import {Redirect} from "react-router";
 import CourseSearchForm from "./CourseSearchForm";
 import LoginPage from "./LoginPage";
 import SectionList from "./Schedule/SectionList";
+import Semester from "./Semester";
 
 type HomepageProps = {
     user: any,
     setUser: any,
     redirectUrl: any
 }
+
+const currentSemester = Semester.currentSemester();
 
 function Homepage({user, setUser, redirectUrl}: HomepageProps) {
 
@@ -61,7 +64,10 @@ function Homepage({user, setUser, redirectUrl}: HomepageProps) {
             <div className="col-md-5">
                 <div className="homepage-forms">
 
-                    {user ? <h3>Your Fall 2020 courses</h3> : <h3>Find your readings</h3>}
+                    {user ?
+                        <h3>Your {currentSemester.displaySemester} {currentSemester.displayYear} courses</h3>
+                        :
+                        <h3>Find your readings</h3>}
 
                     {user ?
 
