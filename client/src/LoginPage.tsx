@@ -4,15 +4,26 @@ import './LoginPage.css';
 // Fetch polyfill
 import "promise/polyfill"
 import "whatwg-fetch"
-import useFetchLogin from "./UseFetchLogin";
+import useFetchLogin from "./Hooks/UseFetchLogin";
+import SetUserCallbackInterface from "./Interfaces/SetUserCallbackInterface";
 
 type LoginPageProps = {
-    setUser: any
+    setUser: SetUserCallbackInterface
 }
 
+/**
+ * Display the login page
+ *
+ * @param setUser a callback to set the user object
+ * @constructor
+ */
 function LoginPage({setUser}: LoginPageProps) {
+
+    // Login form input state.
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+
+    // For communicating with the login server.
     const [{isError}, setLoginPayload] = useFetchLogin(setUser);
 
     return (

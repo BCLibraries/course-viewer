@@ -1,4 +1,4 @@
-import Course from "./Course";
+import Course from "../Course";
 import {useEffect, useState} from "react";
 
 /**

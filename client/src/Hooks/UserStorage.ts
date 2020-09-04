@@ -1,4 +1,5 @@
-import {IN_IFRAME} from "./InIFrame";
+import {IN_IFRAME} from "../InIFrame";
+import {UserType} from "../Types/UserType";
 
 // Storage key for the user data in local storage
 const storageKey = 'library-reserves-user';
@@ -68,7 +69,7 @@ class UserStorage {
      *
      * Return the user or null if the user is not found or the last access has expired.
      */
-    public static get() {
+    public static get(): UserType | null {
         let user = null;
 
         // If we are in an IFrame this is probably an LTI call, and we don't need the
@@ -89,7 +90,7 @@ class UserStorage {
         // Extract a user data object from the JSON string in local storage. Abort if there
         // is no user data set in the object or the last touched date is not set.
         const userStringData = JSON.parse(userString);
-        if (! userStringData.user || ! userStringData.added) {
+        if (!userStringData.user || !userStringData.added) {
             return null;
         }
 

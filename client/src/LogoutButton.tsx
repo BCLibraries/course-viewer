@@ -1,11 +1,20 @@
 import * as React from 'react';
-import UserStorage from "./UserStorage";
+import UserStorage from "./Hooks/UserStorage";
+import SetUserCallbackInterface from "./Interfaces/SetUserCallbackInterface";
+import {UserType} from "./Types/UserType";
 
 type LogoutButtonProps = {
-    user: any,
-    setUser: any
+    user: UserType | null,
+    setUser: SetUserCallbackInterface
 }
 
+/**
+ * Logout button
+ *
+ * @param user
+ * @param setUser
+ * @constructor
+ */
 function LogoutButton({user, setUser}: LogoutButtonProps) {
     function handleLogout() {
         UserStorage.clear();

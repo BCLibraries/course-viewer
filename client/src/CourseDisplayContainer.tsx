@@ -5,18 +5,19 @@ import Course from "./Course";
 import LibrariansBox from "./LibrariansBox";
 import LibrariesHeader from "./LibrariesHeader";
 import ResearchGuidesBox from "./ResearchGuidesBox";
-import UserStorage from "./UserStorage";
+import UserStorage from "./Hooks/UserStorage";
 import QueryString from "./QueryString";
 import {IN_IFRAME} from "./InIFrame";
 import LinkToLibrary from "./LinkToLibrary";
 import ReadingsListPlaceholder from "./ReadingList/ReadingsListPlaceholder";
 import ReadingListContainer from "./ReadingList/ReadingListContainer";
 import CourseDisplay from "./CourseDisplay";
-import useFetchCourse from "./UseFetchCourse";
+import useFetchCourse from "./Hooks/UseFetchCourse";
+import {UserType} from "./Types/UserType";
 
 type CourseDisplayContainerProps = {
     match: any,           // Result of a regex query for course and section info in the request URI
-    user: any,            // The logged-in user.
+    user: UserType,       // The logged-in user.
     location: any         // The original request URI
 };
 

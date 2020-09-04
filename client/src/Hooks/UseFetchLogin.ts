@@ -5,31 +5,53 @@ export type LoginPayloadType = {
     password: string
 }
 
+/**
+ * Custom hook for logging in using LDAP credentials
+ *
+ * @param setUser
+ */
 function useFetchLogin(setUser: any): [any, any] {
+
+    // Are we in an error state?
     const [isError, setIsError] = useState<boolean>(false);
+
+    // Login request payload (username, password)
     const [loginPayload, setLoginPayload] = useState<LoginPayloadType | null>(null);
 
     useEffect(() => {
-        // AbortController to kill hanging requests and prevent memory leaks.
-        const abortController = new AbortController();
 
-        const tryLogin = async () => {
+        /**
+         * Send a login request
+         */
+        async function tryLogin() {
             try {
+
+                // Send the request.
                 const result = await fetch(`${process.env.REACT_APP_API_BASE}/auth`, {
                     body: JSON.stringify(loginPayload),
                     headers: {
-                        "Content-Type": "application/json; charset=utf-8"
+                        'Content-Type': 'application/json; charset=utf-8'
                     },
                     method: 'post',
-                    mode: "cors"
+                    mode: 'cors'
                 });
+
+                // If successful, load the response object.
                 const responseJSON = await result.json();
                 setUser(responseJSON.user);
                 setIsError(false);
+
             } catch (e) {
+
+                // Calling component will handle the error.
                 setIsError(true);
             }
-        };
+        }
+
+        // AbortController to kill hanging requests and prevent memory leaks.
+        const abortController = new AbortController();
+
+        // If there was a request, try to login.
         if (loginPayload) {
             tryLogin();
         }
@@ -37,6 +59,7 @@ function useFetchLogin(setUser: any): [any, any] {
         return function cleanup() {
             abortController.abort();
         }
+
     }, [loginPayload, setUser]);
 
     return [{isError}, setLoginPayload];

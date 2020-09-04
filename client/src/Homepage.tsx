@@ -6,11 +6,13 @@ import CourseSearchForm from "./CourseSearchForm";
 import LoginPage from "./LoginPage";
 import SectionList from "./Schedule/SectionList";
 import Semester from "./Semester";
+import {UserType} from "./Types/UserType";
+import SetUserCallbackInterface from "./Interfaces/SetUserCallbackInterface";
 
 type HomepageProps = {
-    user: any,
-    setUser: any,
-    redirectUrl: any
+    user: UserType | null,
+    setUser: SetUserCallbackInterface,
+    redirectUrl: string | null
 }
 
 const currentSemester = Semester.currentSemester();
@@ -30,31 +32,31 @@ function Homepage({user, setUser, redirectUrl}: HomepageProps) {
 
                         <h3>About course reserves</h3>
                         <div id="s-lg-content-37794915" className="clearfix">
-                            <p>All&nbsp;the libraries at Boston College provide course reserves support.&nbsp;Please
+                            <p>All the libraries at Boston College provide course reserves support. Please
                                 select a library to access detailed information about their Course Reserves
-                                services.&nbsp;</p>
+                                services.</p>
 
                             <ul>
                                 <li>
-                                    <a href="https://libguides.bc.edu/bapst/course-reserves">Bapst&nbsp;Library</a>&nbsp;(Fine
+                                    <a href="https://libguides.bc.edu/bapst/course-reserves">Bapst Library</a> (Fine
                                     Arts)
                                 </li>
                                 <li><a href="https://libguides.bc.edu/erc/course-reserves">Educational Resource
-                                    Center</a>&nbsp;(K-12 curriculum)
+                                    Center</a> (K-12 curriculum)
                                 </li>
                                 <li>
                                     <a href="https://www.bc.edu/bc-web/schools/law/sites/current-students/library/using/faculty-services.html#courses">Law
-                                        Library</a>&nbsp;(Law School)
+                                        Library</a> (Law School)
                                 </li>
                                 <li><a href="https://libguides.bc.edu/course-reserves-oneill">O'Neill
-                                    Library</a>&nbsp;(Arts &amp; Sciences, Education, Management, Nursing, Woods
+                                    Library</a> (Arts &amp; Sciences, Education, Management, Nursing, Woods
                                     College)
                                 </li>
                                 <li><a href="https://libguides.bc.edu/socialwork/course-reserves">Social Work
-                                    Library</a>&nbsp;(School of Social Work)
+                                    Library</a> (School of Social Work)
                                 </li>
                                 <li><a href="https://libguides.bc.edu/tml/reserves">Theology and Ministry
-                                    Library</a>&nbsp;(School of Theology &amp; Ministry)
+                                    Library</a> (School of Theology &amp; Ministry)
                                 </li>
                             </ul>
                         </div>

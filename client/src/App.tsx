@@ -2,18 +2,19 @@ import * as React from 'react';
 import {useState} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
-import UserStorage from './UserStorage';
+import UserStorage from './Hooks/UserStorage';
 import Homepage from './Homepage';
 import CourseDisplayContainer from "./CourseDisplayContainer";
 import LogoutButton from "./LogoutButton";
 import {IN_IFRAME} from "./InIFrame";
+import {UserType} from "./Types/UserType";
 
 const alternateBase = '/reserves';
 
 function App() {
     const [user, setUser] = useState(seedUser());
 
-    function storeNewUser(newUser: any) {
+    function storeNewUser(newUser: UserType | null) {
         try {
             UserStorage.store(newUser);
         } catch (e) {
@@ -51,7 +52,7 @@ function App() {
     );
 }
 
-function seedUser() {
+function seedUser(): UserType | null {
     try {
         return UserStorage.get();
     } catch (e) {
