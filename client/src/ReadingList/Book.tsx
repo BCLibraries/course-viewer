@@ -5,6 +5,12 @@ import ReadingStatusMessage from "./ReadingStatusMessage";
 import buildReadingClassNames from "./buildReadingClassNames";
 
 function Book({reading}: { reading: any }) {
+
+    // Hide books that can't be loaned.
+    if (reading.availability && reading.availability[0] && reading.availability[0].location.includes('No Loan')) {
+        return <span></span>;
+    }
+
     const readingClass = getReadingClass(reading.type);
 
     return (
