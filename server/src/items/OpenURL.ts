@@ -30,6 +30,12 @@ class OpenURL {
     parseXML(err: any, parsed: any): void {
         if (parsed.uresolver_content.context_services[0].context_service[0].target_url) {
             this._targetLink = parsed.uresolver_content.context_services[0].context_service[0].target_url[0];
+
+            // If this is a HathiTrust URL, redirect to SSO if necessary.
+            if (this._targetLink.includes('hathitrust') && ! this._targetLink.includes('bc.edu')) {
+                this._targetLink = this._targetLink + ';signon=swle:https://login.bc.edu/idp/shibboleth';
+            }
+
         }
     }
 }

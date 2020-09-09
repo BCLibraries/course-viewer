@@ -16,7 +16,7 @@ class Citation {
      */
     constructor(almaCite: any, processDept: string) {
         this.id = almaCite.id;
-        this.status = usesIncomplete(processDept) ?  almaCite.status.value: 'Complete';
+        this.status = usesIncomplete(processDept) ? almaCite.status.value : 'Complete';
 
         // Use Alma types, unless it's an eBook which requires some special logic.
         this.type = {
@@ -88,6 +88,14 @@ class Citation {
             return 0;
         });
 
+    }
+
+    public isLoanable(): boolean {
+        if (this.availability) {
+            console.log('not available');
+            return false;
+        }
+        return true;
     }
 
     /**
