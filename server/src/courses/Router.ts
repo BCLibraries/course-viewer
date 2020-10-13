@@ -30,7 +30,7 @@ async function getCourseByCodeAndSection(req: Request, res: Response) {
     // TODO: Add special cases as an ENV value so that they don't require changing code
     if (code === 'HIST1511' || code === 'BIOL1503') {
         subjects = ['HIST', 'BIOL'];
-    } else if (code === 'ENGL1010') {
+    } else if (code === 'ENGL1010' || code === 'ADEN1053' || code === 'ADEN1053') {
         subjects = ['FWS'];
     } else if (code === 'HIST1513' || code === 'EESC1507') {
         subjects = ['EES1'];
