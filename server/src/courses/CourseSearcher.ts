@@ -34,6 +34,13 @@ async function searchForCourse(code: string, section: string): Promise<Course> {
     // If that fails, use just the course code as an identifier.
     if (!courseJSON) {
         courseJSON = await findActiveCourse(`searchable_ids~${code}`);
+        if (courseJSON) {
+
+            // Filter out non-exact matches.
+            if (!courseJSON.searchable_id || courseJSON.searchable_id.indexOf(code) === -1) {
+                courseJSON = null;
+            }
+        }
     }
 
     // If we found a course, convert it to a Course object and cache it.
