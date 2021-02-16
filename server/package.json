@@ -23,7 +23,7 @@
     "pug": "^3.0.0",
     "redis": "^3.0.2",
     "ts-node": "^9.1.1",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.23"
   },
   "scripts": {
     "start": "nodemon",
