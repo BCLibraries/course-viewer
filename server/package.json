@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.7",
     "js-yaml": "^3.13.1",
-    "ldapjs": "^1.0.2",
+    "ldapjs": "^2.2.3",
     "lodash": "^4.17.19",
     "lodash.template": "^4.5.0",
     "mem": "^8.0.0",
