@@ -7,7 +7,9 @@ import Course from "./courses/Course";
  */
 const client = redis.createClient();
 const getAsync = promisify(client.get).bind(client);
-const mgetAsync = promisify(client.mget).bind(client);
+
+/** Bug in redis for Typescript prevents promisifying mget. **/
+// const mgetAsync = promisify(client.mget).bind(client);
 
 // Convenience constants to avoid mystery numbers.
 const MINUTE_IN_SECONDS = 60;
@@ -27,7 +29,9 @@ class Cache {
 
     public lookupSubject(subjectCodes: string[]) {
         subjectCodes = subjectCodes.map(code => (`bc-subj-${code}`));
-        return mgetAsync(subjectCodes);
+
+        // Only look up one subject until promisification of mget is supported.
+        return getAsync(subjectCodes[0]);
     }
 
     public saveCourseSearch(course: Course, almaSearchResult: any) {

@@ -1,5 +1,7 @@
 import Section from "./Section";
 import SectionList from "./SectionList";
+import {SearchEntryObject} from "ldapjs";
+import {type} from "os";
 
 interface ILDAPResponse {
     bcismemberof?: string[],
@@ -18,7 +20,7 @@ const sectionRegEx = /^cn=([A-Z]{4}\d{4}[X[0-9]\d\d{4}[SFU])/;
  *
  * @param ldapObj
  */
-function parse(ldapObj: ILDAPResponse): SectionList {
+function parse(ldapObj: any): SectionList {
 
     const sections = new SectionList;
 

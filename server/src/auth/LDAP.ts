@@ -1,4 +1,4 @@
-import {Client} from "ldapjs";
+import {Client, SearchCallbackResponse, SearchOptions} from "ldapjs";
 import {promisify} from "util";
 import User from "./User";
 import parse from '../auth/LDAPParser';
@@ -48,12 +48,13 @@ async function authenticate(uid: string, passwd: string): Promise<User> {
 }
 
 async function loadCourses(user: User, client: Client) {
-    const opts = {
+    const opts: SearchOptions = {
         filter: `(uid=${user.uid})`,
         scope: 'sub'
-    };
+    }
+
     return new Promise((resolve, reject) => {
-        client.search('dc=bc,dc=edu', opts, (error, res) => {
+        client.search('dc=bc,dc=edu', opts, (error: Error|null, res:SearchCallbackResponse) => {
 
             // Fail on error.
             if (error) {
