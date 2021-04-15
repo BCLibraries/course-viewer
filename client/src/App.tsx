@@ -8,6 +8,7 @@ import CourseDisplayContainer from "./CourseDisplayContainer";
 import LogoutButton from "./LogoutButton";
 import {IN_IFRAME} from "./InIFrame";
 import {UserType} from "./Types/UserType";
+import ExpiredCourse from "./ExpiredCourse";
 
 const alternateBase = '/reserves';
 
@@ -27,6 +28,7 @@ function App() {
     const homepageRender = (props: any) =>
         <Homepage user={user} setUser={storeNewUser} redirectUrl={redirect}/>;
     const courseRender = (props: any) => <CourseDisplayContainer {...props} user={user}/>;
+    const expiredCourseRender =  (props: any) => <ExpiredCourse />;
 
     return (
         <BrowserRouter basename={process.env.REACT_APP_CLIENT_BASE}>
@@ -35,6 +37,9 @@ function App() {
 
                 <Route exact={true} path={`${alternateBase}/`} render={homepageRender}/>
                 <Route exact={true} path={`${process.env.PUBLIC_URL}/`} render={homepageRender}/>
+
+                <Route exact={true} path={`${alternateBase}/expired`} render={expiredCourseRender}/>
+                <Route exact={true} path={`${process.env.PUBLIC_URL}/expired`} render={expiredCourseRender}/>
 
                 <Route path={`${alternateBase}/:course_id/section/:section_id`} render={courseRender}/>
                 <Route path={`${process.env.PUBLIC_URL}/:course_id/section/:section_id`} render={courseRender}/>
