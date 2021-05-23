@@ -1,14 +1,12 @@
 import Section from "./Section";
 import SectionList from "./SectionList";
-import {SearchEntryObject} from "ldapjs";
-import {type} from "os";
 
 interface ILDAPResponse {
     bcismemberof?: string[],
     courseinstructorof?: string[]
 }
 
-const sectionRegEx = /^cn=([A-Z]{4}\d{4}[X[0-9]\d\d{4}[SFU])/;
+const sectionRegEx = /cn=([A-Z]{4}\d{4}-[0-9X]{2}-\d{4}(?:SUMM|FALL|SPRG))/
 
 /**
  * Parse LDAP response to extract course information
