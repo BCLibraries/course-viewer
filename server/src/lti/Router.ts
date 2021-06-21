@@ -21,7 +21,7 @@ function launch(req: Request, res: Response) {
     }
 
     // Extract the course and section information from the LTI request.
-    const regExp = /([A-Z]{4}\d{4})(X\w|\d\d)(\d{4})([SFU])/;
+    const regExp = /([A-Z]{4}\d{4})(X\w|\d\d)(\d{4})([sfuSFU])/;
     let courseId = '';
     let sectionId = 'X';
     let year = 2000;
@@ -46,7 +46,7 @@ function launch(req: Request, res: Response) {
             courseId = match[1];
             sectionId = match[2];
             year = match[3];
-            semester = match[4];
+            semester = match[4].toUpperCase();
         } else {
 
             // No match? The sourcedid is probably a whole searchable course ID.
