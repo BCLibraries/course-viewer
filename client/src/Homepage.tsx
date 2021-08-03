@@ -26,44 +26,7 @@ function Homepage({user, setUser, redirectUrl}: HomepageProps) {
     return (
         <div>
             <h2 className="course-name">Course reserves</h2>
-            <div className="col-md-7">
-                <div className="about-reserves">
-                    <div className="s-lib-box-content">
-
-                        <h3>About course reserves</h3>
-                        <div id="s-lg-content-37794915" className="clearfix">
-                            <p>All the libraries at Boston College provide course reserves support. Please
-                                select a library to access detailed information about their Course Reserves
-                                services.</p>
-
-                            <ul>
-                                <li>
-                                    <a href="https://libguides.bc.edu/bapst/course-reserves">Bapst Library</a> (Fine
-                                    Arts)
-                                </li>
-                                <li><a href="https://libguides.bc.edu/erc/course-reserves">Educational Resource
-                                    Center</a> (K-12 curriculum)
-                                </li>
-                                <li>
-                                    <a href="https://www.bc.edu/bc-web/schools/law/sites/current-students/library/using/faculty-services.html#courses">Law
-                                        Library</a> (Law School)
-                                </li>
-                                <li><a href="https://libguides.bc.edu/course-reserves-oneill">O'Neill
-                                    Library</a> (Arts &amp; Sciences, Education, Management, Nursing, Woods
-                                    College)
-                                </li>
-                                <li><a href="https://libguides.bc.edu/socialwork/course-reserves">Social Work
-                                    Library</a> (School of Social Work)
-                                </li>
-                                <li><a href="https://libguides.bc.edu/tml/reserves">Theology and Ministry
-                                    Library</a> (School of Theology &amp; Ministry)
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-md-5">
+            <div className="col-md-12">
                 <div className="homepage-forms">
 
                     {user ?

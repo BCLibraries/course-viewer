@@ -27,8 +27,8 @@ function LoginPage({setUser}: LoginPageProps) {
     const [{isError}, setLoginPayload] = useFetchLogin(setUser);
 
     return (
-        <div className="login-form" onSubmit={handleSubmit}>
-            <div className="login-form-container">
+        <div className="login-form row" onSubmit={handleSubmit}>
+            <div className="login-form-container col-md-5">
                 <p><strong>Login</strong> to view courses in your schedule.</p>
                 <form>
                     <div className="form-input-group">
@@ -52,6 +52,9 @@ function LoginPage({setUser}: LoginPageProps) {
                     <input type="submit" value="Login"/>
                     {isError && <div className="login-error">There was a problem with your username or password</div>}
                 </form>
+            </div>
+            <div className="col-md-12">
+                <a href="https://libguides.bc.edu/course-reserves">Course reserves information for faculty.</a>
             </div>
         </div>
     );
