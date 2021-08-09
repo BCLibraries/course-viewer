@@ -60,10 +60,12 @@ function fetchFromLibGuides(code: string, section: string) {
         tagNames = getTagNames('HIST1511', '01').concat(getTagNames('BIOL1503', '01'));
     }
 
+    const siteId = (code.includes('LAWS')) ? process.env.LIBGUIDES_SITE_ID : process.env.LAW_LIBGUIDES_SITE_ID;
+
     // See https://bc.libapps.com/libguides/api.php?action=1&resource=1&version=1.1 for documentation for
     // LibGuides API.
     const queryParams = {
-        site_id: process.env.LIBGUIDS_SITE_ID,
+        site_id: siteId,
         key: process.env.LIBGUIDES_KEY,
         expand: 'tags',
         status: '1,2',
