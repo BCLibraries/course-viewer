@@ -21,7 +21,7 @@
     "lodash.template": "^4.5.0",
     "macaddress": "^0.2.9",
     "mem": "^6.0.0",
-    "merge": "^1.2.1",
+    "merge": "^2.1.1",
     "promise": "^8.0.1",
     "react": "^17.0.1",
     "react-dev-utils": "^5.0.2",
