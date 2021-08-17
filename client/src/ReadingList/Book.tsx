@@ -4,6 +4,14 @@ import {creatorsLine, thumbnail} from "./MetadataDisplay";
 import ReadingStatusMessage from "./ReadingStatusMessage";
 import buildReadingClassNames from "./buildReadingClassNames";
 
+export interface Availability {
+    availability: string;
+    call_number: string;
+    library: string;
+    location: string;
+}
+
+
 function Book({reading}: { reading: any }) {
 
     // Hide books that can't be loaned.
@@ -75,7 +83,7 @@ function availabilityInfo(reading: any) {
         return '';
     }
 
-    const availability = reading.availability[0];
+    const availability = getBestAvailability(reading.availability);
 
     switch (availability.availability) {
         case 'available': {
@@ -88,6 +96,29 @@ function availabilityInfo(reading: any) {
             return checkForAvailability(reading.metadata, reading.status);
         }
     }
+}
+
+/**
+ * Determine best availability
+ *
+ * If there is a reading at a reserves desk that is available, choose that one. Otherwise return the first
+ * availability.
+ *
+ * @param availabilities
+ */
+function getBestAvailability(availabilities: Availability[]) {
+
+    const reservesAvailability = availabilities.find(isInReserves);
+
+    if (reservesAvailability) {
+        return reservesAvailability;
+    }
+
+    return availabilities[0];
+}
+
+function isInReserves(availability: Availability) {
+    return availability.location.includes('Reserves');
 }
 
 /**
@@ -128,7 +159,8 @@ function checkedOut(availability: any) {
 function checkForAvailability(metadata: any, status: any) {
     return (
         <div className="availability">
-            <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'} status={status}/></strong>
+            <strong><LinkToReading mms={metadata.mms_id} title={'Check record in catalog for availability'}
+                                   status={status}/></strong>
         </div>
     )
 }
