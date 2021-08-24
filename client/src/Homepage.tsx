@@ -37,7 +37,8 @@ function Homepage({user, setUser, redirectUrl}: HomepageProps) {
                     {user ?
 
                         // Logged in user? Display their courses.
-                        <SectionList sections={user.sections._sectionsAsStudent}/>
+                        <SectionList
+                            sections={user.sections._sectionsAsInstructor.concat(user.sections._sectionsAsStudent)}/>
                         :
                         // Otherwise, prompt for login
                         <LoginPage setUser={setUser}/>

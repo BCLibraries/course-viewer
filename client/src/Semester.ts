@@ -51,7 +51,6 @@ class Semester {
         switch (this.codeSemester) {
             case 'F':
                 this.displaySemester = 'Fall';
-                this.displayYear = String(this.codeYear - 1);
                 break;
             case 'U':
                 this.displaySemester = 'Summer';
