@@ -7,7 +7,8 @@ import Semester from "../Semester";
 const currentSemester = Semester.currentSemester();
 
 type SectionListProps = {
-    sections: any[]
+    sections: any[],
+    uid: string
 };
 
 /**
@@ -16,7 +17,7 @@ type SectionListProps = {
  * @param sections
  * @constructor
  */
-function SectionList({sections}: SectionListProps) {
+function SectionList({sections, uid}: SectionListProps) {
     const currentSections = sections.filter(currentSectionFilter).map(sectionFactory);
 
     return (
