@@ -6,7 +6,7 @@ interface ILDAPResponse {
     courseinstructorof?: string[]
 }
 
-const sectionRegEx = /cn=([A-Z]{4}\d{4}-[0-9X]{2}-\d{4}(?:SUMM|FALL|SPRG))/
+const sectionRegEx = /([A-Z]{4}\d{4}-[0-9X]{2}-\d{4}(?:SUMM|FALL|SPRG))/
 
 /**
  * Parse LDAP response to extract course information
@@ -32,7 +32,7 @@ function parse(ldapObj: any): SectionList {
 
     // Add all courses that are in 'bcismemberof' but not 'courseinstructorof' to the courses
     // the user is enrolled in.
-    const sectionStrings = ldapObj.bcismemberof ? ldapObj.bcismemberof.reduce(parseMemberOf, []) : [];
+    const sectionStrings = ldapObj.coursememberprim ? ldapObj.coursememberprim.reduce(parseMemberOf, []) : [];
     sectionStrings.forEach((sectionString: string) => {
             const section = new Section(sectionString);
             sections.addAsStudent(section);
@@ -42,7 +42,7 @@ function parse(ldapObj: any): SectionList {
     // Check if a course is in both 'bcismemberof' and 'courseinstructorof'.
     function parseMemberOf(result: string[], memberOfString: string) {
         const ldapMatches = memberOfString.match(sectionRegEx);
-        if (ldapMatches && taughtSectionStrings.indexOf(ldapMatches[1]) === -1) {
+        if (ldapMatches && ldapMatches[1]) {
             result.push(ldapMatches[1]);
         }
         return result;
