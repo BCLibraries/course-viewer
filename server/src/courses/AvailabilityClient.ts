@@ -5,6 +5,8 @@ import buildThrottledClient from './ThrottledWebClient'
 const webClient = buildThrottledClient();
 
 async function fetchAvailability(mmsIds: any) {
+    // Filter out undefined MMSes prevent a bad query.
+    mmsIds = mmsIds.filter((mmsId: any) => mmsId != undefined);
     const query = mmsIds.join('+');
     return webClient.get(`${process.env.AVAILABILITY_BASE}/bib/${query}`,{});
 }
