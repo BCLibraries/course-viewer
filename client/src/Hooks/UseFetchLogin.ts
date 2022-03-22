@@ -38,8 +38,12 @@ function useFetchLogin(setUser: any): [any, any] {
 
                 // If successful, load the response object.
                 const responseJSON = await result.json();
-                setUser(responseJSON.user);
-                setIsError(false);
+                if (responseJSON.success) {
+                    setUser(responseJSON.user);
+                    setIsError(false);
+                } else {
+                    setIsError(true);
+                }
 
             } catch (e) {
 

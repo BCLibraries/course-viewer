@@ -22,17 +22,9 @@ function parse(ldapObj: any): SectionList {
 
     const sections = new SectionList;
 
-    // Add all courses in 'courseinstructorof' to the list of courses taught by the user.
-    const taughtSectionStrings = ldapObj.courseinstructorof ? ldapObj.courseinstructorof : [];
-    taughtSectionStrings.forEach((sectionString: string) => {
-            const section = new Section(sectionString);
-            sections.addAsInstructor(section);
-        }
-    );
-
     // Add all courses that are in 'bcismemberof' but not 'courseinstructorof' to the courses
     // the user is enrolled in.
-    const sectionStrings = ldapObj.coursememberprim ? ldapObj.coursememberprim.reduce(parseMemberOf, []) : [];
+    const sectionStrings = ldapObj.coursememberprim && Array.isArray(ldapObj.coursememberprim) ? ldapObj.coursememberprim.reduce(parseMemberOf, []) : [];
     sectionStrings.forEach((sectionString: string) => {
             const section = new Section(sectionString);
             sections.addAsStudent(section);
