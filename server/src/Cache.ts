@@ -40,7 +40,7 @@ class Cache {
     }
 
     public async fetchCourseSearch(course: Course) {
-        const courseJson = await getAsync(Cache.courseSearchKey(course));
+        const courseJson = await getAsync(Cache.courseSearchKey(course)) ?? '';
         return JSON.parse(courseJson);
     }
 
@@ -50,7 +50,7 @@ class Cache {
     }
 
     public async fetchReadingList(course: Course) {
-        const courseJson = await getAsync(Cache.readingListKey(course));
+        const courseJson = await getAsync(Cache.readingListKey(course)) ?? '';
         return JSON.parse(courseJson);
     }
 }
