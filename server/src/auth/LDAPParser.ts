@@ -24,15 +24,20 @@ function parse(ldapObj: any): SectionList {
 
     // Add all courses that are in 'bcismemberof' but not 'courseinstructorof' to the courses
     // the user is enrolled in.
-    const sectionStrings = ldapObj.coursememberprim && Array.isArray(ldapObj.coursememberprim) ? ldapObj.coursememberprim.reduce(parseMemberOf, []) : [];
+    console.log(ldapObj.coursememberprim);
+    console.log(`UID ${ldapObj.uid}`);
+    const sectionStrings = ldapObj.coursememberprim && Array.isArray(ldapObj.coursememberprim) ? ldapObj.coursememberprim.reduce(parseMemberOf, []) : [ldapObj.coursememberprim];
+    console.log(sectionStrings);
     sectionStrings.forEach((sectionString: string) => {
             const section = new Section(sectionString);
             sections.addAsStudent(section);
         }
     );
+    console.log(sections);
 
     // Check if a course is in both 'bcismemberof' and 'courseinstructorof'.
     function parseMemberOf(result: string[], memberOfString: string) {
+        console.log(`parsing ${memberOfString}`);
         const ldapMatches = memberOfString.match(sectionRegEx);
         if (ldapMatches && ldapMatches[1]) {
             result.push(ldapMatches[1]);
